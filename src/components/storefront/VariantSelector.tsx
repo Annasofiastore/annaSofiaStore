@@ -1,18 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Heart, ShoppingBag, AlertCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useCartStore } from "@/lib/store/cart";
+import { useWishlistStore } from "@/lib/store/wishlist";
+import { formatCOP } from "@/lib/utils/format";
 import type { Product, ProductVariant } from "@/types";
 import { useStoreName } from "@/components/StoreNameProvider";
 
-interface Props {
-  product: Product;
+// Orden de tallas de menor a mayor; las desconocidas (o numéricas) van al final en orden natural
+const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+function bySizeOrder(a: string, b: string) {
+  const ia = SIZE_ORDER.indexOf(a.toUpperCase());
+  const ib = SIZE_ORDER.indexOf(b.toUpperCase());
+  if (ia !== -1 || ib !== -1) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  return a.localeCompare(b, "es", { numeric: true });
 }
 
-export function VariantSelector({ product }: Props) {
+interface Props {
+  product: Product;
+  /** Código hex por nombre de color (en minúsculas), para pintar los círculos. */
+  colorHex?: Record<string, string>;
+}
+
+export function VariantSelector({ product, colorHex = {} }: Props) {
   const storeName = useStoreName();
   const { variants = [] } = product;
 
@@ -23,7 +36,7 @@ export function VariantSelector({ product }: Props) {
         .map((v) => v.attributes.talla)
         .filter(Boolean) as string[]
     ),
-  ];
+  ].sort(bySizeOrder);
   const colors = [
     ...new Set(
       variants
@@ -44,6 +57,19 @@ export function VariantSelector({ product }: Props) {
   const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const addItem = useCartStore((s) => s.addItem);
+  const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const wishlisted = useWishlistStore((s) => s.productIds.includes(product.id));
+
+  // Barra fija en celular cuando el botón principal sale de la pantalla
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  useEffect(() => {
+    const el = ctaRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setShowStickyBar(!entry.isIntersecting && entry.boundingClientRect.top < 0));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // Encontrar variante que coincide con selección
   const selectedVariant: ProductVariant | undefined = variants.find((v) => {
@@ -57,6 +83,7 @@ export function VariantSelector({ product }: Props) {
     : 0;
 
   const isSoldOut = product.is_sold_out;
+  const unitPrice = selectedVariant?.price ?? product.effective_price ?? product.base_price;
   const canAddToCart =
     !isSoldOut &&
     selectedVariant &&
@@ -81,6 +108,16 @@ export function VariantSelector({ product }: Props) {
         (v.stock - v.reserved) > 0
     );
   }
+
+  const ctaLabel = adding
+    ? "Añadiendo..."
+    : sizes.length && !selectedSize
+    ? "Selecciona una talla"
+    : colors.length && !selectedColor
+    ? "Selecciona un color"
+    : !selectedVariant || available <= 0
+    ? "Sin stock en esta combinación"
+    : "Añadir al carrito";
 
   async function handleAddToCart() {
     if (!canAddToCart || !selectedVariant) return;
@@ -128,7 +165,7 @@ export function VariantSelector({ product }: Props) {
                   onClick={() => hasStock && setSelectedSize(size === selectedSize ? null : size)}
                   disabled={!hasStock}
                   className={cn(
-                    "w-10 h-10 text-xs font-[500] border transition-colors",
+                    "min-w-11 h-11 px-3 rounded-full text-sm font-[500] border transition-colors",
                     selectedSize === size
                       ? "border-[#1E1B2E] bg-[#1E1B2E] text-white"
                       : hasStock
@@ -150,17 +187,37 @@ export function VariantSelector({ product }: Props) {
           <span className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] block mb-2.5">
             Color{selectedColor ? `: ${selectedColor}` : ""}
           </span>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {colors.map((color) => {
               const hasStock = colorHasStock(color);
-              return (
+              const hex = colorHex[color.toLowerCase()];
+              const selected = selectedColor === color;
+              const onClick = () => hasStock && setSelectedColor(selected ? null : color);
+              return hex ? (
                 <button
                   key={color}
-                  onClick={() => hasStock && setSelectedColor(color === selectedColor ? null : color)}
+                  onClick={onClick}
+                  disabled={!hasStock}
+                  title={color}
+                  aria-label={color}
+                  aria-pressed={selected}
+                  className={cn(
+                    "relative w-9 h-9 rounded-full border border-[#1E1B2E]/15 transition-shadow",
+                    selected ? "ring-2 ring-offset-2 ring-offset-[#FAF6F7] ring-[#1E1B2E]" : "hover:ring-1 hover:ring-offset-2 hover:ring-[#6E6680]",
+                    !hasStock && "opacity-35 cursor-not-allowed"
+                  )}
+                  style={{ backgroundColor: hex }}
+                >
+                  {!hasStock && <span className="absolute inset-0 m-auto w-full h-px bg-[#6E6680] rotate-45" />}
+                </button>
+              ) : (
+                <button
+                  key={color}
+                  onClick={onClick}
                   disabled={!hasStock}
                   className={cn(
-                    "px-4 h-9 text-xs font-[400] border transition-colors",
-                    selectedColor === color
+                    "px-4 h-9 rounded-full text-xs font-[400] border transition-colors",
+                    selected
                       ? "border-[#1E1B2E] bg-[#1E1B2E] text-white"
                       : hasStock
                       ? "border-[#E9DDE3] text-[#1E1B2E] hover:border-[#6E6680]"
@@ -181,7 +238,7 @@ export function VariantSelector({ product }: Props) {
           <span className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] block mb-2.5">
             Cantidad
           </span>
-          <div className="flex items-center border border-[#E9DDE3] w-fit">
+          <div className="flex items-center border border-[#E9DDE3] rounded-full w-fit px-1">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               className="w-10 h-10 flex items-center justify-center text-[#6E6680] hover:text-[#1E1B2E] text-lg"
@@ -207,11 +264,11 @@ export function VariantSelector({ product }: Props) {
       )}
 
       {/* BOTONES */}
-      <div className="flex flex-col gap-3 pt-2">
+      <div ref={ctaRef} className="flex flex-col gap-3 pt-2">
         {isSoldOut ? (
           <button
             disabled
-            className="w-full py-4 bg-[#D9C3CE] text-[#6E6680] text-[11px] tracking-[0.2em] uppercase font-[500] cursor-not-allowed"
+            className="w-full py-4 bg-[#D9C3CE] text-[#6E6680] text-[11px] tracking-[0.2em] uppercase font-[500] cursor-not-allowed rounded-full"
           >
             Agotado
           </button>
@@ -220,20 +277,29 @@ export function VariantSelector({ product }: Props) {
             onClick={handleAddToCart}
             disabled={!canAddToCart || adding}
             className={cn(
-              "w-full py-4 flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors",
+              "w-full py-4 flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-full",
               canAddToCart && !adding
                 ? "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#34304A]"
                 : "bg-[#D9C3CE] text-[#6E6680] cursor-not-allowed"
             )}
           >
             <ShoppingBag size={15} strokeWidth={1.5} />
-            {adding ? "Añadiendo..." : "Añadir al carrito"}
+            {ctaLabel}
           </button>
         )}
 
-        <button className="w-full py-3 border border-[#E9DDE3] flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] text-[#6E6680] hover:border-[#A0647E] hover:text-[#A0647E] transition-colors">
-          <Heart size={14} strokeWidth={1.5} />
-          Añadir a favoritos
+        <button
+          onClick={() => toggleWishlist(product.id)}
+          aria-pressed={wishlisted}
+          className={cn(
+            "w-full py-3 border flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-full",
+            wishlisted
+              ? "border-[#A0647E] text-[#A0647E]"
+              : "border-[#E9DDE3] text-[#6E6680] hover:border-[#A0647E] hover:text-[#A0647E]"
+          )}
+        >
+          <Heart size={14} strokeWidth={1.5} fill={wishlisted ? "currentColor" : "none"} />
+          {wishlisted ? "En tus favoritos" : "Añadir a favoritos"}
         </button>
       </div>
 
@@ -248,6 +314,29 @@ export function VariantSelector({ product }: Props) {
           <AlertCircle size={12} />
           Sin stock disponible. Intenta de nuevo.
         </p>
+      )}
+
+      {/* BARRA FIJA (celular) */}
+      {!isSoldOut && (
+        <div
+          className={cn(
+            "lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#FAF6F7]/95 backdrop-blur border-t border-[#E9DDE3] shadow-[0_-4px_20px_rgba(30,27,46,0.08)]",
+            "pl-4 pr-24 py-3 flex items-center gap-3 transition-transform duration-300",
+            showStickyBar ? "translate-y-0" : "translate-y-full"
+          )}
+        >
+          <div className="min-w-0 flex-1">
+            <p className="text-xs text-[#1E1B2E] truncate">{product.name}</p>
+            <p className="text-sm text-[#A0647E] font-[600]">{formatCOP(unitPrice)}</p>
+          </div>
+          <button
+            onClick={canAddToCart ? handleAddToCart : () => ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
+            disabled={adding}
+            className="shrink-0 px-5 py-3 rounded-full bg-[#1E1B2E] text-[#FAF6F7] text-[10px] tracking-[0.18em] uppercase font-[600]"
+          >
+            {canAddToCart ? (adding ? "Añadiendo..." : "Añadir") : sizes.length && !selectedSize ? "Elegir talla" : colors.length && !selectedColor ? "Elegir color" : "Ver opciones"}
+          </button>
+        </div>
       )}
 
       {/* MODAL GUÍA DE TALLAS */}

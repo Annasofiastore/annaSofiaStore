@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo" },
   { href: "/colecciones", label: "Colecciones" },
   { href: "/best-sellers", label: "Best Sellers", hot: true },
-  { href: "/nosotras", label: "Nosotras" },
+  { href: "/nosotras", label: "Conócenos" },
 ];
 
 export function Navbar() {
@@ -67,11 +67,11 @@ export function Navbar() {
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-[#FAF6F7]/95 backdrop-blur-md shadow-[0_1px_12px_rgba(30,27,46,0.08)]"
-          : "bg-[#FAF6F7]"
+          ? "bg-[#FAF6F7]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(30,27,46,0.12)]"
+          : "bg-[#FAF6F7] shadow-[0_2px_12px_rgba(30,27,46,0.08)]"
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
+      <div className="px-4 sm:px-6 lg:px-10">
         {/* Grid 3 columnas: [nav] [logo] [iconos] */}
         <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16">
 
@@ -110,8 +110,8 @@ export function Navbar() {
           {/* COLUMNA CENTRAL: Logo — siempre centrado */}
           <Link href="/" className="flex items-center justify-center px-3">
             <span
-              className="text-[19px] sm:text-[21px] text-[#1E1B2E] tracking-tight leading-none select-none whitespace-nowrap"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+              className="text-[28px] sm:text-[32px] text-[#1E1B2E] leading-none select-none whitespace-nowrap"
+              style={{ fontFamily: "var(--font-script)" }}
             >
               {storeName}
             </span>

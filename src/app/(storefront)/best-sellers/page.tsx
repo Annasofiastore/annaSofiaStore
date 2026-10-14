@@ -51,7 +51,7 @@ export default async function BestSellersPage() {
             </div>
             <h1
               className="text-5xl sm:text-6xl text-[#1E1B2E] mb-4 leading-[1.08]"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Best Sellers
             </h1>
@@ -80,7 +80,7 @@ export default async function BestSellersPage() {
           <div className="text-center py-24">
             <p
               className="text-3xl text-[#D9C3CE] mb-4"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Próximamente
             </p>
@@ -105,13 +105,13 @@ export default async function BestSellersPage() {
           </span>
           <p
             className="text-2xl text-[#1E1B2E] mt-2 mb-6"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Explora todo el catálogo
           </p>
           <Link
             href="/catalogo"
-            className="inline-flex items-center gap-2 px-8 py-3 border border-[#1E1B2E] text-[#1E1B2E] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#1E1B2E] hover:text-[#FAF6F7] transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-3 border border-[#1E1B2E] text-[#1E1B2E] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#1E1B2E] hover:text-[#FAF6F7] transition-colors rounded-full"
           >
             Ver todo <ArrowRight size={13} />
           </Link>

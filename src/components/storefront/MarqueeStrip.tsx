@@ -1,25 +1,40 @@
 import { getStoreName } from "@/lib/config/store-name";
+
 const wordsFor = (storeName: string) => [
-  "◈ Nueva Colección",
-  `◈ ${storeName}`,
-  "◈ Cartagena",
-  "◈ Mujeres que visten con intención",
-  "◈ Hecho con amor",
-  "◈ Diseño exclusivo",
+  "Nueva colección",
+  storeName,
+  "Elegancia que brilla",
+  "Hecho para ti",
+  "Diseños exclusivos",
+  "Brilla a tu manera",
 ];
 
+/**
+ * Franja con frases en movimiento, en la tipografía de los títulos.
+ * La principal va en azul noche; la invertida, en el fondo claro con bordes finos.
+ */
 export async function MarqueeStrip({ inverted = false }: { inverted?: boolean }) {
-  const text = wordsFor(await getStoreName()).join("   ") + "   ";
-  const bg = inverted ? "bg-[#FAF6F7]" : "bg-[#1E1B2E]";
-  const color = inverted ? "text-[#6E6680]" : "text-[#FAF6F7]";
-  const border = inverted ? "border-[#E9DDE3]" : "";
+  const words = wordsFor(await getStoreName());
+  const surface = inverted
+    ? "bg-[#FAF6F7] border-y border-[#E9DDE3] text-[#1E1B2E]"
+    : "bg-[#1E1B2E] text-[#FAF6F7]";
+
+  // Seis copias para que el loop (que avanza la mitad del ancho) no muestre cortes
+  const items = Array.from({ length: 6 }, () => words).flat();
 
   return (
-    <div className={`${bg} ${border} border-y overflow-hidden py-3 select-none`}>
+    <div className={`${surface} overflow-hidden py-4 sm:py-5 select-none`} aria-hidden>
       <div className="flex whitespace-nowrap">
-        {/* Duplicamos el texto para que el loop sea seamless */}
-        <span className={`animate-marquee inline-block ${color} text-[11px] tracking-[0.18em] uppercase font-[500]`}>
-          {text.repeat(6)}
+        <span
+          className="animate-marquee inline-flex items-center text-lg sm:text-[22px]"
+          style={{ fontFamily: "var(--font-display)", animationDuration: "60s" }}
+        >
+          {items.map((w, i) => (
+            <span key={i} className="inline-flex items-center">
+              <span className={i % 2 ? "italic" : undefined}>{w}</span>
+              <span className="text-[#D29DB9] mx-6 sm:mx-9 text-sm">✦</span>
+            </span>
+          ))}
         </span>
       </div>
     </div>

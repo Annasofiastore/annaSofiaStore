@@ -87,7 +87,7 @@ export default async function PedidoDetallePage({
         <div>
           <h2
             className="text-xl text-[#1E1B2E]"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {order.order_number}
           </h2>

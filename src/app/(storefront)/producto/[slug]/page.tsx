@@ -3,10 +3,12 @@
 export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
+import { ChevronDown, ChevronRight, Truck, ShieldCheck, RotateCcw } from "lucide-react";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { ProductGallery } from "@/components/storefront/ProductGallery";
 import { VariantSelector } from "@/components/storefront/VariantSelector";
+import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { formatCOP, discountPercent } from "@/lib/utils/format";
 import type { Product } from "@/types";
 
@@ -45,6 +47,91 @@ async function getProduct(slug: string): Promise<Product | null> {
   };
 }
 
+/** Código hex de cada color, indexado por nombre en minúsculas (value y display_name). */
+async function getColorHex(): Promise<Record<string, string>> {
+  const { data } = await createServiceClient()
+    .from("variant_attribute_values")
+    .select("value, display_name, hex_color, variant_attributes!inner(name)")
+    .eq("variant_attributes.name", "color")
+    .not("hex_color", "is", null);
+  const map: Record<string, string> = {};
+  for (const row of data ?? []) {
+    if (!row.hex_color) continue;
+    map[row.value.toLowerCase()] = row.hex_color;
+    if (row.display_name) map[row.display_name.toLowerCase()] = row.hex_color;
+  }
+  return map;
+}
+
+const RELATED_FIELDS = `
+  id, name, slug, base_price, compare_price, images, status,
+  is_on_sale, effective_price, is_sold_out, is_pre_sale, is_best_seller
+`;
+
+/** Productos de la misma colección; si no alcanzan, los más recientes. */
+async function getRelated(product: Product): Promise<Product[]> {
+  const db = createServiceClient();
+  const limit = 8;
+  let related: Product[] = [];
+
+  const collectionId = product.collections?.[0]?.id;
+  if (collectionId) {
+    const { data } = await db
+      .from("product_collections")
+      .select(`products ( ${RELATED_FIELDS} )`)
+      .eq("collection_id", collectionId)
+      .order("sort_order", { ascending: true })
+      .limit(limit + 1);
+    related = ((data ?? []) as unknown as { products: Product | null }[])
+      .map((r) => r.products)
+      .filter((p): p is Product => !!p && p.status === "active" && p.id !== product.id);
+  }
+
+  if (related.length < 4) {
+    const { data } = await db
+      .from("products")
+      .select(RELATED_FIELDS)
+      .eq("status", "active")
+      .neq("id", product.id)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    const seen = new Set(related.map((p) => p.id));
+    related = [...related, ...((data ?? []) as Product[]).filter((p) => !seen.has(p.id))];
+  }
+
+  return related.slice(0, limit);
+}
+
+function Paragraphs({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/\n\n+/).map((paragraph, i) => (
+        <p key={i}>
+          {paragraph.split("\n").map((line, j, arr) => (
+            <span key={j}>
+              {line}
+              {j < arr.length - 1 && <br />}
+            </span>
+          ))}
+        </p>
+      ))}
+    </>
+  );
+}
+
+/** Sección desplegable (nativa, sin JavaScript). */
+function Accordion({ title, open = false, children }: { title: string; open?: boolean; children: React.ReactNode }) {
+  return (
+    <details open={open} className="group border-b border-[#E9DDE3]">
+      <summary className="flex items-center justify-between py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+        <span className="text-xs tracking-[0.2em] uppercase text-[#1E1B2E] font-[600]">{title}</span>
+        <ChevronDown size={16} strokeWidth={1.5} className="text-[#6E6680] transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="pb-5 space-y-3 text-sm text-[#6E6680] leading-relaxed">{children}</div>
+    </details>
+  );
+}
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const product = await getProduct(slug);
@@ -63,105 +150,112 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProduct(slug);
   if (!product) notFound();
 
+  const [colorHex, related] = await Promise.all([getColorHex(), getRelated(product)]);
+
   const price = product.effective_price ?? product.base_price;
   const isOnSale = product.is_on_sale && product.compare_price;
+  const collection = product.collections?.[0];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-        {/* ── GALERÍA ── */}
-        <ProductGallery images={product.images} name={product.name} />
-
-        {/* ── DETALLE ── */}
-        <div className="flex flex-col">
-          {/* Breadcrumb colección */}
-          {product.collections?.[0] && (
-            <span className="text-[9px] tracking-[0.25em] uppercase text-[#A0647E] font-[500] mb-3">
-              {product.collections[0].name}
-            </span>
+    <>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8 pb-16">
+        {/* Ruta de navegación */}
+        <nav aria-label="Ruta" className="flex items-center gap-1.5 text-xs text-[#6E6680] mb-6 min-w-0">
+          <Link href="/" className="hover:text-[#1E1B2E] transition-colors shrink-0">Inicio</Link>
+          <ChevronRight size={12} className="shrink-0" />
+          {collection ? (
+            <Link href={`/coleccion/${collection.slug}`} className="hover:text-[#1E1B2E] transition-colors shrink-0">
+              {collection.name}
+            </Link>
+          ) : (
+            <Link href="/catalogo" className="hover:text-[#1E1B2E] transition-colors shrink-0">Catálogo</Link>
           )}
+          <ChevronRight size={12} className="shrink-0" />
+          <span className="text-[#1E1B2E] truncate">{product.name}</span>
+        </nav>
 
-          {/* Nombre */}
-          <h1
-            className="text-3xl sm:text-4xl text-[#1E1B2E] leading-tight mb-4"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            {product.name}
-          </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-8 lg:gap-16">
+          {/* ── GALERÍA ── */}
+          <ProductGallery images={product.images} name={product.name} />
 
-          {/* Precio */}
-          <div className="flex items-baseline gap-3 mb-6">
-            <span className="text-2xl text-[#1E1B2E] font-[500]">
-              {formatCOP(price)}
-            </span>
-            {isOnSale && product.compare_price && (
-              <>
-                <span className="text-base text-[#6E6680] line-through">
-                  {formatCOP(product.compare_price)}
-                </span>
-                <span className="text-xs bg-[#A0647E] text-white px-2 py-0.5 font-[500]">
-                  -{discountPercent(product.compare_price, price)}%
-                </span>
-              </>
+          {/* ── DETALLE (fijo al hacer scroll en escritorio) ── */}
+          <div className="lg:sticky lg:top-24 self-start">
+            {collection && (
+              <span className="block text-xs tracking-[0.25em] uppercase text-[#A0647E] font-[500] mb-3">
+                {collection.name}
+              </span>
             )}
-          </div>
 
-          {/* Selector de variantes + Añadir al carrito */}
-          <VariantSelector product={product} />
+            <h1
+              className="text-3xl sm:text-4xl lg:text-[44px] text-[#1E1B2E] leading-tight mb-4"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {product.name}
+            </h1>
 
-          {/* Separador */}
-          <div className="border-t border-[#E9DDE3] my-6" />
-
-          {/* Descripción */}
-          {product.description && (
-            <div className="mb-6">
-              <h2 className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] mb-3">
-                Descripción
-              </h2>
-              <div className="space-y-3 text-sm text-[#1E1B2E] leading-relaxed font-[300]">
-                {product.description.split(/\n\n+/).map((paragraph, i) => (
-                  <p key={i}>
-                    {paragraph.split("\n").map((line, j, arr) => (
-                      <span key={j}>
-                        {line}
-                        {j < arr.length - 1 && <br />}
-                      </span>
-                    ))}
-                  </p>
-                ))}
-              </div>
+            <div className="flex items-baseline gap-3 mb-8">
+              <span className="text-2xl text-[#A0647E] font-[600]">{formatCOP(price)}</span>
+              {isOnSale && product.compare_price && (
+                <>
+                  <span className="text-base text-[#6E6680] line-through">{formatCOP(product.compare_price)}</span>
+                  <span className="text-xs bg-[#A0647E] text-white px-2.5 py-0.5 rounded-full font-[500]">
+                    -{discountPercent(product.compare_price, price)}%
+                  </span>
+                </>
+              )}
             </div>
-          )}
 
-          {/* Cuidado de la prenda */}
-          {product.care_instructions && (
-            <div className="mb-6">
-              <h2 className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] mb-3">
-                Cuidado de la prenda
-              </h2>
-              <div className="space-y-3 text-sm text-[#6E6680] leading-relaxed font-[300]">
-                {product.care_instructions.split(/\n\n+/).map((paragraph, i) => (
-                  <p key={i}>
-                    {paragraph.split("\n").map((line, j, arr) => (
-                      <span key={j}>
-                        {line}
-                        {j < arr.length - 1 && <br />}
-                      </span>
-                    ))}
-                  </p>
-                ))}
-              </div>
+            <VariantSelector product={product} colorHex={colorHex} />
+
+            <div className="mt-8 border-t border-[#E9DDE3]">
+              {product.description && (
+                <Accordion title="Descripción" open>
+                  <div className="text-[#1E1B2E] space-y-3"><Paragraphs text={product.description} /></div>
+                </Accordion>
+              )}
+              {product.care_instructions && (
+                <Accordion title="Cuidado de la prenda">
+                  <Paragraphs text={product.care_instructions} />
+                </Accordion>
+              )}
+              <Accordion title="Envíos y cambios" open={!product.description}>
+                <p className="flex gap-3">
+                  <Truck size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#A0647E]" />
+                  Envío a todo Colombia. Tiempo estimado 3–5 días hábiles.
+                </p>
+                <p className="flex gap-3">
+                  <ShieldCheck size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#A0647E]" />
+                  Pago 100% seguro con Wompi.
+                </p>
+                <p className="flex gap-3">
+                  <RotateCcw size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#A0647E]" />
+                  <span>
+                    Consulta nuestra{" "}
+                    <Link href="/devoluciones" className="underline underline-offset-2 text-[#1E1B2E]">
+                      política de cambios y devoluciones
+                    </Link>
+                    .
+                  </span>
+                </p>
+              </Accordion>
             </div>
-          )}
-
-          {/* Envío info */}
-          <div className="bg-[#F2D4DC]/20 border border-[#E9DDE3] p-4 text-xs text-[#6E6680] leading-relaxed">
-            <p>📦 Envío a todo Colombia. Tiempo estimado 3-5 días hábiles.</p>
-            <p className="mt-1">🔒 Pago 100% seguro con Wompi.</p>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* ── TAMBIÉN TE PUEDE GUSTAR ── */}
+      {related.length > 0 && (
+        <section className="border-t border-[#E9DDE3]">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+            <NewArrivals
+              title="También te puede gustar"
+              href={collection ? `/coleccion/${collection.slug}` : "/catalogo"}
+              products={related.map((p) => ({ ...p, occasionSlugs: [] }))}
+              tabs={[]}
+            />
+          </div>
+        </section>
+      )}
+    </>
   );
 }

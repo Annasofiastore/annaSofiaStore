@@ -9,7 +9,7 @@ export default function ImportarProductosPage() {
         <div>
           <h1
             className="text-3xl text-[#1E1B2E]"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Carga masiva de productos
           </h1>

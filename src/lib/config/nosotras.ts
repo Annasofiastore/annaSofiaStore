@@ -72,3 +72,18 @@ export async function getNosotrasContent(storeName: string): Promise<NosotrasCon
 export function toParagraphs(body: string): string[] {
   return body.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 }
+
+/** Foto de la historia. Sin caché: el admin la cambia por /api/admin/site-settings. */
+export async function getNosotrasImage(): Promise<string> {
+  try {
+    const db = createServiceClient();
+    const { data } = await db
+      .from("site_settings")
+      .select("value")
+      .eq("key", "nosotras_historia_image")
+      .single();
+    return data?.value || "/nosotras-historia.jpg";
+  } catch {
+    return "/nosotras-historia.jpg";
+  }
+}

@@ -24,7 +24,7 @@ export function RetryPaymentBanner({ orderId, createdAt }: Props) {
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center justify-center px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors"
+          className="inline-flex items-center justify-center px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
         >
           Ver catálogo
         </Link>
@@ -88,7 +88,7 @@ export function RetryPaymentBanner({ orderId, createdAt }: Props) {
       <button
         onClick={handleRetry}
         disabled={retrying}
-        className="px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors disabled:opacity-50"
+        className="px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors disabled:opacity-50 rounded-full"
       >
         {retrying ? "Preparando pago…" : "Completar pago"}
       </button>

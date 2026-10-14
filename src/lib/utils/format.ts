@@ -58,3 +58,8 @@ export function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
+
+/** Iniciales para monogramas: "AnnaSofia" → "AS". */
+export function monogramOf(name: string): string {
+  return name.match(/[A-ZÁÉÍÓÚÑ]/g)?.slice(0, 2).join("") || name.charAt(0);
+}

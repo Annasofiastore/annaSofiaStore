@@ -4,9 +4,11 @@ import { HeroSlideManager } from "@/components/admin/HeroSlideManager";
 import { NosotrasImageManager } from "@/components/admin/NosotrasImageManager";
 import { StoreNameForm } from "@/components/admin/StoreNameForm";
 import { NosotrasContentForm } from "@/components/admin/NosotrasContentForm";
+import { HeroContentForm } from "@/components/admin/HeroContentForm";
 import { brand } from "@/lib/config/brand";
 import { getStoreName, STORE_NAME_MAX_LENGTH } from "@/lib/config/store-name";
 import { getNosotrasRaw, NOSOTRAS_LIMITS } from "@/lib/config/nosotras";
+import { getHeroRaw, HERO_LIMITS } from "@/lib/config/hero";
 
 function EnvRow({ label, envKey, secret }: { label: string; envKey: string; secret?: boolean }) {
   const val = process.env[envKey];
@@ -28,7 +30,7 @@ function EnvRow({ label, envKey, secret }: { label: string; envKey: string; secr
 }
 
 export default async function AdminConfiguracionPage() {
-  const [storeName, nosotras] = await Promise.all([getStoreName(), getNosotrasRaw()]);
+  const [storeName, nosotras, hero] = await Promise.all([getStoreName(), getNosotrasRaw(), getHeroRaw()]);
 
   return (
     <div className="p-6 max-w-3xl space-y-8">
@@ -50,11 +52,14 @@ export default async function AdminConfiguracionPage() {
         <div className="mb-4">
           <h2 className="text-base font-[600] text-gray-800">Banner del inicio</h2>
           <p className="text-xs text-gray-400 mt-0.5">
-            Las fotos rotan automáticamente cada 3 segundos en el banner principal de la tienda.
-            Arrastra para reordenar. La primera foto aparece al cargar la página.
+            Textos y fotos del banner principal. Las fotos rotan cada 5 segundos; arrastra para reordenar.
+            Usa fotos horizontales de al menos 1920×1080 px; el texto va abajo a la izquierda.
           </p>
         </div>
-        <HeroSlideManager />
+        <div className="space-y-4">
+          <HeroContentForm initial={hero} limits={HERO_LIMITS} />
+          <HeroSlideManager />
+        </div>
       </div>
 
       {/* Textos de Nosotras */}

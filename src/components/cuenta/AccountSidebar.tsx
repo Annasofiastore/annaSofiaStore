@@ -69,7 +69,7 @@ export default function AccountSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border rounded-full transition-colors ${
                 active
                   ? "bg-[#1E1B2E] text-[#FAF6F7] border-[#1E1B2E]"
                   : "bg-white text-[#6E6680] border-[#E9DDE3] hover:border-[#6E6680]"
@@ -82,7 +82,7 @@ export default function AccountSidebar() {
         })}
         <button
           onClick={logout}
-          className="flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border bg-white text-[#6E6680] border-[#E9DDE3] hover:text-[#A0647E] hover:border-[#A0647E] transition-colors"
+          className="flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border bg-white text-[#6E6680] border-[#E9DDE3] hover:text-[#A0647E] hover:border-[#A0647E] transition-colors rounded-full"
         >
           <LogOut size={12} />
           Salir

@@ -23,7 +23,7 @@ export function CatalogMobileFilters({ categories, collections, occasions, curre
       {/* Botón disparador */}
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 border border-[#E9DDE3] text-xs text-[#1E1B2E] font-[500] tracking-[0.1em] uppercase hover:border-[#6E6680] transition-colors relative"
+        className="inline-flex items-center gap-2 px-4 py-2 border border-[#E9DDE3] text-xs text-[#1E1B2E] font-[500] tracking-[0.1em] uppercase hover:border-[#6E6680] transition-colors relative rounded-full"
       >
         <SlidersHorizontal size={13} strokeWidth={1.5} />
         Filtros
@@ -82,7 +82,7 @@ export function CatalogMobileFilters({ categories, collections, occasions, curre
         <div className="px-5 py-4 border-t border-[#F3EAEE]">
           <button
             onClick={() => setOpen(false)}
-            className="w-full py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors"
+            className="w-full py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
           >
             Ver {totalProducts} {totalProducts === 1 ? "prenda" : "prendas"}
           </button>

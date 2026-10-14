@@ -2,29 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { createServiceClient } from "@/lib/supabase/server";
 import { brand, location } from "@/lib/config/brand";
 import { getStoreName } from "@/lib/config/store-name";
-import { getNosotrasContent, toParagraphs } from "@/lib/config/nosotras";
-
-async function getNosotrasImage(): Promise<string> {
-  try {
-    const db = createServiceClient();
-    const { data } = await db
-      .from("site_settings")
-      .select("value")
-      .eq("key", "nosotras_historia_image")
-      .single();
-    return data?.value || "/nosotras-historia.jpg";
-  } catch {
-    return "/nosotras-historia.jpg";
-  }
-}
+import { getNosotrasContent, getNosotrasImage, toParagraphs } from "@/lib/config/nosotras";
 
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
-    title: "Nosotras",
+    title: "Conócenos",
     description: `${storeName} — ${brand.tagline}. Desde ${location}.`,
   };
 }
@@ -73,9 +58,9 @@ export default async function NosotrasPage() {
           </span>
           <h1
             className="text-5xl text-[#1E1B2E] mt-3 mb-5 leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            Nosotras
+            Conócenos
           </h1>
 
         </div>
@@ -103,7 +88,7 @@ export default async function NosotrasPage() {
             </span>
             <h2
               className="text-3xl text-[#1E1B2E] mt-2 mb-5"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {content.title}
             </h2>
@@ -125,7 +110,7 @@ export default async function NosotrasPage() {
             </span>
             <h2
               className="text-4xl text-[#1E1B2E] mt-2"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Nuestros valores
             </h2>
@@ -136,7 +121,7 @@ export default async function NosotrasPage() {
                 <div className="w-10 h-px bg-[#A0647E] mx-auto mb-4" />
                 <h3
                   className="text-lg text-[#1E1B2E] mb-2"
-                  style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   {v.title}
                 </h3>
@@ -154,7 +139,7 @@ export default async function NosotrasPage() {
         </span>
         <h2
           className="text-3xl text-[#FAF6F7] mt-3 mb-5"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Viste con intención
         </h2>
@@ -163,7 +148,7 @@ export default async function NosotrasPage() {
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#F2D4DC] text-[#1E1B2E] text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#FAF6F7] transition-colors"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-[#F2D4DC] text-[#1E1B2E] text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#FAF6F7] transition-colors rounded-full"
         >
           Ver catálogo <ArrowRight size={13} />
         </Link>

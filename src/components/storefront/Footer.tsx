@@ -51,8 +51,8 @@ export async function Footer() {
           {/* MARCA */}
           <div className="sm:col-span-2 md:col-span-2">
             <span
-              className="block text-2xl text-[#D29DB9] mb-3"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+              className="block text-4xl text-[#D29DB9] mb-3"
+              style={{ fontFamily: "var(--font-script)" }}
             >
               {storeName}
             </span>
@@ -106,7 +106,7 @@ export async function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {[
-                { href: "/nosotras", label: "Nosotras" },
+                { href: "/nosotras", label: "Conócenos" },
                 { href: "/terminos", label: "Términos y condiciones" },
                 { href: "/privacidad", label: "Política de privacidad" },
                 { href: "/devoluciones", label: "Política de devoluciones" },

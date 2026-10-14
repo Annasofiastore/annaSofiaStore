@@ -177,7 +177,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
 
       <h1
         className="text-4xl text-[#1E1B2E] mb-2"
-        style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {order.status === "paid" ? "¡Pedido confirmado!" : "Tu pedido"}
       </h1>
@@ -285,13 +285,13 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <Link
           href={`/seguimiento?orden=${order.order_number}&email=${encodeURIComponent(order.shipping_email)}`}
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#1E1B2E] text-[#1E1B2E] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#1E1B2E] hover:text-[#FAF6F7] transition-colors"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#1E1B2E] text-[#1E1B2E] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#1E1B2E] hover:text-[#FAF6F7] transition-colors rounded-full"
         >
           Seguir pedido
         </Link>
         <Link
           href="/catalogo"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
         >
           Seguir comprando <ArrowRight size={13} />
         </Link>

@@ -76,7 +76,7 @@ export default async function ColeccionPage({ params }: Props) {
             className={`text-5xl mt-1 ${
               collection.hero_url ? "text-white" : "text-[#1E1B2E]"
             }`}
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {collection.name}
           </h1>

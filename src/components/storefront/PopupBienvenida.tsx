@@ -87,7 +87,7 @@ export function PopupBienvenida() {
               <CheckCircle size={44} className="mx-auto mb-4 text-[#A0647E]" strokeWidth={1} />
               <h2
                 className="text-3xl text-[#1E1B2E] mb-2"
-                style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 ¡Ya casi!
               </h2>
@@ -99,7 +99,7 @@ export function PopupBienvenida() {
               </p>
               <button
                 onClick={dismiss}
-                className="w-full py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0647E] transition-colors"
+                className="w-full py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0647E] transition-colors rounded-full"
               >
                 Explorar colección
               </button>
@@ -113,13 +113,13 @@ export function PopupBienvenida() {
 
               <h2
                 className="text-4xl text-[#1E1B2E] mb-1 leading-tight"
-                style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 10% de descuento
               </h2>
               <p
                 className="text-xl text-[#1E1B2E] mb-4"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 en tu primer pedido
               </p>
@@ -157,7 +157,7 @@ export function PopupBienvenida() {
                 <button
                   type="submit"
                   disabled={state === "submitting"}
-                  className="w-full py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0647E] disabled:bg-[#D9C3CE] disabled:cursor-not-allowed transition-colors"
+                  className="w-full py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0647E] disabled:bg-[#D9C3CE] disabled:cursor-not-allowed transition-colors rounded-full"
                 >
                   {state === "submitting" ? "Enviando…" : "Enviarme mi código"}
                 </button>

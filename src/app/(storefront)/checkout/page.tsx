@@ -263,7 +263,7 @@ export default function CheckoutPage() {
         </Link>
         <h1
           className="text-3xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Checkout
         </h1>
@@ -410,7 +410,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={applyCoupon}
                   disabled={couponLoading || !!appliedPromotion}
-                  className="px-5 py-2.5 border border-[#E9DDE3] text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:border-[#6E6680] hover:text-[#1E1B2E] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2.5 border border-[#E9DDE3] text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:border-[#6E6680] hover:text-[#1E1B2E] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed rounded-full"
                 >
                   {couponLoading ? "…" : "Aplicar"}
                 </button>
@@ -526,7 +526,7 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] disabled:bg-[#D9C3CE] disabled:cursor-not-allowed transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] disabled:bg-[#D9C3CE] disabled:cursor-not-allowed transition-colors rounded-full"
             >
               {paymentMethod === "contraentrega" ? (
                 <Truck size={13} strokeWidth={1.5} />
@@ -655,7 +655,7 @@ function WompiWidget({ data }: { data: NonNullable<ReturnType<typeof useState<an
       <div className="mb-6">
         <h2
           className="text-3xl text-[#1E1B2E] mb-2"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Completa tu pago
         </h2>
@@ -674,7 +674,7 @@ function WompiWidget({ data }: { data: NonNullable<ReturnType<typeof useState<an
 
         <button
           type="submit"
-          className="w-full py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors flex items-center justify-center gap-2"
+          className="w-full py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors flex items-center justify-center gap-2 rounded-full"
         >
           <Lock size={13} strokeWidth={1.5} />
           Pagar con Wompi

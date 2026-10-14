@@ -5,15 +5,18 @@ import Image from "next/image";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils/cn";
-import { formatCOP, discountPercent } from "@/lib/utils/format";
+import { formatCOP, discountPercent, monogramOf } from "@/lib/utils/format";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import type { Product } from "@/types";
+import { useStoreName } from "@/components/StoreNameProvider";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const storeName = useStoreName();
+  const monogram = monogramOf(storeName);
   const { toggle, has } = useWishlistStore();
   const wishlisted = has(product.id);
   const [imgIdx, setImgIdx] = useState(0);
@@ -48,10 +51,10 @@ export function ProductCard({ product }: ProductCardProps) {
           ) : (
             <div className="absolute inset-0 bg-[#D9C3CE]/30 flex items-center justify-center">
               <span
-                className="text-2xl text-[#6E6680]"
-                style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                className="text-3xl text-[#6E6680]"
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                MB
+                {monogram}
               </span>
             </div>
           )}
@@ -115,19 +118,19 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       {/* INFO */}
-      <div className="mt-3">
+      <div className="mt-4 sm:mt-5 text-center">
         <Link href={`/producto/${product.slug}`}>
-          <h3 className="text-sm text-[#1E1B2E] font-[400] leading-snug hover:text-[#A0647E] transition-colors truncate">
+          <h3 className="text-[15px] sm:text-base text-[#1E1B2E] font-[500] leading-snug hover:text-[#A0647E] transition-colors truncate">
             {product.name}
           </h3>
         </Link>
 
-        <div className="flex items-baseline gap-2 mt-1">
-          <span className="text-sm text-[#1E1B2E] font-[500]">
+        <div className="flex items-baseline justify-center gap-2 mt-1.5">
+          <span className="text-[15px] sm:text-base text-[#A0647E] font-[600]">
             {formatCOP(price)}
           </span>
           {isOnSale && product.compare_price && (
-            <span className="text-xs text-[#6E6680] line-through">
+            <span className="text-[13px] text-[#6E6680] line-through">
               {formatCOP(product.compare_price)}
             </span>
           )}

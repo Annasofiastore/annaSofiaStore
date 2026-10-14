@@ -16,7 +16,7 @@ export default async function NuevoProductoPage() {
       <div className="mb-6">
         <h1
           className="text-3xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Nuevo producto
         </h1>

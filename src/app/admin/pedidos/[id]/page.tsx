@@ -32,7 +32,7 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
         </a>
         <h1
           className="text-2xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {order.order_number}
         </h1>

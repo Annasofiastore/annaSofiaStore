@@ -85,7 +85,7 @@ const renderHtml = (storeName: string) => `
     <li><a href="/catalogo">Catálogo</a></li>
     <li><a href="/colecciones">Colecciones</a></li>
     <li><a href="/best-sellers">Best Sellers</a></li>
-    <li><a href="/nosotras">Nosotras</a></li>
+    <li><a href="/nosotras">Conócenos</a></li>
   </ul>
 </nav>
 <div class="page-hero">
@@ -117,7 +117,7 @@ const renderHtml = (storeName: string) => `
   <div class="footer-inner">
     <div class="footer-brand"><div class="footer-logo">${storeName}</div><p>${brand.description}</p></div>
     <div class="footer-col"><h4>Tienda</h4><ul><li><a href="/catalogo">Catálogo</a></li><li><a href="/colecciones">Colecciones</a></li><li><a href="/cuenta/wishlist">Favoritos</a></li><li><a href="/seguimiento">Seguir mi pedido</a></li></ul></div>
-    <div class="footer-col"><h4>Información</h4><ul><li><a href="/terminos">Términos y condiciones</a></li><li class="footer-active"><a href="/privacidad">Política de privacidad</a></li><li><a href="/devoluciones">Política de devoluciones</a></li><li><a href="/nosotras">Nosotras</a></li></ul></div>
+    <div class="footer-col"><h4>Información</h4><ul><li><a href="/terminos">Términos y condiciones</a></li><li class="footer-active"><a href="/privacidad">Política de privacidad</a></li><li><a href="/devoluciones">Política de devoluciones</a></li><li><a href="/nosotras">Conócenos</a></li></ul></div>
   </div>
   <div class="footer-bottom"><span>© ${new Date().getFullYear()} ${storeName}. Todos los derechos reservados. ${location}</span><span>${brand.legal.businessName} · NIT ${brand.legal.nit}</span></div>
 </footer>

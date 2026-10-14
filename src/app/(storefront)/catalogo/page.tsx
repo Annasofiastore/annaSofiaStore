@@ -156,7 +156,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
         </span>
         <h1
           className="text-5xl text-[#1E1B2E] mt-1"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Catálogo
         </h1>
@@ -203,7 +203,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
             <div className="text-center py-24">
               <p
                 className="text-2xl text-[#6E6680]"
-                style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 Sin resultados
               </p>

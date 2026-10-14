@@ -48,7 +48,7 @@ export default async function CuentaLayout({ children }: { children: React.React
           </p>
           <h1
             className="text-2xl text-[#1E1B2E] mt-1"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {displayName}
           </h1>

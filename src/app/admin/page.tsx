@@ -82,7 +82,7 @@ export default async function AdminDashboard() {
       <div className="mb-8">
         <h1
           className="text-3xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Dashboard
         </h1>

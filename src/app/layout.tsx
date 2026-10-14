@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Lora, Montserrat, Parisienne } from "next/font/google";
 import { brand } from "@/lib/config/brand";
 import { getStoreName } from "@/lib/config/store-name";
 import { StoreNameProvider } from "@/components/StoreNameProvider";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const lora = Lora({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-playfair",
+  variable: "--font-lora",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+// Manuscrita para el nombre de la tienda, en línea con el logo
+const parisienne = Parisienne({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-parisienne",
   display: "swap",
 });
 
@@ -49,7 +57,7 @@ export default async function RootLayout({
   const storeName = await getStoreName();
 
   return (
-    <html lang="es" className={`h-full ${playfair.variable} ${dmSans.variable}`}>
+    <html lang="es" className={`h-full ${lora.variable} ${montserrat.variable} ${parisienne.variable}`}>
       <body className="min-h-full flex flex-col">
         <StoreNameProvider name={storeName}>{children}</StoreNameProvider>
       </body>

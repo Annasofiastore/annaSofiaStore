@@ -61,7 +61,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
           </span>
           <h1
             className="text-4xl text-[#1E1B2E] mt-2"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Seguimiento de pedido
           </h1>
@@ -100,7 +100,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
             </div>
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0647E] transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0647E] transition-colors rounded-full"
             >
               <Search size={14} /> Buscar pedido
             </button>
@@ -127,7 +127,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                   </p>
                   <p
                     className="text-2xl text-[#1E1B2E] mt-0.5"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {order.order_number}
                   </p>

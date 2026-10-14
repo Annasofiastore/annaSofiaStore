@@ -21,8 +21,9 @@
   --color-border:      #E9DDE3;
 
   /* Tipografía — variables inyectadas por next/font/google en layout.tsx */
-  --font-display: var(--font-playfair), Georgia, serif;
-  --font-sans:    var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-lora), Georgia, serif;
+  --font-sans:    var(--font-montserrat), system-ui, sans-serif;
+  --font-script:  var(--font-parisienne), cursive;
 
   /* Radios */
   --radius-sm:  4px;
@@ -58,11 +59,14 @@ body {
 }
 
 /* ── TIPOGRAFÍA ──────────────────────────────────────────── */
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--color-espresso);
+/* En @layer base para que las utilidades de Tailwind (text-white, etc.) puedan sobrescribirlo */
+@layer base {
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--color-espresso);
+  }
 }
 
 /* Display italic para hero y nombre de marca */
@@ -97,6 +101,17 @@ h1, h2, h3, h4 {
   to   { transform: translateX(-50%); }
 }
 
+/* Banner: el texto entra subiendo levemente; la foto hace un zoom muy lento */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
@@ -105,9 +120,13 @@ h1, h2, h3, h4 {
 .animate-fade-up   { animation: fadeUp 0.45s ease forwards; }
 .animate-fade-in   { animation: fadeIn 0.3s ease forwards; }
 .animate-marquee   { animation: marqueeScroll 30s linear infinite; }
+.animate-hero-in   { animation: heroIn 0.9s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-ken-burns { animation: kenBurns 7s ease-out both; }
 .animate-float     { animation: floatY 4s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
-  .animate-float { animation: none; }
+  .animate-float,
+  .animate-hero-in,
+  .animate-ken-burns { animation: none; }
 }

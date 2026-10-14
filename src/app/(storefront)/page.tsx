@@ -1,32 +1,55 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { createServiceClient } from "@/lib/supabase/server";
-import { ProductCard } from "@/components/storefront/ProductCard";
 import { HeroSlider } from "@/components/storefront/HeroSlider";
 import { ScrollReveal } from "@/components/storefront/ScrollReveal";
 import { StaggeredGrid } from "@/components/storefront/StaggeredGrid";
+import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { MarqueeStrip } from "@/components/storefront/MarqueeStrip";
 import type { Product } from "@/types";
 import { getStoreName } from "@/lib/config/store-name";
-import { getNosotrasContent } from "@/lib/config/nosotras";
+import { getNosotrasContent, getNosotrasImage } from "@/lib/config/nosotras";
+import { getHeroContent } from "@/lib/config/hero";
 
 type HeroSlide = { id: string; image_url: string; alt_text: string | null };
 
-type FeaturedSection = {
-  collectionName: string;
-  collectionSlug: string | null;
-  collectionDesc: string | null;
-  products: Product[];
+type CollectionTile = {
+  id: string;
+  name: string;
+  slug: string;
+  hero_url: string | null;
+  featured_on_home: boolean | null;
+};
+
+type ArrivalProduct = Product & { occasionSlugs: string[] };
+
+type OccasionRow = { name: string; slug: string; sort_order: number | null };
+type RawProduct = Product & { product_occasions?: { occasions: OccasionRow | null }[] | null };
+
+type NewArrivalsSection = {
+  title: string;
+  href: string;
+  products: ArrivalProduct[];
+  tabs: { slug: string; name: string }[];
 };
 
 const BRAND_VALUES = [
-  { num: "01", title: "Intencional", desc: "Con propósito detrás de cada costura. Cada prenda nace desde el amor." },
-  { num: "02", title: "Versátil", desc: "De los días simples a los momentos especiales. Prendas que se adaptan a tu día a día." },
-  { num: "03", title: "Femenina", desc: "Diseños que resaltan tu esencia. Delicadeza, confianza y estilo en cada detalle." },
-  { num: "04", title: "Auténtica", desc: "Cada prenda refleja quién quieres ser." },
+  { title: "Intencional", desc: "Con propósito detrás de cada costura. Cada prenda nace desde el amor." },
+  { title: "Versátil", desc: "De los días simples a los momentos especiales. Prendas que se adaptan a tu día a día." },
+  { title: "Femenina", desc: "Diseños que resaltan tu esencia. Delicadeza, confianza y estilo en cada detalle." },
+  { title: "Auténtica", desc: "Cada prenda refleja quién quieres ser." },
 ];
+
+const PRODUCT_FIELDS = `
+  id, name, slug, base_price, compare_price, images, status,
+  is_on_sale, effective_price, is_sold_out, is_pre_sale, is_best_seller,
+  product_occasions ( occasions ( name, slug, sort_order ) )
+`;
+
+const ARRIVALS_LIMIT = 12;
 
 async function getHeroSlides(): Promise<HeroSlide[]> {
   const db = createServiceClient();
@@ -38,76 +61,91 @@ async function getHeroSlides(): Promise<HeroSlide[]> {
   return (data ?? []) as HeroSlide[];
 }
 
-async function getFeaturedSection(): Promise<FeaturedSection> {
+/** Colecciones activas para los recuadros; la destacada en el inicio va primero. */
+async function getCollectionTiles(): Promise<CollectionTile[]> {
+  const db = createServiceClient();
+  const { data } = await db
+    .from("collections")
+    .select("id, name, slug, hero_url, featured_on_home")
+    .eq("is_active", true)
+    .order("featured_on_home", { ascending: false, nullsFirst: false })
+    .order("sort_order");
+  return (data ?? []) as CollectionTile[];
+}
+
+/**
+ * Novedades: productos de la colección destacada si existe; si no, los últimos creados.
+ * Las pestañas son las ocasiones presentes en esos productos.
+ */
+async function getNewArrivals(): Promise<NewArrivalsSection> {
   const db = createServiceClient();
 
   const { data: collection } = await db
     .from("collections")
-    .select("id, name, slug, description")
+    .select("id, name, slug")
     .eq("featured_on_home", true)
     .eq("is_active", true)
-    .single();
+    .maybeSingle();
 
+  let raw: RawProduct[];
   if (collection) {
     const { data: rows } = await db
       .from("product_collections")
-      .select(`
-        products (
-          id, name, slug, base_price, compare_price, images,
-          is_on_sale, effective_price, is_sold_out, is_pre_sale, status
-        )
-      `)
+      .select(`products ( ${PRODUCT_FIELDS} )`)
       .eq("collection_id", collection.id)
       .order("sort_order", { ascending: true })
-      .limit(4);
-
-    const products = (rows ?? [])
-      .map((r: any) => r.products)
-      .filter((p: any) => p?.status === "active") as Product[];
-
-    return {
-      collectionName: collection.name,
-      collectionSlug: collection.slug,
-      collectionDesc: collection.description,
-      products,
-    };
+      .limit(ARRIVALS_LIMIT);
+    raw = ((rows ?? []) as unknown as { products: RawProduct | null }[])
+      .map((r) => r.products)
+      .filter((p): p is RawProduct => p?.status === "active");
+  } else {
+    const { data } = await db
+      .from("products")
+      .select(PRODUCT_FIELDS)
+      .eq("status", "active")
+      .order("created_at", { ascending: false })
+      .limit(ARRIVALS_LIMIT);
+    raw = (data ?? []) as unknown as RawProduct[];
   }
 
-  const { data } = await db
-    .from("products")
-    .select(`
-      id, name, slug, base_price, compare_price, images,
-      is_on_sale, effective_price, is_sold_out, is_pre_sale
-    `)
-    .eq("status", "active")
-    .order("created_at", { ascending: false })
-    .limit(4);
+  const tabsBySlug = new Map<string, OccasionRow>();
+  const products = raw.map(({ product_occasions, ...p }) => {
+    const occasions = (product_occasions ?? [])
+      .map((po) => po.occasions)
+      .filter((o): o is OccasionRow => !!o);
+    occasions.forEach((o) => tabsBySlug.set(o.slug, o));
+    return { ...p, occasionSlugs: occasions.map((o) => o.slug) };
+  });
 
   return {
-    collectionName: "Nueva colección",
-    collectionSlug: null,
-    collectionDesc: null,
-    products: (data ?? []) as Product[],
+    title: collection?.name ?? "Lo nuevo",
+    href: collection ? `/coleccion/${collection.slug}` : "/catalogo",
+    products,
+    tabs: [...tabsBySlug.values()]
+      .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+      .map(({ slug, name }) => ({ slug, name })),
   };
 }
 
 export default async function HomePage() {
   const storeName = await getStoreName();
-  const nosotras = await getNosotrasContent(storeName);
-  // Iniciales para el texto decorativo: "AnnaSofia" → "AS"
-  const monogram = storeName.match(/[A-ZÁÉÍÓÚÑ]/g)?.slice(0, 2).join("") || storeName.charAt(0);
-  const [featured, heroSlides] = await Promise.all([
-    getFeaturedSection(),
+  const [heroSlides, collections, arrivals, nosotras, nosotrasImage, hero] = await Promise.all([
     getHeroSlides(),
+    getCollectionTiles(),
+    getNewArrivals(),
+    getNosotrasContent(storeName),
+    getNosotrasImage(),
+    getHeroContent(storeName),
   ]);
 
   const hasSlides = heroSlides.length > 0;
+  const tiles = collections.slice(0, 3);
 
   return (
     <>
       {/* ── HERO ───────────────────────────────────────────────── */}
       <section
-        className={`relative min-h-[92vh] flex items-center justify-center overflow-hidden ${
+        className={`relative min-h-[75vh] flex items-end overflow-hidden ${
           hasSlides ? "bg-[#1E1B2E]" : "bg-[#FAF6F7]"
         }`}
       >
@@ -117,176 +155,196 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6F7] via-[#F2D4DC]/20 to-[#D9C3CE]/30" />
         )}
 
-        <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
-          <span
-            className={`inline-block text-[10px] tracking-[0.3em] uppercase mb-6 font-[500] ${
-              hasSlides ? "text-white/90" : "text-[#A0647E]"
-            }`}
-            style={hasSlides ? { textShadow: "0 1px 8px rgba(0,0,0,0.9), 0 2px 20px rgba(0,0,0,0.6)" } : undefined}
+        {/* Texto abajo a la izquierda, alineado con el contenido del resto de la página */}
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pb-20">
+          <div
+            className="max-w-2xl animate-hero-in"
+            style={hasSlides ? { textShadow: "0 2px 18px rgba(30,27,46,0.45)" } : undefined}
           >
-            Nueva colección
-          </span>
-
-          <h1
-            className="text-5xl sm:text-6xl md:text-7xl mb-4 leading-[1.05]"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontStyle: "italic",
-              color: hasSlides ? "#ffffff" : "#1E1B2E",
-              ...(hasSlides && {
-                textShadow:
-                  "0 1px 3px rgba(0,0,0,0.95), 0 3px 20px rgba(0,0,0,0.75), 0 6px 50px rgba(0,0,0,0.5)",
-              }),
-            }}
-          >
-            {storeName}
-          </h1>
-
-          <p
-            className={`text-base mb-10 leading-relaxed font-[300] ${
-              hasSlides ? "text-white/90" : "text-[#6E6680]"
-            }`}
-            style={hasSlides ? { textShadow: "0 1px 6px rgba(0,0,0,0.9), 0 2px 20px rgba(0,0,0,0.6)" } : undefined}
-          >
-            Mujeres que visten con intención
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/catalogo"
-              className={`inline-flex items-center gap-2 px-8 py-3 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-none ${
-                hasSlides
-                  ? "bg-white text-[#1E1B2E] hover:bg-[#FAF6F7]"
-                  : "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#34304A]"
+            <span
+              className={`block text-xs tracking-[0.3em] uppercase font-[500] mb-5 ${
+                hasSlides ? "text-[#F2D4DC]" : "text-[#A0647E]"
               }`}
             >
-              Ver catálogo <ArrowRight size={14} />
-            </Link>
-            <Link
-              href="/colecciones"
-              className={`inline-flex items-center gap-2 px-8 py-3 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-none ${
-                hasSlides
-                  ? "border border-white text-white hover:bg-white hover:text-[#1E1B2E]"
-                  : "border border-[#1E1B2E] text-[#1E1B2E] hover:bg-[#1E1B2E] hover:text-[#FAF6F7]"
+              {hero.eyebrow}
+            </span>
+            <h1
+              className={`text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-5 ${
+                hasSlides ? "text-white" : "text-[#1E1B2E]"
+              }`}
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {hero.title}
+            </h1>
+            <p
+              className={`text-base sm:text-lg leading-relaxed mb-9 max-w-lg ${
+                hasSlides ? "text-white/90" : "text-[#6E6680]"
               }`}
             >
-              Colecciones
-            </Link>
+              {hero.subtitle}
+            </p>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link
+                href="/catalogo"
+                className={`inline-flex items-center gap-2 px-9 py-3.5 text-xs tracking-[0.2em] uppercase font-[600] transition-colors rounded-full ${
+                  hasSlides
+                    ? "bg-white text-[#1E1B2E] hover:bg-[#F2D4DC]"
+                    : "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#34304A]"
+                }`}
+                style={{ textShadow: "none" }}
+              >
+                {hero.cta} <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/colecciones"
+                className={`inline-flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase font-[500] border-b pb-1 transition-colors ${
+                  hasSlides
+                    ? "text-white border-white/60 hover:border-white"
+                    : "text-[#1E1B2E] border-[#1E1B2E]/40 hover:border-[#1E1B2E]"
+                }`}
+              >
+                Ver colecciones <ArrowRight size={12} />
+              </Link>
+            </div>
           </div>
         </div>
+
+        {/* Invitación a bajar */}
+        <a
+          href="#valores"
+          aria-label="Ver más"
+          className={`hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-float ${
+            hasSlides ? "text-white/80" : "text-[#6E6680]"
+          }`}
+        >
+          <ChevronDown size={22} strokeWidth={1.5} />
+        </a>
       </section>
 
       {/* ── MARQUEE ────────────────────────────────────────────── */}
       <MarqueeStrip />
 
       {/* ── VALORES DE MARCA ───────────────────────────────────── */}
-      <section className="bg-[#FAF6F7] border-b border-[#E9DDE3] py-16 overflow-hidden">
-        <StaggeredGrid
-          className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-          itemDelay={120}
-        >
-          {BRAND_VALUES.map((v) => (
-            <div key={v.title}>
-              <h3
-                className="text-lg text-[#1E1B2E] mb-2"
-                style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
-              >
-                {v.title}
-              </h3>
-              <p className="text-xs text-[#6E6680] leading-relaxed">{v.desc}</p>
-            </div>
-          ))}
-        </StaggeredGrid>
-      </section>
-
-      {/* ── COLECCIÓN DESTACADA ────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <ScrollReveal variant="fadeUp" className="flex items-end justify-between mb-12">
-          <div>
-            <span className="text-[10px] tracking-[0.25em] uppercase text-[#A0647E] font-[500]">
-              Nueva colección
+      <section id="valores" className="bg-[#FAF6F7] border-b border-[#E9DDE3] px-4 sm:px-6 lg:px-8 py-20 sm:py-28 overflow-hidden scroll-mt-16">
+        <div className="max-w-[1376px] mx-auto grid md:grid-cols-[2fr_3fr] gap-12 md:gap-20 items-center">
+          <ScrollReveal variant="fadeUp">
+            <span className="text-xs tracking-[0.3em] uppercase text-[#A0647E] font-[500]">
+              Lo que nos define
             </span>
-            <h2
-              className="text-4xl sm:text-5xl text-[#1E1B2E] mt-1"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+            <p
+              className="text-4xl sm:text-5xl lg:text-6xl text-[#1E1B2E] leading-[1.1] mt-5"
+              style={{ fontFamily: "var(--font-display)" }}
             >
-              {featured.collectionName}
-            </h2>
-            {featured.collectionDesc && (
-              <p className="text-sm text-[#6E6680] leading-relaxed font-[300] mt-2 max-w-md">
-                {featured.collectionDesc}
-              </p>
-            )}
-          </div>
-          <Link
-            href={featured.collectionSlug ? `/coleccion/${featured.collectionSlug}` : "/catalogo"}
-            className="hidden sm:inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:text-[#1E1B2E] transition-colors font-[500]"
-          >
-            Ver todo <ArrowRight size={12} />
-          </Link>
-        </ScrollReveal>
-
-        {featured.products.length > 0 ? (
-          <StaggeredGrid
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-            itemDelay={100}
-          >
-            {featured.products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              Prendas que cuentan quién eres.
+            </p>
+          </ScrollReveal>
+          <StaggeredGrid className="grid sm:grid-cols-2 gap-x-14 gap-y-12" itemDelay={120}>
+            {BRAND_VALUES.map((v) => (
+              <div key={v.title}>
+                <div className="w-14 h-px bg-[#A0647E] mb-5" />
+                <h3
+                  className="text-2xl sm:text-[28px] text-[#1E1B2E] mb-2.5"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {v.title}
+                </h3>
+                <p className="text-sm sm:text-[15px] text-[#6E6680] leading-relaxed">{v.desc}</p>
+              </div>
             ))}
           </StaggeredGrid>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="aspect-[3/4] bg-[#F2D4DC]/30 animate-pulse" />
-            ))}
-          </div>
-        )}
-
-        <div className="text-center mt-10 sm:hidden">
-          <Link
-            href={featured.collectionSlug ? `/coleccion/${featured.collectionSlug}` : "/catalogo"}
-            className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:text-[#1E1B2E] transition-colors font-[500]"
-          >
-            Ver todo <ArrowRight size={12} />
-          </Link>
         </div>
+      </section>
+
+      {/* ── COLECCIONES (ancho completo) ───────────────────────── */}
+      {tiles.length > 0 && (
+        <section className="px-2 pt-2">
+          <StaggeredGrid
+            className={`grid gap-2 ${tiles.length === 1 ? "" : tiles.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}
+            itemDelay={120}
+          >
+            {tiles.map((c) => (
+              <Link
+                key={c.id}
+                href={`/coleccion/${c.slug}`}
+                className="group relative block aspect-[4/3] overflow-hidden bg-[#1E1B2E]"
+              >
+                {c.hero_url && (
+                  <Image
+                    src={c.hero_url}
+                    alt={c.name}
+                    fill
+                    sizes="(max-width:640px) 100vw, 33vw"
+                    unoptimized
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
+                <div className="absolute inset-0 bg-[#1E1B2E]/20 group-hover:bg-[#1E1B2E]/30 transition-colors" />
+                {/* Marco interior */}
+                <div className="absolute inset-5 sm:inset-6 border border-white/80 flex items-center justify-center">
+                  <span
+                    className={`text-2xl sm:text-3xl text-center px-4 ${c.hero_url ? "text-white" : "text-[#D29DB9]"}`}
+                    style={{ fontFamily: "var(--font-display)", textShadow: c.hero_url ? "0 1px 12px rgba(0,0,0,0.5)" : undefined }}
+                  >
+                    {c.name}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </StaggeredGrid>
+          {collections.length > tiles.length && (
+            <div className="text-center mt-6">
+              <Link
+                href="/colecciones"
+                className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+              >
+                Ver todas las colecciones <ArrowRight size={12} />
+              </Link>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ── NOVEDADES ──────────────────────────────────────────── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <ScrollReveal variant="fadeUp">
+          <NewArrivals {...arrivals} />
+        </ScrollReveal>
       </section>
 
       {/* ── MARQUEE CLARO ──────────────────────────────────────── */}
       <MarqueeStrip inverted />
 
-      {/* ── BANNER NOSOTRAS ────────────────────────────────────── */}
-      <section className="relative bg-[#1E1B2E] py-28 overflow-hidden">
-        {/* Texto decorativo de fondo */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 flex items-center justify-center text-[18vw] font-[700] text-[#D29DB9]/[0.06] leading-none select-none"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
-        >
-          {monogram}
-        </span>
-
-        <ScrollReveal variant="fadeUp" className="relative z-10 max-w-2xl mx-auto text-center px-4">
-          <span className="text-[10px] tracking-[0.35em] uppercase text-[#A0647E] font-[500]">
-            Nuestra historia
-          </span>
-          <h2
-            className="text-5xl sm:text-6xl mt-3 mb-6 leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", color: "#ffffff" }}
-          >
-            Nosotras
-          </h2>
-          <p className="text-sm text-[#D9C3CE] font-[300] leading-relaxed mb-8 max-w-sm mx-auto">
-            {nosotras.summary}
-          </p>
-          <Link
-            href="/nosotras"
-            className="inline-flex items-center gap-2 px-8 py-3 border border-[#F2D4DC]/60 text-[#F2D4DC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#F2D4DC] hover:text-[#1E1B2E] transition-colors"
-          >
-            Conocernos <ArrowRight size={12} />
-          </Link>
-        </ScrollReveal>
+      {/* ── CONÓCENOS ──────────────────────────────────────────── */}
+      <section className="bg-[#1E1B2E] px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="max-w-[1376px] mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
+          {/* Foto completa, con su proporción original (sin recortes) */}
+          <Image
+            src={nosotrasImage}
+            alt={`${storeName} — Nuestra historia`}
+            width={0}
+            height={0}
+            sizes="(max-width:768px) 100vw, 50vw"
+            className="w-full h-auto max-h-[720px] object-contain"
+            unoptimized
+          />
+          <ScrollReveal variant="fadeUp">
+            <span className="text-xs tracking-[0.3em] uppercase text-[#D29DB9] font-[500]">
+              Conócenos
+            </span>
+            <h2 className="text-4xl sm:text-5xl text-[#FAF6F7] mt-4 mb-6" style={{ fontFamily: "var(--font-display)" }}>
+              {nosotras.title}
+            </h2>
+            <p className="text-[15px] text-[#D9C3CE] leading-relaxed mb-10 max-w-md">
+              {nosotras.summary}
+            </p>
+            <Link
+              href="/nosotras"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-[#FAF6F7]/70 text-[#FAF6F7] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#FAF6F7] hover:text-[#1E1B2E] transition-colors rounded-full"
+            >
+              Nuestra historia <ArrowRight size={13} />
+            </Link>
+          </ScrollReveal>
+        </div>
       </section>
 
       {/* ── CTA WISHLIST ───────────────────────────────────────── */}
@@ -297,7 +355,7 @@ export default async function HomePage() {
           </span>
           <h2
             className="text-4xl sm:text-5xl text-[#1E1B2E] mb-4"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Guarda tus favoritos
           </h2>
@@ -306,7 +364,7 @@ export default async function HomePage() {
           </p>
           <Link
             href="/cuenta/wishlist"
-            className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors"
+            className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
           >
             Ver wishlist <ArrowRight size={12} />
           </Link>

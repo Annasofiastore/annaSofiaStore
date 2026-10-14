@@ -63,7 +63,7 @@ function LoginForm() {
       <div className="mb-8 text-center">
         <h1
           className="text-3xl text-[#1E1B2E] mb-2"
-          style={{ fontFamily: "var(--font-playfair), 'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Bienvenida
         </h1>
@@ -152,7 +152,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading || googleLoading}
-            className="w-full bg-[#1E1B2E] text-[#FAF6F7] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0647E] transition-colors disabled:opacity-50"
+            className="w-full bg-[#1E1B2E] text-[#FAF6F7] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0647E] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Iniciando sesión…" : "Iniciar sesión"}
           </button>

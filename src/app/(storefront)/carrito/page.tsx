@@ -4,10 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Trash2, ArrowRight, ShoppingBag } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
-import { formatCOP } from "@/lib/utils/format";
+import { formatCOP, monogramOf } from "@/lib/utils/format";
 import { CountdownTimer } from "@/components/storefront/CountdownTimer";
+import { useStoreName } from "@/components/StoreNameProvider";
 
 export default function CarritoPage() {
+  const monogram = monogramOf(useStoreName());
   const { items, subtotal, discountAmount, shippingCost, total, removeItem, updateQuantity } =
     useCartStore();
 
@@ -17,7 +19,7 @@ export default function CarritoPage() {
         <ShoppingBag size={48} strokeWidth={1} className="text-[#D9C3CE]" />
         <h1
           className="text-3xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Tu carrito está vacío
         </h1>
@@ -26,7 +28,7 @@ export default function CarritoPage() {
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
         >
           Ver catálogo <ArrowRight size={14} />
         </Link>
@@ -38,7 +40,7 @@ export default function CarritoPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <h1
         className="text-4xl text-[#1E1B2E] mb-8"
-        style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         Tu carrito
       </h1>
@@ -66,9 +68,9 @@ export default function CarritoPage() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span
                       className="text-lg text-[#6E6680]"
-                      style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
-                      MB
+                      {monogram}
                     </span>
                   </div>
                 )}
@@ -163,7 +165,7 @@ export default function CarritoPage() {
 
           <Link
             href="/checkout"
-            className="mt-6 w-full flex items-center justify-center gap-2 py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors"
+            className="mt-6 w-full flex items-center justify-center gap-2 py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
           >
             Proceder al pago <ArrowRight size={14} />
           </Link>

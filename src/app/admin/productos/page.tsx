@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { createServiceClient } from "@/lib/supabase/server";
-import { formatCOP } from "@/lib/utils/format";
+import { formatCOP, monogramOf } from "@/lib/utils/format";
 import { ProductThumb } from "@/components/admin/ProductThumb";
+import { getStoreName } from "@/lib/config/store-name";
 
 const STATUS_BADGE: Record<string, string> = {
   active: "bg-[#FAF6F7] text-[#1E1B2E]",
@@ -16,6 +17,7 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 export default async function AdminProductosPage() {
+  const monogram = monogramOf(await getStoreName());
   const supabase = createServiceClient();
   const { data: products } = await supabase
     .from("products")
@@ -28,7 +30,7 @@ export default async function AdminProductosPage() {
       <div className="flex items-center justify-between mb-6">
         <h1
           className="text-3xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Productos
         </h1>
@@ -73,8 +75,8 @@ export default async function AdminProductosPage() {
                     ) : (
                       <div className="w-10 h-12 bg-[#F2D4DC]/20 flex items-center justify-center">
                         <span className="text-[10px] text-[#6E6680]"
-                          style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}>
-                          MB
+                          style={{ fontFamily: "var(--font-display)" }}>
+                          {monogram}
                         </span>
                       </div>
                     )}

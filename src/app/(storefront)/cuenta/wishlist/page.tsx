@@ -62,7 +62,7 @@ export default function WishlistPage() {
     <div>
       <h2
         className="text-xl text-[#1E1B2E] mb-5"
-        style={{ fontFamily: "'Playfair Display', serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         Wishlist
       </h2>
@@ -135,7 +135,7 @@ export default function WishlistPage() {
                   {isAvailable && (
                     <Link
                       href={`/producto/${p.slug}`}
-                      className="inline-flex items-center gap-1 px-3 py-2 bg-[#1E1B2E] text-[#FAF6F7] text-[10px] uppercase tracking-[0.12em] font-[500] hover:bg-[#A0647E] transition-colors"
+                      className="inline-flex items-center gap-1 px-3 py-2 bg-[#1E1B2E] text-[#FAF6F7] text-[10px] uppercase tracking-[0.12em] font-[500] hover:bg-[#A0647E] transition-colors rounded-full"
                     >
                       <ShoppingBag size={11} /> Ver
                     </Link>

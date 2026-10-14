@@ -145,13 +145,13 @@ export default function DireccionesPage() {
       <div className="flex items-center justify-between mb-5">
         <h2
           className="text-xl text-[#1E1B2E]"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Direcciones
         </h2>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#A0647E] transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#A0647E] transition-colors rounded-full"
         >
           <Plus size={13} /> Nueva
         </button>
@@ -243,14 +243,14 @@ export default function DireccionesPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] uppercase tracking-[0.15em] font-[500] hover:bg-[#A0647E] transition-colors disabled:opacity-50"
+                className="px-5 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] uppercase tracking-[0.15em] font-[500] hover:bg-[#A0647E] transition-colors disabled:opacity-50 rounded-full"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="px-5 py-2.5 border border-[#E9DDE3] text-[#6E6680] text-[11px] uppercase tracking-[0.15em] font-[500] hover:border-[#6E6680] transition-colors"
+                className="px-5 py-2.5 border border-[#E9DDE3] text-[#6E6680] text-[11px] uppercase tracking-[0.15em] font-[500] hover:border-[#6E6680] transition-colors rounded-full"
               >
                 Cancelar
               </button>

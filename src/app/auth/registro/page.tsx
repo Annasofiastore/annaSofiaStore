@@ -101,7 +101,7 @@ export default function RegistroPage() {
     return (
       <div className="w-full max-w-md text-center">
         <div className="bg-white border border-[#E9DDE3] p-10 space-y-4">
-          <div className="text-3xl mb-2" style={{ fontFamily: "var(--font-playfair), 'Playfair Display', serif" }}>
+          <div className="text-3xl mb-2" style={{ fontFamily: "var(--font-display)" }}>
             ¡Casi listo!
           </div>
           <p className="text-sm text-[#6E6680]">
@@ -144,7 +144,7 @@ export default function RegistroPage() {
       <div className="mb-8 text-center">
         <h1
           className="text-3xl text-[#1E1B2E] mb-2"
-          style={{ fontFamily: "var(--font-playfair), 'Playfair Display', serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Crear cuenta
         </h1>
@@ -306,7 +306,7 @@ export default function RegistroPage() {
           <button
             type="submit"
             disabled={loading || googleLoading}
-            className="w-full bg-[#1E1B2E] text-[#FAF6F7] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0647E] transition-colors disabled:opacity-50"
+            className="w-full bg-[#1E1B2E] text-[#FAF6F7] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0647E] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Creando cuenta…" : "Crear cuenta"}
           </button>

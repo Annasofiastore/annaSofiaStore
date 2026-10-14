@@ -17,7 +17,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
 
   useEffect(() => {
     if (paused || slides.length <= 1) return;
-    const t = setInterval(next, 3000);
+    const t = setInterval(next, 5000);
     return () => clearInterval(t);
   }, [paused, next, slides.length]);
 
@@ -46,27 +46,28 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
           }`}
         >
           <Image
+            key={i === current ? `on-${current}` : `off-${i}`}
             src={slide.image_url}
             alt={slide.alt_text ?? storeName}
             fill
-            className="object-cover object-center"
+            className={`object-cover object-center ${i === current ? "animate-ken-burns" : ""}`}
             priority={i === 0}
             sizes="100vw"
           />
         </div>
       ))}
 
-      {/* Overlay: lineal vertical + radial central para que el texto siempre contraste */}
+      {/* Overlay: oscurece abajo a la izquierda, donde va el texto del banner */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "linear-gradient(to bottom, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.22) 60%, rgba(0,0,0,0.48) 100%)"
+        background: "linear-gradient(to top, rgba(30,27,46,0.65) 0%, rgba(30,27,46,0.25) 45%, rgba(30,27,46,0) 75%)"
       }} />
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 100%)"
+        background: "linear-gradient(to right, rgba(30,27,46,0.35) 0%, rgba(30,27,46,0) 60%)"
       }} />
 
       {/* Dots de navegación */}
       {slides.length > 1 && (
-        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+        <div className="absolute bottom-6 sm:bottom-10 right-6 sm:right-10 flex items-center gap-2 z-20">
           {slides.map((_, i) => (
             <button
               key={i}

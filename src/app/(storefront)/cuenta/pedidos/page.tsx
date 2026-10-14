@@ -63,7 +63,7 @@ export default async function PedidosPage() {
     <div>
       <h2
         className="text-xl text-[#1E1B2E] mb-5"
-        style={{ fontFamily: "'Playfair Display', serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         Mis pedidos
       </h2>
