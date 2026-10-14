@@ -1,0 +1,10 @@
+Imágenes que debe aportar la tienda antes de salir a producción.
+Respetar exactamente estos nombres — el código los referencia así:
+
+  icon.png              Favicon, 512×512 px
+  apple-icon.png        Icono para iOS, 180×180 px
+  nosotras-historia.jpg Foto de la sección "Nosotras" (horizontal, máx. 1 MB)
+  guia-tallas.jpg       Tabla de medidas que se abre desde la ficha de producto
+
+Las imágenes de productos y los banners del home NO van aquí:
+se cargan desde el panel de administración.
