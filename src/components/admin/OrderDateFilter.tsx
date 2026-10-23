@@ -28,27 +28,27 @@ export function OrderDateFilter() {
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <CalendarDays size={13} className="text-[#6E6680]" strokeWidth={1.5} />
+      <CalendarDays size={13} className="text-[#766A63]" strokeWidth={1.5} />
       <input
         type="date"
         value={dateFrom}
         max={dateTo || undefined}
         onChange={(e) => update("date_from", e.target.value)}
-        className="text-xs border border-[#E9DDE3] px-2 py-1.5 text-[#1E1B2E] focus:outline-none focus:border-[#6E6680] bg-white"
+        className="text-xs border border-[#E8DED4] px-2 py-1.5 text-[#1F1B19] focus:outline-none focus:border-[#766A63] bg-white"
       />
-      <span className="text-xs text-[#D9C3CE]">—</span>
+      <span className="text-xs text-[#DCCFC4]">—</span>
       <input
         type="date"
         value={dateTo}
         min={dateFrom || undefined}
         onChange={(e) => update("date_to", e.target.value)}
-        className="text-xs border border-[#E9DDE3] px-2 py-1.5 text-[#1E1B2E] focus:outline-none focus:border-[#6E6680] bg-white"
+        className="text-xs border border-[#E8DED4] px-2 py-1.5 text-[#1F1B19] focus:outline-none focus:border-[#766A63] bg-white"
       />
       {hasDate && (
         <button
           onClick={clear}
           title="Limpiar fechas"
-          className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+          className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
         >
           <X size={13} strokeWidth={2} />
         </button>

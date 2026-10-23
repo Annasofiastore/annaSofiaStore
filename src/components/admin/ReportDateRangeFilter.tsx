@@ -60,7 +60,7 @@ export function ReportDateRangeFilter({ from, to }: Props) {
           <button
             key={p.label}
             onClick={() => apply(p.range())}
-            className="text-[11px] px-3 py-1.5 rounded border border-gray-200 text-gray-600 hover:border-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+            className="text-[11px] px-3 py-1.5 rounded border border-gray-200 text-gray-600 hover:border-[#766A63] hover:text-[#1F1B19] transition-colors"
           >
             {p.label}
           </button>
@@ -72,7 +72,7 @@ export function ReportDateRangeFilter({ from, to }: Props) {
           value={localFrom}
           max={localTo}
           onChange={(e) => setLocalFrom(e.target.value)}
-          className="text-[11px] border border-gray-200 rounded px-2 py-1.5 text-gray-700 focus:outline-none focus:border-[#6E6680]"
+          className="text-[11px] border border-gray-200 rounded px-2 py-1.5 text-gray-700 focus:outline-none focus:border-[#766A63]"
         />
         <span className="text-xs text-gray-400">a</span>
         <input
@@ -81,11 +81,11 @@ export function ReportDateRangeFilter({ from, to }: Props) {
           min={localFrom}
           max={toISO(new Date())}
           onChange={(e) => setLocalTo(e.target.value)}
-          className="text-[11px] border border-gray-200 rounded px-2 py-1.5 text-gray-700 focus:outline-none focus:border-[#6E6680]"
+          className="text-[11px] border border-gray-200 rounded px-2 py-1.5 text-gray-700 focus:outline-none focus:border-[#766A63]"
         />
         <button
           onClick={() => apply()}
-          className="text-[11px] px-3 py-1.5 rounded bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#34304A] transition-colors"
+          className="text-[11px] px-3 py-1.5 rounded bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#3A3431] transition-colors"
         >
           Aplicar
         </button>

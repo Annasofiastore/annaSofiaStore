@@ -130,17 +130,17 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
   }
 
   const inputCls =
-    "w-full border border-[#E9DDE3] bg-white px-3 py-2 text-sm text-[#1E1B2E] focus:outline-none focus:border-[#6E6680] transition-colors placeholder:text-[#D9C3CE]";
+    "w-full border border-[#E8DED4] bg-white px-3 py-2 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
   const labelCls =
-    "block text-[10px] tracking-[0.18em] uppercase text-[#6E6680] font-[600] mb-1.5";
-  const sectionCls = "bg-white border border-[#E9DDE3] p-5 space-y-4";
+    "block text-[10px] tracking-[0.18em] uppercase text-[#766A63] font-[600] mb-1.5";
+  const sectionCls = "bg-white border border-[#E8DED4] p-5 space-y-4";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 pb-20">
 
       {/* Información básica */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Información básica</h2>
+        <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Información básica</h2>
 
         <div className="grid grid-cols-1 gap-4">
           <div>
@@ -162,7 +162,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
               placeholder="se genera automáticamente"
               className={cn(inputCls, "font-mono text-xs")}
             />
-            <p className="text-[10px] text-[#D9C3CE] mt-1">
+            <p className="text-[10px] text-[#DCCFC4] mt-1">
               /producto/{form.slug || "vestido-lino-ibiza"}
             </p>
           </div>
@@ -193,7 +193,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Precios */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Precios</h2>
+        <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Precios</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className={labelCls}>Precio base (COP) *</label>
@@ -237,14 +237,14 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             <MarginPreview price={form.base_price} cost={form.cost_price} />
           </div>
         </div>
-        <p className="text-xs text-[#6E6680]">
+        <p className="text-xs text-[#766A63]">
           El costo es privado: solo se ve en el panel admin y se usa para el inventario valorizado.
         </p>
       </div>
 
       {/* Estado */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Estado</h2>
+        <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Estado</h2>
         <div className="flex gap-3 flex-wrap">
           {(["draft", "active", "archived"] as const).map((s) => (
             <label
@@ -252,8 +252,8 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
               className={cn(
                 "flex items-center gap-2 px-3 py-2 border text-xs cursor-pointer transition-colors",
                 form.status === s
-                  ? "border-[#1E1B2E] bg-[#1E1B2E] text-[#FAF6F7]"
-                  : "border-[#E9DDE3] text-[#6E6680] hover:border-[#6E6680]"
+                  ? "border-[#1F1B19] bg-[#1F1B19] text-[#F7F2EC]"
+                  : "border-[#E8DED4] text-[#766A63] hover:border-[#766A63]"
               )}
             >
               <input
@@ -275,7 +275,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             onClick={() => set("is_best_seller", !form.is_best_seller)}
             className={cn(
               "relative w-10 h-5 rounded-full transition-colors duration-200",
-              form.is_best_seller ? "bg-[#6E6680]" : "bg-[#E9DDE3]"
+              form.is_best_seller ? "bg-[#766A63]" : "bg-[#E8DED4]"
             )}
           >
             <span
@@ -286,8 +286,8 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             />
           </div>
           <div>
-            <p className="text-xs font-[600] text-[#1E1B2E]">✦ Marcar como Best Seller</p>
-            <p className="text-[10px] text-[#6E6680]">Aparece en la sección Best Sellers del storefront</p>
+            <p className="text-xs font-[600] text-[#1F1B19]">✦ Marcar como Best Seller</p>
+            <p className="text-[10px] text-[#766A63]">Aparece en la sección Best Sellers del storefront</p>
           </div>
         </label>
 
@@ -297,7 +297,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             onClick={() => set("is_pre_sale", !form.is_pre_sale)}
             className={cn(
               "relative w-10 h-5 rounded-full transition-colors duration-200",
-              form.is_pre_sale ? "bg-[#1E1B2E]" : "bg-[#E9DDE3]"
+              form.is_pre_sale ? "bg-[#1F1B19]" : "bg-[#E8DED4]"
             )}
           >
             <span
@@ -308,21 +308,21 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             />
           </div>
           <div>
-            <p className="text-xs font-[600] text-[#1E1B2E]">◈ Marcar como Pre Orden</p>
-            <p className="text-[10px] text-[#6E6680]">Muestra la etiqueta "PRE ORDEN" en la tarjeta del producto</p>
+            <p className="text-xs font-[600] text-[#1F1B19]">◈ Marcar como Pre Orden</p>
+            <p className="text-[10px] text-[#766A63]">Muestra la etiqueta "PRE ORDEN" en la tarjeta del producto</p>
           </div>
         </label>
       </div>
 
       {/* Imágenes */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Imágenes</h2>
+        <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Imágenes</h2>
         <ImageUploader images={form.images} onChange={(imgs) => set("images", imgs)} />
       </div>
 
       {/* Taxonomía */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Categorías y colecciones</h2>
+        <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Categorías y colecciones</h2>
         <div className="grid grid-cols-1 gap-5">
 
           {categories.length > 0 && (
@@ -337,8 +337,8 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
                     className={cn(
                       "px-3 py-1 text-xs border transition-colors",
                       form.category_ids.includes(cat.id)
-                        ? "bg-[#1E1B2E] text-[#FAF6F7] border-[#1E1B2E]"
-                        : "bg-white text-[#6E6680] border-[#E9DDE3] hover:border-[#6E6680]"
+                        ? "bg-[#1F1B19] text-[#F7F2EC] border-[#1F1B19]"
+                        : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
                     )}
                   >
                     {cat.name}
@@ -360,8 +360,8 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
                     className={cn(
                       "px-3 py-1 text-xs border transition-colors",
                       form.collection_ids.includes(col.id)
-                        ? "bg-[#A0647E] text-white border-[#A0647E]"
-                        : "bg-white text-[#6E6680] border-[#E9DDE3] hover:border-[#A0647E]"
+                        ? "bg-[#965C57] text-white border-[#965C57]"
+                        : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#965C57]"
                     )}
                   >
                     {col.name}
@@ -383,8 +383,8 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
                     className={cn(
                       "px-3 py-1 text-xs border transition-colors",
                       form.occasion_ids.includes(occ.id)
-                        ? "bg-[#6E6680] text-white border-[#6E6680]"
-                        : "bg-white text-[#6E6680] border-[#E9DDE3] hover:border-[#6E6680]"
+                        ? "bg-[#766A63] text-white border-[#766A63]"
+                        : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
                     )}
                   >
                     {occ.name}
@@ -395,7 +395,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
           )}
 
           {categories.length === 0 && collections.length === 0 && occasions.length === 0 && (
-            <p className="text-xs text-[#D9C3CE] italic">
+            <p className="text-xs text-[#DCCFC4] italic">
               No hay categorías ni colecciones creadas aún.
             </p>
           )}
@@ -404,7 +404,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Variantes */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Variantes (talla × color)</h2>
+        <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Variantes (talla × color)</h2>
         <VariantManager
           variants={form.variants}
           onChange={(v) => set("variants", v)}
@@ -415,7 +415,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Error global */}
       {error && (
-        <p className="text-xs text-[#A0647E] border border-[#A0647E]/30 bg-[#F2D4DC]/20 px-4 py-2.5">
+        <p className="text-xs text-[#965C57] border border-[#965C57]/30 bg-[#F2DCD6]/20 px-4 py-2.5">
           {error}
         </p>
       )}
@@ -425,7 +425,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
         <button
           type="button"
           onClick={() => router.back()}
-          className="text-xs text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+          className="text-xs text-[#766A63] hover:text-[#1F1B19] transition-colors"
         >
           Cancelar
         </button>
@@ -435,8 +435,8 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
           className={cn(
             "text-[11px] tracking-[0.18em] uppercase font-[600] px-8 py-3 transition-colors",
             saving
-              ? "bg-[#D9C3CE] text-white cursor-not-allowed"
-              : "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#A0647E]"
+              ? "bg-[#DCCFC4] text-white cursor-not-allowed"
+              : "bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#965C57]"
           )}
         >
           {saving ? "Guardando…" : isEdit ? "Guardar cambios" : "Crear producto"}
@@ -452,7 +452,7 @@ function MarginPreview({ price, cost }: { price: string; cost: string }) {
   const c = parseFloat(cost);
 
   if (!(p > 0) || !(c >= 0) || cost === "") {
-    return <p className="py-2 text-sm text-[#D9C3CE]">Ingresa precio y costo</p>;
+    return <p className="py-2 text-sm text-[#DCCFC4]">Ingresa precio y costo</p>;
   }
 
   const profit = p - c;

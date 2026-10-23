@@ -75,26 +75,26 @@ export default async function CuentaDashboard() {
           <Link
             key={href}
             href={href}
-            className="bg-white border border-[#E9DDE3] p-4 hover:border-[#A0647E] transition-colors group"
+            className="bg-white border border-[#E8DED4] p-4 hover:border-[#965C57] transition-colors group"
           >
-            <Icon size={18} className="text-[#A0647E] mb-2" />
-            <p className="text-[11px] font-[600] text-[#1E1B2E] uppercase tracking-[0.1em]">
+            <Icon size={18} className="text-[#965C57] mb-2" />
+            <p className="text-[11px] font-[600] text-[#1F1B19] uppercase tracking-[0.1em]">
               {label}
             </p>
-            <p className="text-[11px] text-[#6E6680] mt-0.5">{sub}</p>
+            <p className="text-[11px] text-[#766A63] mt-0.5">{sub}</p>
           </Link>
         ))}
       </div>
 
       {/* Pedidos recientes */}
-      <div className="bg-white border border-[#E9DDE3]">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#FAF6F7]">
-          <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1E1B2E]">
+      <div className="bg-white border border-[#E8DED4]">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#F7F2EC]">
+          <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1F1B19]">
             Pedidos recientes
           </p>
           <Link
             href="/cuenta/pedidos"
-            className="inline-flex items-center gap-1 text-[11px] text-[#6E6680] hover:text-[#1E1B2E] transition-colors tracking-wide"
+            className="inline-flex items-center gap-1 text-[11px] text-[#766A63] hover:text-[#1F1B19] transition-colors tracking-wide"
           >
             Ver todos <ArrowRight size={11} />
           </Link>
@@ -102,11 +102,11 @@ export default async function CuentaDashboard() {
 
         {orders.length === 0 ? (
           <div className="py-12 text-center">
-            <Package size={32} className="mx-auto mb-3 text-[#D9C3CE]" />
-            <p className="text-sm text-[#6E6680]">Aún no tienes pedidos.</p>
+            <Package size={32} className="mx-auto mb-3 text-[#DCCFC4]" />
+            <p className="text-sm text-[#766A63]">Aún no tienes pedidos.</p>
             <Link
               href="/catalogo"
-              className="inline-block mt-3 text-[11px] uppercase tracking-[0.15em] text-[#1E1B2E] border-b border-[#1E1B2E] pb-0.5"
+              className="inline-block mt-3 text-[11px] uppercase tracking-[0.15em] text-[#1F1B19] border-b border-[#1F1B19] pb-0.5"
             >
               Ir al catálogo
             </Link>
@@ -119,11 +119,11 @@ export default async function CuentaDashboard() {
               <Link
                 key={order.id}
                 href={`/cuenta/pedidos/${order.id}`}
-                className="flex items-center justify-between px-5 py-4 border-b border-[#FAF6F7] last:border-0 hover:bg-[#FAF6F7]/50 transition-colors"
+                className="flex items-center justify-between px-5 py-4 border-b border-[#F7F2EC] last:border-0 hover:bg-[#F7F2EC]/50 transition-colors"
               >
                 <div>
-                  <p className="text-sm font-[600] text-[#1E1B2E]">{order.order_number}</p>
-                  <p className="text-[11px] text-[#6E6680] mt-0.5">{formatDate(order.created_at)}</p>
+                  <p className="text-sm font-[600] text-[#1F1B19]">{order.order_number}</p>
+                  <p className="text-[11px] text-[#766A63] mt-0.5">{formatDate(order.created_at)}</p>
                 </div>
                 <div className="text-right">
                   <span
@@ -131,7 +131,7 @@ export default async function CuentaDashboard() {
                   >
                     {s.label}
                   </span>
-                  <p className="text-sm font-[600] text-[#1E1B2E] mt-1">{formatCOP(order.total)}</p>
+                  <p className="text-sm font-[600] text-[#1F1B19] mt-1">{formatCOP(order.total)}</p>
                 </div>
               </Link>
             );

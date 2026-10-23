@@ -18,17 +18,17 @@ export function ArchiveProductButton({ id }: { id: string }) {
   if (confirming) {
     return (
       <div className="flex items-center gap-3">
-        <span className="text-xs text-[#6E6680]">¿Archivar este producto?</span>
+        <span className="text-xs text-[#766A63]">¿Archivar este producto?</span>
         <button
           onClick={archive}
           disabled={loading}
-          className="text-xs text-[#A0647E] hover:text-[#1E1B2E] font-[500]"
+          className="text-xs text-[#965C57] hover:text-[#1F1B19] font-[500]"
         >
           {loading ? "Archivando…" : "Sí, archivar"}
         </button>
         <button
           onClick={() => setConfirming(false)}
-          className="text-xs text-[#D9C3CE] hover:text-[#6E6680]"
+          className="text-xs text-[#DCCFC4] hover:text-[#766A63]"
         >
           Cancelar
         </button>
@@ -39,7 +39,7 @@ export function ArchiveProductButton({ id }: { id: string }) {
   return (
     <button
       onClick={() => setConfirming(true)}
-      className="text-xs text-[#D9C3CE] hover:text-[#A0647E] transition-colors"
+      className="text-xs text-[#DCCFC4] hover:text-[#965C57] transition-colors"
     >
       Archivar producto
     </button>

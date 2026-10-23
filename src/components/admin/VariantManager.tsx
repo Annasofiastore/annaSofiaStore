@@ -109,13 +109,13 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
   }
 
   const inputCls =
-    "w-full border border-[#E9DDE3] bg-white px-2 py-1 text-xs text-[#1E1B2E] focus:outline-none focus:border-[#6E6680]";
+    "w-full border border-[#E8DED4] bg-white px-2 py-1 text-xs text-[#1F1B19] focus:outline-none focus:border-[#766A63]";
 
   return (
     <div className="space-y-5">
       {/* Tallas */}
       <div>
-        <p className="text-[10px] tracking-[0.18em] uppercase text-[#6E6680] font-[600] mb-2">
+        <p className="text-[10px] tracking-[0.18em] uppercase text-[#766A63] font-[600] mb-2">
           Tallas disponibles
         </p>
         <div className="flex flex-wrap gap-1.5 mb-2">
@@ -127,8 +127,8 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               className={cn(
                 "px-3 py-1 text-xs border transition-colors",
                 tallas.includes(t)
-                  ? "bg-[#1E1B2E] text-[#FAF6F7] border-[#1E1B2E]"
-                  : "bg-white text-[#6E6680] border-[#E9DDE3] hover:border-[#6E6680]"
+                  ? "bg-[#1F1B19] text-[#F7F2EC] border-[#1F1B19]"
+                  : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
               )}
             >
               {t}
@@ -143,12 +143,12 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               if (e.key === "Enter") { e.preventDefault(); addTalla(newTalla); setNewTalla(""); }
             }}
             placeholder="Otra talla…"
-            className="border border-[#E9DDE3] px-2 py-1 text-xs text-[#1E1B2E] focus:outline-none focus:border-[#6E6680] w-32"
+            className="border border-[#E8DED4] px-2 py-1 text-xs text-[#1F1B19] focus:outline-none focus:border-[#766A63] w-32"
           />
           <button
             type="button"
             onClick={() => { addTalla(newTalla); setNewTalla(""); }}
-            className="text-xs text-[#6E6680] hover:text-[#1E1B2E] flex items-center gap-1"
+            className="text-xs text-[#766A63] hover:text-[#1F1B19] flex items-center gap-1"
           >
             <Plus size={12} /> Agregar
           </button>
@@ -157,18 +157,18 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
 
       {/* Colores */}
       <div>
-        <p className="text-[10px] tracking-[0.18em] uppercase text-[#6E6680] font-[600] mb-2">
+        <p className="text-[10px] tracking-[0.18em] uppercase text-[#766A63] font-[600] mb-2">
           Colores disponibles
         </p>
         <div className="flex flex-wrap gap-1.5 mb-2">
           {colores.map((c) => (
             <span
               key={c}
-              className="flex items-center gap-1 px-2 py-0.5 text-xs bg-[#FAF6F7] text-[#1E1B2E] border border-[#E9DDE3]"
+              className="flex items-center gap-1 px-2 py-0.5 text-xs bg-[#F7F2EC] text-[#1F1B19] border border-[#E8DED4]"
             >
               {c}
               <button type="button" onClick={() => removeColor(c)}>
-                <X size={10} className="text-[#6E6680] hover:text-[#A0647E]" />
+                <X size={10} className="text-[#766A63] hover:text-[#965C57]" />
               </button>
             </span>
           ))}
@@ -181,12 +181,12 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               if (e.key === "Enter") { e.preventDefault(); addColor(newColor); setNewColor(""); }
             }}
             placeholder="Ej: Negro, Blanco, Rojo…"
-            className="border border-[#E9DDE3] px-2 py-1 text-xs text-[#1E1B2E] focus:outline-none focus:border-[#6E6680] w-48"
+            className="border border-[#E8DED4] px-2 py-1 text-xs text-[#1F1B19] focus:outline-none focus:border-[#766A63] w-48"
           />
           <button
             type="button"
             onClick={() => { addColor(newColor); setNewColor(""); }}
-            className="text-xs text-[#6E6680] hover:text-[#1E1B2E] flex items-center gap-1"
+            className="text-xs text-[#766A63] hover:text-[#1F1B19] flex items-center gap-1"
           >
             <Plus size={12} /> Agregar
           </button>
@@ -199,13 +199,13 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
           <table className="w-full text-xs border-collapse">
             <thead>
               <tr>
-                <th className="text-left text-[9px] tracking-[0.15em] uppercase text-[#6E6680] font-[600] pb-2 pr-4 whitespace-nowrap">
+                <th className="text-left text-[9px] tracking-[0.15em] uppercase text-[#766A63] font-[600] pb-2 pr-4 whitespace-nowrap">
                   Talla / Color
                 </th>
                 {colores.map((c) => (
                   <th
                     key={c}
-                    className="text-center text-[9px] tracking-[0.15em] uppercase text-[#6E6680] font-[600] pb-2 px-2 whitespace-nowrap"
+                    className="text-center text-[9px] tracking-[0.15em] uppercase text-[#766A63] font-[600] pb-2 px-2 whitespace-nowrap"
                   >
                     {c}
                   </th>
@@ -214,8 +214,8 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
             </thead>
             <tbody>
               {tallas.map((t) => (
-                <tr key={t} className="border-t border-[#FAF6F7]">
-                  <td className="py-2 pr-4 font-[500] text-[#1E1B2E] whitespace-nowrap">{t}</td>
+                <tr key={t} className="border-t border-[#F7F2EC]">
+                  <td className="py-2 pr-4 font-[500] text-[#1F1B19] whitespace-nowrap">{t}</td>
                   {colores.map((c) => {
                     const variant = getVariant(t, c);
                     if (!variant) return <td key={c} />;
@@ -232,7 +232,7 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
                           />
                           {/* Stock */}
                           <div className="flex items-center gap-1">
-                            <span className="text-[9px] text-[#6E6680] w-10 shrink-0">Stock</span>
+                            <span className="text-[9px] text-[#766A63] w-10 shrink-0">Stock</span>
                             <input
                               type="number"
                               min={0}
@@ -243,7 +243,7 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
                           </div>
                           {/* Precio override */}
                           <div className="flex items-center gap-1">
-                            <span className="text-[9px] text-[#6E6680] w-10 shrink-0">Precio</span>
+                            <span className="text-[9px] text-[#766A63] w-10 shrink-0">Precio</span>
                             <input
                               type="number"
                               min={0}
@@ -251,7 +251,7 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
                               value={variant.price ?? ""}
                               onChange={(e) => updateVariant(t, c, "price", e.target.value)}
                               placeholder={String(basePrice)}
-                              className={cn(inputCls, "placeholder:text-[#D9C3CE]")}
+                              className={cn(inputCls, "placeholder:text-[#DCCFC4]")}
                               title="Dejar vacío para usar el precio base"
                             />
                           </div>
@@ -263,14 +263,14 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               ))}
             </tbody>
           </table>
-          <p className="text-[10px] text-[#6E6680] mt-2">
+          <p className="text-[10px] text-[#766A63] mt-2">
             Precio vacío = usa el precio base del producto. SKU se genera automáticamente, puedes editarlo.
           </p>
         </div>
       )}
 
       {tallas.length === 0 && colores.length === 0 && (
-        <p className="text-xs text-[#D9C3CE] italic">
+        <p className="text-xs text-[#DCCFC4] italic">
           Agrega al menos una talla y un color para generar la matriz de variantes.
         </p>
       )}

@@ -85,7 +85,7 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
           onClick={() => bump(-1)}
           disabled={saving || (valid ? parsed : saved) === 0}
           aria-label="Restar una unidad"
-          className="h-11 w-11 shrink-0 flex items-center justify-center border border-[#E9DDE3] bg-white text-[#1E1B2E] disabled:opacity-30 active:bg-[#FAF6F7]"
+          className="h-11 w-11 shrink-0 flex items-center justify-center border border-[#E8DED4] bg-white text-[#1F1B19] disabled:opacity-30 active:bg-[#F7F2EC]"
         >
           <Minus size={16} strokeWidth={1.5} />
         </button>
@@ -101,8 +101,8 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
           disabled={saving}
           aria-label="Cantidad en stock"
           className={cn(
-            "h-11 w-16 shrink-0 border text-center text-base text-[#1E1B2E] bg-white",
-            dirty ? "border-[#A0647E]" : "border-[#E9DDE3]"
+            "h-11 w-16 shrink-0 border text-center text-base text-[#1F1B19] bg-white",
+            dirty ? "border-[#965C57]" : "border-[#E8DED4]"
           )}
         />
 
@@ -111,7 +111,7 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
           onClick={() => bump(1)}
           disabled={saving}
           aria-label="Sumar una unidad"
-          className="h-11 w-11 shrink-0 flex items-center justify-center border border-[#E9DDE3] bg-white text-[#1E1B2E] disabled:opacity-30 active:bg-[#FAF6F7]"
+          className="h-11 w-11 shrink-0 flex items-center justify-center border border-[#E8DED4] bg-white text-[#1F1B19] disabled:opacity-30 active:bg-[#F7F2EC]"
         >
           <Plus size={16} strokeWidth={1.5} />
         </button>
@@ -123,20 +123,20 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
             setValue("0");
           }}
           disabled={saving || saved === 0}
-          className="h-11 px-3 shrink-0 border border-[#E9DDE3] bg-white text-[10px] tracking-[0.15em] uppercase text-[#6E6680] disabled:opacity-30 active:bg-[#FAF6F7]"
+          className="h-11 px-3 shrink-0 border border-[#E8DED4] bg-white text-[10px] tracking-[0.15em] uppercase text-[#766A63] disabled:opacity-30 active:bg-[#F7F2EC]"
         >
           Agotar
         </button>
       </div>
 
       {dirty && (
-        <div className="mt-2 flex flex-col gap-2 border border-[#A0647E]/40 bg-[#FAF6F7] p-2.5">
+        <div className="mt-2 flex flex-col gap-2 border border-[#965C57]/40 bg-[#F7F2EC] p-2.5">
           <select
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             disabled={saving}
             aria-label="Motivo del ajuste"
-            className="h-11 w-full border border-[#E9DDE3] bg-white px-2 text-sm text-[#1E1B2E]"
+            className="h-11 w-full border border-[#E8DED4] bg-white px-2 text-sm text-[#1F1B19]"
           >
             {REASONS.map((r) => (
               <option key={r.value} value={r.value}>
@@ -151,7 +151,7 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
             onChange={(e) => setNote(e.target.value)}
             disabled={saving}
             placeholder="Nota (opcional)"
-            className="h-11 w-full border border-[#E9DDE3] bg-white px-2 text-sm text-[#1E1B2E] placeholder:text-[#6E6680]"
+            className="h-11 w-full border border-[#E8DED4] bg-white px-2 text-sm text-[#1F1B19] placeholder:text-[#766A63]"
           />
 
           <div className="flex gap-2">
@@ -159,7 +159,7 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
               type="button"
               onClick={save}
               disabled={saving}
-              className="h-11 flex-1 flex items-center justify-center gap-2 bg-[#1E1B2E] text-[11px] tracking-[0.15em] uppercase text-[#FAF6F7] disabled:opacity-50"
+              className="h-11 flex-1 flex items-center justify-center gap-2 bg-[#1F1B19] text-[11px] tracking-[0.15em] uppercase text-[#F7F2EC] disabled:opacity-50"
             >
               {saving ? (
                 <Loader2 size={14} strokeWidth={1.5} className="animate-spin" />
@@ -173,7 +173,7 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
               onClick={reset}
               disabled={saving}
               aria-label="Cancelar ajuste"
-              className="h-11 w-11 shrink-0 flex items-center justify-center border border-[#E9DDE3] bg-white text-[#6E6680] disabled:opacity-50"
+              className="h-11 w-11 shrink-0 flex items-center justify-center border border-[#E8DED4] bg-white text-[#766A63] disabled:opacity-50"
             >
               <X size={16} strokeWidth={1.5} />
             </button>
@@ -184,7 +184,7 @@ export function StockAdjuster({ variantId, stock, reserved }: Props) {
       {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
 
       {reserved > 0 && (
-        <p className="mt-1 text-[11px] text-[#6E6680]">
+        <p className="mt-1 text-[11px] text-[#766A63]">
           {reserved} reservada{reserved === 1 ? "" : "s"} en carritos
         </p>
       )}

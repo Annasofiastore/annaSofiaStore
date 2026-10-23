@@ -41,48 +41,48 @@ export function ExportPedidosButton({ currentStatus }: Props) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 border border-[#1E1B2E] text-[#1E1B2E] font-[500] hover:bg-[#1E1B2E] hover:text-[#FAF6F7] transition-colors"
+        className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 border border-[#1F1B19] text-[#1F1B19] font-[500] hover:bg-[#1F1B19] hover:text-[#F7F2EC] transition-colors"
       >
         <Download size={13} strokeWidth={1.5} />
         Exportar a Excel
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 z-20 bg-white border border-[#E9DDE3] shadow-lg p-4 w-72">
-          <p className="text-[10px] tracking-[0.15em] uppercase text-[#6E6680] font-[600] mb-3">
+        <div className="absolute right-0 top-full mt-2 z-20 bg-white border border-[#E8DED4] shadow-lg p-4 w-72">
+          <p className="text-[10px] tracking-[0.15em] uppercase text-[#766A63] font-[600] mb-3">
             Rango de fechas
           </p>
           <div className="flex flex-col gap-3 mb-4">
             <label className="flex flex-col gap-1">
-              <span className="text-[10px] text-[#6E6680]">Desde</span>
+              <span className="text-[10px] text-[#766A63]">Desde</span>
               <input
                 type="date"
                 value={from}
                 max={to}
                 onChange={(e) => setFrom(e.target.value)}
-                className="border border-[#E9DDE3] px-2 py-1.5 text-sm text-[#1E1B2E] focus:outline-none focus:border-[#6E6680]"
+                className="border border-[#E8DED4] px-2 py-1.5 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63]"
               />
             </label>
             <label className="flex flex-col gap-1">
-              <span className="text-[10px] text-[#6E6680]">Hasta</span>
+              <span className="text-[10px] text-[#766A63]">Hasta</span>
               <input
                 type="date"
                 value={to}
                 min={from}
                 max={todayISO()}
                 onChange={(e) => setTo(e.target.value)}
-                className="border border-[#E9DDE3] px-2 py-1.5 text-sm text-[#1E1B2E] focus:outline-none focus:border-[#6E6680]"
+                className="border border-[#E8DED4] px-2 py-1.5 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63]"
               />
             </label>
           </div>
           {currentStatus && (
-            <p className="text-[10px] text-[#6E6680] mb-3">
+            <p className="text-[10px] text-[#766A63] mb-3">
               Se exportarán solo los pedidos con estado filtrado actualmente.
             </p>
           )}
           <button
             onClick={handleDownload}
-            className="w-full text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] font-[500] hover:bg-[#34304A] transition-colors"
+            className="w-full text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 bg-[#1F1B19] text-[#F7F2EC] font-[500] hover:bg-[#3A3431] transition-colors"
           >
             Descargar reporte
           </button>

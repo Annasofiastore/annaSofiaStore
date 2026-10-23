@@ -11,13 +11,13 @@ const wordsFor = (storeName: string) => [
 
 /**
  * Franja con frases en movimiento, en la tipografía de los títulos.
- * La principal va en azul noche; la invertida, en el fondo claro con bordes finos.
+ * La principal va en negro cálido; la invertida, en el fondo claro con bordes finos.
  */
 export async function MarqueeStrip({ inverted = false }: { inverted?: boolean }) {
   const words = wordsFor(await getStoreName());
   const surface = inverted
-    ? "bg-[#FAF6F7] border-y border-[#E9DDE3] text-[#1E1B2E]"
-    : "bg-[#1E1B2E] text-[#FAF6F7]";
+    ? "bg-[#F7F2EC] border-y border-[#E8DED4] text-[#1F1B19]"
+    : "bg-[#1F1B19] text-[#F7F2EC]";
 
   // Seis copias para que el loop (que avanza la mitad del ancho) no muestre cortes
   const items = Array.from({ length: 6 }, () => words).flat();
@@ -32,7 +32,7 @@ export async function MarqueeStrip({ inverted = false }: { inverted?: boolean })
           {items.map((w, i) => (
             <span key={i} className="inline-flex items-center">
               <span className={i % 2 ? "italic" : undefined}>{w}</span>
-              <span className="text-[#D29DB9] mx-6 sm:mx-9 text-sm">✦</span>
+              <span className="text-[#E3BDB6] mx-6 sm:mx-9 text-sm">✦</span>
             </span>
           ))}
         </span>

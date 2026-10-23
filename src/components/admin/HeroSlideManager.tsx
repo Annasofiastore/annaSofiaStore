@@ -113,9 +113,9 @@ export function HeroSlideManager() {
                 draggingIdx === idx
                   ? "opacity-40 border-gray-300"
                   : dragTargetIdx === idx && draggingIdx !== idx
-                  ? "border-[#A0647E] scale-105"
+                  ? "border-[#965C57] scale-105"
                   : idx === 0
-                  ? "border-[#1E1B2E]"
+                  ? "border-[#1F1B19]"
                   : "border-gray-200"
               }`}
             >
@@ -133,14 +133,14 @@ export function HeroSlideManager() {
                 <button
                   type="button"
                   onClick={() => removeSlide(slide.id)}
-                  className="text-white hover:text-[#F2D4DC]"
+                  className="text-white hover:text-[#F2DCD6]"
                   aria-label="Eliminar slide"
                 >
                   <X size={14} />
                 </button>
               </div>
               {idx === 0 && (
-                <span className="absolute bottom-0 left-0 right-0 bg-[#1E1B2E]/80 text-[#FAF6F7] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
+                <span className="absolute bottom-0 left-0 right-0 bg-[#1F1B19]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
                   Primera
                 </span>
               )}
@@ -150,7 +150,7 @@ export function HeroSlideManager() {
       )}
 
       {slides.length > 1 && (
-        <p className="text-[10px] text-[#6E6680]">
+        <p className="text-[10px] text-[#766A63]">
           Arrastra para reordenar. Las imágenes rotan cada 3 segundos.
         </p>
       )}
@@ -162,14 +162,14 @@ export function HeroSlideManager() {
         onDrop={(e) => { e.preventDefault(); setDragOver(false); if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files); }}
         onClick={() => inputRef.current?.click()}
         className={`border-2 border-dashed px-6 py-8 text-center cursor-pointer transition-colors ${
-          dragOver ? "border-[#A0647E] bg-[#F2D4DC]/20" : "border-[#E9DDE3] hover:border-[#6E6680] bg-[#FAF6F7]"
+          dragOver ? "border-[#965C57] bg-[#F2DCD6]/20" : "border-[#E8DED4] hover:border-[#766A63] bg-[#F7F2EC]"
         }`}
       >
-        <Upload size={24} strokeWidth={1.5} className={`mx-auto mb-2 ${dragOver ? "text-[#A0647E]" : "text-[#D9C3CE]"}`} />
-        <p className="text-sm text-[#6E6680]">
+        <Upload size={24} strokeWidth={1.5} className={`mx-auto mb-2 ${dragOver ? "text-[#965C57]" : "text-[#DCCFC4]"}`} />
+        <p className="text-sm text-[#766A63]">
           {uploading ? "Subiendo…" : "Arrastra fotos aquí o haz clic para seleccionar"}
         </p>
-        <p className="text-xs text-[#D9C3CE] mt-1">
+        <p className="text-xs text-[#DCCFC4] mt-1">
           JPG, PNG, WEBP, HEIC · máx. 20 MB por imagen · {slides.length} foto{slides.length !== 1 ? "s" : ""} cargada{slides.length !== 1 ? "s" : ""}
         </p>
         <input

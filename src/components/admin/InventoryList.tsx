@@ -128,19 +128,19 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
   const filtered = query !== "" || estado !== "todos" || soloSinCosto;
 
   const tone = (available: number) =>
-    available === 0 ? "text-red-500" : available <= 3 ? "text-[#A0647E]" : "text-green-700";
+    available === 0 ? "text-red-500" : available <= 3 ? "text-[#965C57]" : "text-green-700";
 
   return (
     <div>
-      <p className="text-sm text-[#6E6680] mb-5">
+      <p className="text-sm text-[#766A63] mb-5">
         {counts.agotados} agotados · {counts.bajo} con stock bajo · {counts.ok} OK
       </p>
 
       {/* Inventario valorizado */}
-      <section className="bg-white border border-[#E9DDE3] p-4 mb-5">
+      <section className="bg-white border border-[#E8DED4] p-4 mb-5">
         <div className="flex items-baseline justify-between gap-3 mb-3">
-          <h2 className="text-sm font-[600] text-[#1E1B2E] tracking-wide">Inventario valorizado</h2>
-          <span className="text-[10px] tracking-[0.15em] uppercase text-[#6E6680]">
+          <h2 className="text-sm font-[600] text-[#1F1B19] tracking-wide">Inventario valorizado</h2>
+          <span className="text-[10px] tracking-[0.15em] uppercase text-[#766A63]">
             {filtered ? `Filtrado · ${visible.length} variantes` : "Todo el inventario"}
           </span>
         </div>
@@ -154,20 +154,20 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
             { label: "Margen", value: `${totals.margin.toFixed(1)}%` },
           ].map((k) => (
             <div key={k.label}>
-              <dt className="text-[9px] tracking-[0.2em] uppercase text-[#6E6680]">{k.label}</dt>
-              <dd className="text-lg font-[600] text-[#1E1B2E]">{k.value}</dd>
+              <dt className="text-[9px] tracking-[0.2em] uppercase text-[#766A63]">{k.label}</dt>
+              <dd className="text-lg font-[600] text-[#1F1B19]">{k.value}</dd>
             </div>
           ))}
         </dl>
 
         {(totals.missingCost > 0 || soloSinCosto) && (
-          <p className="mt-3 text-xs text-[#6E6680]">
+          <p className="mt-3 text-xs text-[#766A63]">
             {totals.missingCost} variantes sin costo registrado no entran en el valor al costo, la
             ganancia ni el margen.{" "}
             <button
               type="button"
               onClick={() => setSoloSinCosto((x) => !x)}
-              className="underline text-[#1E1B2E]"
+              className="underline text-[#1F1B19]"
             >
               {soloSinCosto ? "Ver todas" : "Ver solo sin costo"}
             </button>
@@ -180,7 +180,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
         <Search
           size={16}
           strokeWidth={1.5}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6E6680] pointer-events-none"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-[#766A63] pointer-events-none"
         />
         <input
           type="text"
@@ -189,14 +189,14 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
           placeholder="Buscar por producto, SKU, talla o color"
           autoComplete="off"
           aria-label="Buscar en el inventario"
-          className="h-11 w-full border border-[#E9DDE3] bg-white pl-9 pr-11 text-sm text-[#1E1B2E] placeholder:text-[#6E6680]"
+          className="h-11 w-full border border-[#E8DED4] bg-white pl-9 pr-11 text-sm text-[#1F1B19] placeholder:text-[#766A63]"
         />
         {query && (
           <button
             type="button"
             onClick={() => setQuery("")}
             aria-label="Limpiar búsqueda"
-            className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-[#6E6680]"
+            className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-[#766A63]"
           >
             <X size={16} strokeWidth={1.5} />
           </button>
@@ -212,8 +212,8 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
             className={cn(
               "shrink-0 h-9 px-3 flex items-center border text-[10px] tracking-[0.15em] uppercase",
               estado === e.value
-                ? "bg-[#1E1B2E] border-[#1E1B2E] text-[#FAF6F7]"
-                : "bg-white border-[#E9DDE3] text-[#6E6680]"
+                ? "bg-[#1F1B19] border-[#1F1B19] text-[#F7F2EC]"
+                : "bg-white border-[#E8DED4] text-[#766A63]"
             )}
           >
             {e.label} ({counts[e.value]})
@@ -222,14 +222,14 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
       </div>
 
       {truncated && (
-        <p className="mb-4 text-xs text-[#6E6680] border border-[#E9DDE3] bg-white px-3 py-2">
+        <p className="mb-4 text-xs text-[#766A63] border border-[#E8DED4] bg-white px-3 py-2">
           Mostrando las primeras {rows.length} variantes ordenadas por menor stock. Si no
           encuentras una, refina la búsqueda desde Productos.
         </p>
       )}
 
       {visible.length === 0 ? (
-        <p className="text-sm text-[#6E6680] py-8 text-center border border-[#E9DDE3] bg-white">
+        <p className="text-sm text-[#766A63] py-8 text-center border border-[#E8DED4] bg-white">
           {query ? `Sin resultados para "${query}".` : "No hay variantes en este estado."}
         </p>
       ) : (
@@ -237,22 +237,22 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
           {/* Celular: una tarjeta por variante, sin scroll horizontal */}
           <div className="md:hidden space-y-3">
             {visible.map((v) => (
-              <div key={v.id} className="bg-white border border-[#E9DDE3] p-3">
+              <div key={v.id} className="bg-white border border-[#E8DED4] p-3">
                 <div className="flex gap-3">
                   <ProductThumb src={v.image} alt={v.productName} size="md" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-[#1E1B2E] leading-tight">{v.productName}</p>
-                    <p className="text-xs text-[#6E6680] mt-0.5">{attrsText(v.attributes)}</p>
-                    <p className="font-mono text-[10px] text-[#6E6680] mt-0.5 truncate">{v.sku}</p>
+                    <p className="text-[#1F1B19] leading-tight">{v.productName}</p>
+                    <p className="text-xs text-[#766A63] mt-0.5">{attrsText(v.attributes)}</p>
+                    <p className="font-mono text-[10px] text-[#766A63] mt-0.5 truncate">{v.sku}</p>
                     <p className="mt-1.5">
-                      <span className="text-[9px] tracking-[0.2em] uppercase text-[#6E6680] mr-2">
+                      <span className="text-[9px] tracking-[0.2em] uppercase text-[#766A63] mr-2">
                         Disponible
                       </span>
                       <span className={cn("text-lg font-[600]", tone(v.available))}>
                         {v.available}
                       </span>
                     </p>
-                    <p className="mt-1 text-xs text-[#6E6680]">
+                    <p className="mt-1 text-xs text-[#766A63]">
                       Venta {formatCOP(v.price)} ·{" "}
                       {v.cost === null ? (
                         <MissingCost productId={v.productId} />
@@ -273,14 +273,14 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
           </div>
 
           {/* Escritorio: tabla */}
-          <div className="hidden md:block bg-white border border-[#E9DDE3] overflow-x-auto">
+          <div className="hidden md:block bg-white border border-[#E8DED4] overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#E9DDE3]">
+                <tr className="border-b border-[#E8DED4]">
                   {["", "Producto", "Atributos", "SKU", "Costo", "Precio venta", "Margen", "Disponible", "Ajustar stock"].map((h, i) => (
                     <th
                       key={i}
-                      className="text-left text-[9px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] px-4 py-2"
+                      className="text-left text-[9px] tracking-[0.2em] uppercase text-[#766A63] font-[600] px-4 py-2"
                     >
                       {h}
                     </th>
@@ -289,17 +289,17 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
               </thead>
               <tbody>
                 {visible.map((v) => (
-                  <tr key={v.id} className="border-b border-[#FAF6F7] align-top">
+                  <tr key={v.id} className="border-b border-[#F7F2EC] align-top">
                     <td className="pl-4 py-3">
                       <ProductThumb src={v.image} alt={v.productName} />
                     </td>
-                    <td className="px-4 py-3 text-[#1E1B2E]">{v.productName}</td>
-                    <td className="px-4 py-3 text-xs text-[#6E6680]">{attrsText(v.attributes)}</td>
-                    <td className="px-4 py-3 font-mono text-xs text-[#6E6680]">{v.sku}</td>
-                    <td className="px-4 py-3 whitespace-nowrap text-[#1E1B2E]">
+                    <td className="px-4 py-3 text-[#1F1B19]">{v.productName}</td>
+                    <td className="px-4 py-3 text-xs text-[#766A63]">{attrsText(v.attributes)}</td>
+                    <td className="px-4 py-3 font-mono text-xs text-[#766A63]">{v.sku}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-[#1F1B19]">
                       {v.cost === null ? <MissingCost productId={v.productId} /> : formatCOP(v.cost)}
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-[#1E1B2E]">{formatCOP(v.price)}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-[#1F1B19]">{formatCOP(v.price)}</td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       {v.cost === null ? "—" : <Margin price={v.price} cost={v.cost} />}
                     </td>
@@ -328,9 +328,9 @@ function Margin({ price, cost }: { price: number; cost: number }) {
 }
 
 function MissingCost({ productId }: { productId: string | null }) {
-  if (!productId) return <span className="text-[#A0647E]">Sin costo</span>;
+  if (!productId) return <span className="text-[#965C57]">Sin costo</span>;
   return (
-    <Link href={`/admin/productos/${productId}`} className="text-[#A0647E] underline">
+    <Link href={`/admin/productos/${productId}`} className="text-[#965C57] underline">
       Sin costo
     </Link>
   );

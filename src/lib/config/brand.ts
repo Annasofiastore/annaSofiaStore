@@ -41,13 +41,13 @@ export const brand = {
   /** Correo de contacto público. */
   email: "hola@ejemplo.com",
   /** WhatsApp en formato internacional sin "+" ni espacios. */
-  whatsapp: "573000000000",
+  whatsapp: "573042114253",
 
   /** Redes sociales. Dejar en null las que la tienda no tenga. */
   social: {
-    instagram: null as string | null,
-    facebook: null as string | null,
-    tiktok: null as string | null,
+    instagram: "https://www.instagram.com/annasofiastore1" as string | null,
+    facebook: "https://www.facebook.com/profile.php?id=100067127897048" as string | null,
+    tiktok: "https://vt.tiktok.com/ZSgDMW1Aj/" as string | null,
   },
 
   /** Datos legales para términos, privacidad y facturación. */

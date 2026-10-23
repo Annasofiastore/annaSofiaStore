@@ -90,19 +90,19 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
           className={cn(
             "border-2 border-dashed rounded-none px-6 py-10 text-center cursor-pointer transition-colors",
             dragOver
-              ? "border-[#A0647E] bg-[#F2D4DC]/20"
-              : "border-[#E9DDE3] hover:border-[#6E6680] bg-[#FAF6F7]"
+              ? "border-[#965C57] bg-[#F2DCD6]/20"
+              : "border-[#E8DED4] hover:border-[#766A63] bg-[#F7F2EC]"
           )}
         >
           <Upload
             size={28}
             strokeWidth={1.5}
-            className={cn("mx-auto mb-3", dragOver ? "text-[#A0647E]" : "text-[#D9C3CE]")}
+            className={cn("mx-auto mb-3", dragOver ? "text-[#965C57]" : "text-[#DCCFC4]")}
           />
-          <p className="text-sm text-[#6E6680]">
+          <p className="text-sm text-[#766A63]">
             {uploading ? "Subiendo…" : "Arrastra imágenes aquí o haz clic para seleccionar"}
           </p>
-          <p className="text-xs text-[#D9C3CE] mt-1">
+          <p className="text-xs text-[#DCCFC4] mt-1">
             JPG, PNG, WEBP, HEIC · máx. 20 MB por imagen · {images.length}/{maxImages}
           </p>
           <input
@@ -117,7 +117,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
       )}
 
       {error && (
-        <p className="flex items-center gap-1.5 text-xs text-[#A0647E]">
+        <p className="flex items-center gap-1.5 text-xs text-[#965C57]">
           <AlertCircle size={13} /> {error}
         </p>
       )}
@@ -136,9 +136,9 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
               onDragEnd={() => { setDraggingIdx(null); setDragTargetIdx(null); }}
               className={cn(
                 "relative group aspect-[3/4] overflow-hidden border transition-all",
-                idx === 0 ? "border-[#1E1B2E]" : "border-[#E9DDE3]",
+                idx === 0 ? "border-[#1F1B19]" : "border-[#E8DED4]",
                 draggingIdx === idx && "opacity-40",
-                dragTargetIdx === idx && draggingIdx !== idx && "border-[#A0647E] scale-105"
+                dragTargetIdx === idx && draggingIdx !== idx && "border-[#965C57] scale-105"
               )}
             >
               <Image
@@ -157,7 +157,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
-                  className="text-white hover:text-[#F2D4DC]"
+                  className="text-white hover:text-[#F2DCD6]"
                   aria-label="Eliminar imagen"
                 >
                   <X size={14} />
@@ -166,7 +166,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
 
               {/* Badge principal */}
               {idx === 0 && (
-                <span className="absolute bottom-0 left-0 right-0 bg-[#1E1B2E]/80 text-[#FAF6F7] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
+                <span className="absolute bottom-0 left-0 right-0 bg-[#1F1B19]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
                   Principal
                 </span>
               )}
@@ -176,7 +176,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
       )}
 
       {images.length > 0 && (
-        <p className="text-[10px] text-[#6E6680]">
+        <p className="text-[10px] text-[#766A63]">
           Arrastra los thumbnails para reordenar. La primera imagen es la principal.
         </p>
       )}

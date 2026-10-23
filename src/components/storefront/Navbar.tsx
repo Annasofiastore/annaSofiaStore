@@ -67,8 +67,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-[#FAF6F7]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(30,27,46,0.12)]"
-          : "bg-[#FAF6F7] shadow-[0_2px_12px_rgba(30,27,46,0.08)]"
+          ? "bg-[#F7F2EC]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(31,27,25,0.12)]"
+          : "bg-[#F7F2EC] shadow-[0_2px_12px_rgba(31,27,25,0.08)]"
       )}
     >
       <div className="px-4 sm:px-6 lg:px-10">
@@ -79,7 +79,7 @@ export function Navbar() {
           <div className="flex items-center min-w-0">
             {/* Móvil y tablet (< 1280px): hamburger */}
             <button
-              className="xl:hidden text-[#1E1B2E] shrink-0"
+              className="xl:hidden text-[#1F1B19] shrink-0"
               aria-label="Menú"
               onClick={() => setMenuOpen((v) => !v)}
             >
@@ -95,10 +95,10 @@ export function Navbar() {
                   className={cn(
                     "text-[10px] 2xl:text-[11px] tracking-[0.15em] 2xl:tracking-[0.2em] uppercase font-[500] transition-colors duration-200 whitespace-nowrap",
                     pathname === link.href
-                      ? "text-[#1E1B2E]"
+                      ? "text-[#1F1B19]"
                       : link.hot
-                      ? "text-[#A0647E] hover:text-[#1E1B2E]"
-                      : "text-[#6E6680] hover:text-[#1E1B2E]"
+                      ? "text-[#965C57] hover:text-[#1F1B19]"
+                      : "text-[#766A63] hover:text-[#1F1B19]"
                   )}
                 >
                   {link.label}
@@ -110,7 +110,7 @@ export function Navbar() {
           {/* COLUMNA CENTRAL: Logo — siempre centrado */}
           <Link href="/" className="flex items-center justify-center px-3">
             <span
-              className="text-[28px] sm:text-[32px] text-[#1E1B2E] leading-none select-none whitespace-nowrap"
+              className="text-[28px] sm:text-[32px] text-[#1F1B19] leading-none select-none whitespace-nowrap"
               style={{ fontFamily: "var(--font-script)" }}
             >
               {storeName}
@@ -124,18 +124,18 @@ export function Navbar() {
               <button
                 aria-label="Buscar"
                 onClick={() => setSearchOpen(true)}
-                className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 <Search size={18} strokeWidth={1.5} />
               </button>
               <Link
                 href="/carrito"
                 aria-label={`Carrito (${itemCount} productos)`}
-                className="relative text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="relative text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 <ShoppingBag size={18} strokeWidth={1.5} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#A0647E] text-white text-[9px] font-[600] flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#965C57] text-white text-[9px] font-[600] flex items-center justify-center">
                     {itemCount > 9 ? "9+" : itemCount}
                   </span>
                 )}
@@ -147,7 +147,7 @@ export function Navbar() {
               <button
                 aria-label="Buscar"
                 onClick={() => setSearchOpen(true)}
-                className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 <Search size={18} strokeWidth={1.5} />
               </button>
@@ -155,7 +155,7 @@ export function Navbar() {
               <Link
                 href="/cuenta/wishlist"
                 aria-label="Wishlist"
-                className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 <Heart size={18} strokeWidth={1.5} />
               </Link>
@@ -163,7 +163,7 @@ export function Navbar() {
               <Link
                 href="/cuenta"
                 aria-label="Mi cuenta"
-                className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 <User size={18} strokeWidth={1.5} />
               </Link>
@@ -171,11 +171,11 @@ export function Navbar() {
               <Link
                 href="/carrito"
                 aria-label={`Carrito (${itemCount} productos)`}
-                className="relative text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="relative text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 <ShoppingBag size={18} strokeWidth={1.5} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#A0647E] text-white text-[9px] font-[600] flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#965C57] text-white text-[9px] font-[600] flex items-center justify-center">
                     {itemCount > 9 ? "9+" : itemCount}
                   </span>
                 )}
@@ -189,24 +189,24 @@ export function Navbar() {
       {searchOpen && (
         <div className="fixed inset-0 z-50 flex flex-col">
           <div
-            className="absolute inset-0 bg-[#1E1B2E]/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#1F1B19]/40 backdrop-blur-sm"
             onClick={() => setSearchOpen(false)}
           />
-          <div className="relative bg-[#FAF6F7] border-b border-[#E9DDE3] px-4 sm:px-8 py-5">
+          <div className="relative bg-[#F7F2EC] border-b border-[#E8DED4] px-4 sm:px-8 py-5">
             <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex items-center gap-4">
-              <Search size={18} className="text-[#6E6680] shrink-0" strokeWidth={1.5} />
+              <Search size={18} className="text-[#766A63] shrink-0" strokeWidth={1.5} />
               <input
                 ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar prendas..."
-                className="flex-1 bg-transparent text-lg text-[#1E1B2E] placeholder:text-[#D9C3CE] focus:outline-none"
+                className="flex-1 bg-transparent text-lg text-[#1F1B19] placeholder:text-[#DCCFC4] focus:outline-none"
               />
               <button
                 type="button"
                 onClick={() => setSearchOpen(false)}
-                className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
                 aria-label="Cerrar búsqueda"
               >
                 <X size={20} strokeWidth={1.5} />
@@ -218,7 +218,7 @@ export function Navbar() {
 
       {/* MENÚ MÓVIL/TABLET — drawer (< 1280px) */}
       {menuOpen && (
-        <div className="xl:hidden bg-[#FAF6F7] border-t border-[#E9DDE3] px-6 py-6 flex flex-col gap-5">
+        <div className="xl:hidden bg-[#F7F2EC] border-t border-[#E8DED4] px-6 py-6 flex flex-col gap-5">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -227,20 +227,20 @@ export function Navbar() {
               className={cn(
                 "text-[13px] tracking-[0.18em] uppercase font-[500]",
                 pathname === link.href
-                  ? "text-[#1E1B2E]"
+                  ? "text-[#1F1B19]"
                   : link.hot
-                  ? "text-[#A0647E]"
-                  : "text-[#6E6680]"
+                  ? "text-[#965C57]"
+                  : "text-[#766A63]"
               )}
             >
               {link.label}
             </Link>
           ))}
-          <div className="border-t border-[#E9DDE3] pt-5 flex gap-6">
-            <Link href="/cuenta/wishlist" onClick={() => setMenuOpen(false)} className="text-[#6E6680]">
+          <div className="border-t border-[#E8DED4] pt-5 flex gap-6">
+            <Link href="/cuenta/wishlist" onClick={() => setMenuOpen(false)} className="text-[#766A63]">
               <Heart size={20} strokeWidth={1.5} />
             </Link>
-            <Link href="/cuenta" onClick={() => setMenuOpen(false)} className="text-[#6E6680]">
+            <Link href="/cuenta" onClick={() => setMenuOpen(false)} className="text-[#766A63]">
               <User size={20} strokeWidth={1.5} />
             </Link>
           </div>

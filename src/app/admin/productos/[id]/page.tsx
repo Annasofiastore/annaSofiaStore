@@ -64,12 +64,12 @@ export default async function EditarProductoPage({ params }: Props) {
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1
-            className="text-3xl text-[#1E1B2E]"
+            className="text-3xl text-[#1F1B19]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Editar producto
           </h1>
-          <p className="text-sm text-[#6E6680] mt-1">{product.name}</p>
+          <p className="text-sm text-[#766A63] mt-1">{product.name}</p>
         </div>
         <ArchiveProductButton id={id} />
       </div>

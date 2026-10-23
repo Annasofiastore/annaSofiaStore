@@ -258,11 +258,11 @@ export default function CheckoutPage() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/carrito" className="text-[#6E6680] hover:text-[#1E1B2E] transition-colors">
+        <Link href="/carrito" className="text-[#766A63] hover:text-[#1F1B19] transition-colors">
           <ArrowLeft size={18} strokeWidth={1.5} />
         </Link>
         <h1
-          className="text-3xl text-[#1E1B2E]"
+          className="text-3xl text-[#1F1B19]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Checkout
@@ -278,15 +278,15 @@ export default function CheckoutPage() {
 
             {/* Banner cliente existente */}
             {existingCustomer && (
-              <div className="flex items-start gap-3 bg-white border border-[#F2D4DC] px-4 py-3.5">
-                <UserCheck size={16} className="text-[#A0647E] shrink-0 mt-0.5" strokeWidth={1.5} />
+              <div className="flex items-start gap-3 bg-white border border-[#F2DCD6] px-4 py-3.5">
+                <UserCheck size={16} className="text-[#965C57] shrink-0 mt-0.5" strokeWidth={1.5} />
                 <div className="flex-1">
-                  <p className="text-xs text-[#1E1B2E] font-[500]">¿Ya tienes cuenta en {storeName}?</p>
-                  <p className="text-[11px] text-[#6E6680] mt-0.5">Inicia sesión para cargar tus datos automáticamente.</p>
+                  <p className="text-xs text-[#1F1B19] font-[500]">¿Ya tienes cuenta en {storeName}?</p>
+                  <p className="text-[11px] text-[#766A63] mt-0.5">Inicia sesión para cargar tus datos automáticamente.</p>
                 </div>
                 <Link
                   href="/auth/login?redirect=/checkout"
-                  className="shrink-0 text-[10px] tracking-[0.12em] uppercase font-[600] text-[#A0647E] hover:text-[#1E1B2E] transition-colors whitespace-nowrap"
+                  className="shrink-0 text-[10px] tracking-[0.12em] uppercase font-[600] text-[#965C57] hover:text-[#1F1B19] transition-colors whitespace-nowrap"
                 >
                   Iniciar sesión
                 </Link>
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
                     id="id_type"
                     value={form.id_type}
                     onChange={(e) => set("id_type", e.target.value)}
-                    className="w-full border border-[#E9DDE3] bg-[#FAF6F7] px-3 py-2.5 text-sm text-[#1E1B2E] outline-none focus:border-[#6E6680] transition-colors"
+                    className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2.5 text-sm text-[#1F1B19] outline-none focus:border-[#766A63] transition-colors"
                   >
                     <option value="CC">CC</option>
                     <option value="CE">CE</option>
@@ -370,7 +370,7 @@ export default function CheckoutPage() {
                       setPaymentMethod("wompi");
                       setError(null);
                     }}
-                    className="w-full border border-[#E9DDE3] bg-[#FAF6F7] px-3 py-2.5 text-sm text-[#1E1B2E] outline-none focus:border-[#6E6680] transition-colors"
+                    className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2.5 text-sm text-[#1F1B19] outline-none focus:border-[#766A63] transition-colors"
                   >
                     <option value="">Seleccionar…</option>
                     {DEPARTAMENTOS.map((d) => (
@@ -384,7 +384,7 @@ export default function CheckoutPage() {
                     value={form.city}
                     disabled={!form.department}
                     onChange={(e) => set("city", e.target.value)}
-                    className="w-full border border-[#E9DDE3] bg-[#FAF6F7] px-3 py-2.5 text-sm text-[#1E1B2E] outline-none focus:border-[#6E6680] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2.5 text-sm text-[#1F1B19] outline-none focus:border-[#766A63] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option value="">
                       {form.department ? "Seleccionar…" : "Primero el departamento"}
@@ -410,13 +410,13 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={applyCoupon}
                   disabled={couponLoading || !!appliedPromotion}
-                  className="px-5 py-2.5 border border-[#E9DDE3] text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:border-[#6E6680] hover:text-[#1E1B2E] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed rounded-full"
+                  className="px-5 py-2.5 border border-[#E8DED4] text-[11px] tracking-[0.15em] uppercase text-[#766A63] hover:border-[#766A63] hover:text-[#1F1B19] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed rounded-full"
                 >
                   {couponLoading ? "…" : "Aplicar"}
                 </button>
               </div>
               {couponMsg && (
-                <p className={`text-xs mt-1.5 ${couponMsg.ok ? "text-green-700" : "text-[#A0647E]"}`}>
+                <p className={`text-xs mt-1.5 ${couponMsg.ok ? "text-green-700" : "text-[#965C57]"}`}>
                   {couponMsg.text}
                 </p>
               )}
@@ -426,22 +426,22 @@ export default function CheckoutPage() {
             {cityEligible && (
               <div className="space-y-3">
                 {/* Aviso entrega */}
-                <div className={`flex items-start gap-3 px-4 py-3 border ${sameDayStatus.beforeCutoff ? "bg-[#FAF6F7] border-[#D9C3CE]" : "bg-white border-[#E9DDE3]"}`}>
+                <div className={`flex items-start gap-3 px-4 py-3 border ${sameDayStatus.beforeCutoff ? "bg-[#F7F2EC] border-[#DCCFC4]" : "bg-white border-[#E8DED4]"}`}>
                   {sameDayStatus.beforeCutoff ? (
-                    <Clock size={15} className="text-[#6E6680] shrink-0 mt-0.5" strokeWidth={1.5} />
+                    <Clock size={15} className="text-[#766A63] shrink-0 mt-0.5" strokeWidth={1.5} />
                   ) : (
-                    <Truck size={15} className="text-[#D9C3CE] shrink-0 mt-0.5" strokeWidth={1.5} />
+                    <Truck size={15} className="text-[#DCCFC4] shrink-0 mt-0.5" strokeWidth={1.5} />
                   )}
                   <div>
                     {sameDayStatus.beforeCutoff ? (
                       <>
-                        <p className="text-xs font-[600] text-[#1E1B2E]">Entrega hoy en Cartagena</p>
-                        <p className="text-[11px] text-[#6E6680] mt-0.5">Pedidos antes de las 4:00 PM llegan antes de las 6:00 PM.</p>
+                        <p className="text-xs font-[600] text-[#1F1B19]">Entrega hoy en Cartagena</p>
+                        <p className="text-[11px] text-[#766A63] mt-0.5">Pedidos antes de las 4:00 PM llegan antes de las 6:00 PM.</p>
                       </>
                     ) : (
                       <>
-                        <p className="text-xs font-[600] text-[#6E6680]">Pedidos después de las 4:00 PM</p>
-                        <p className="text-[11px] text-[#6E6680] mt-0.5">Tu pedido llegará mañana en Cartagena o Turbaco.</p>
+                        <p className="text-xs font-[600] text-[#766A63]">Pedidos después de las 4:00 PM</p>
+                        <p className="text-[11px] text-[#766A63] mt-0.5">Tu pedido llegará mañana en Cartagena o Turbaco.</p>
                       </>
                     )}
                   </div>
@@ -449,33 +449,33 @@ export default function CheckoutPage() {
 
                 {/* Selector método de pago */}
                 <div className="space-y-2">
-                  <p className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600]">Método de pago</p>
-                  <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "wompi" ? "border-[#1E1B2E] bg-[#FAF6F7]" : "border-[#E9DDE3] bg-white hover:border-[#6E6680]"}`}>
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600]">Método de pago</p>
+                  <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "wompi" ? "border-[#1F1B19] bg-[#F7F2EC]" : "border-[#E8DED4] bg-white hover:border-[#766A63]"}`}>
                     <input
                       type="radio"
                       name="payment_method"
                       value="wompi"
                       checked={paymentMethod === "wompi"}
                       onChange={() => setPaymentMethod("wompi")}
-                      className="accent-[#1E1B2E]"
+                      className="accent-[#1F1B19]"
                     />
                     <div>
-                      <p className="text-sm text-[#1E1B2E] font-[500]">Tarjeta / PSE / Nequi</p>
-                      <p className="text-[11px] text-[#6E6680]">Pago en línea seguro via Wompi</p>
+                      <p className="text-sm text-[#1F1B19] font-[500]">Tarjeta / PSE / Nequi</p>
+                      <p className="text-[11px] text-[#766A63]">Pago en línea seguro via Wompi</p>
                     </div>
                   </label>
-                  <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "contraentrega" ? "border-[#1E1B2E] bg-[#FAF6F7]" : "border-[#E9DDE3] bg-white hover:border-[#6E6680]"}`}>
+                  <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "contraentrega" ? "border-[#1F1B19] bg-[#F7F2EC]" : "border-[#E8DED4] bg-white hover:border-[#766A63]"}`}>
                     <input
                       type="radio"
                       name="payment_method"
                       value="contraentrega"
                       checked={paymentMethod === "contraentrega"}
                       onChange={() => setPaymentMethod("contraentrega")}
-                      className="accent-[#1E1B2E]"
+                      className="accent-[#1F1B19]"
                     />
                     <div>
-                      <p className="text-sm text-[#1E1B2E] font-[500]">Contraentrega</p>
-                      <p className="text-[11px] text-[#6E6680]">Pagas en efectivo cuando recibas tu pedido</p>
+                      <p className="text-sm text-[#1F1B19] font-[500]">Contraentrega</p>
+                      <p className="text-[11px] text-[#766A63]">Pagas en efectivo cuando recibas tu pedido</p>
                     </div>
                   </label>
                 </div>
@@ -489,15 +489,15 @@ export default function CheckoutPage() {
                   type="checkbox"
                   checked={form.terms_accepted}
                   onChange={(e) => set("terms_accepted", e.target.checked)}
-                  className="mt-0.5 accent-[#1E1B2E]"
+                  className="mt-0.5 accent-[#1F1B19]"
                 />
-                <span className="text-xs text-[#6E6680] leading-relaxed">
+                <span className="text-xs text-[#766A63] leading-relaxed">
                   He leído y acepto los{" "}
-                  <Link href="/terminos" target="_blank" className="text-[#A0647E] underline underline-offset-2">
+                  <Link href="/terminos" target="_blank" className="text-[#965C57] underline underline-offset-2">
                     Términos y Condiciones
                   </Link>
                   , la{" "}
-                  <Link href="/privacidad" target="_blank" className="text-[#A0647E] underline underline-offset-2">
+                  <Link href="/privacidad" target="_blank" className="text-[#965C57] underline underline-offset-2">
                     Política de Privacidad
                   </Link>{" "}
                   y autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012.
@@ -508,16 +508,16 @@ export default function CheckoutPage() {
                   type="checkbox"
                   checked={form.save_address ?? false}
                   onChange={(e) => set("save_address", e.target.checked)}
-                  className="mt-0.5 accent-[#1E1B2E]"
+                  className="mt-0.5 accent-[#1F1B19]"
                 />
-                <span className="text-xs text-[#6E6680]">
+                <span className="text-xs text-[#766A63]">
                   Deseo recibir novedades y ofertas por correo electrónico.
                 </span>
               </label>
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 text-sm text-[#A0647E] bg-[#F2D4DC]/30 border border-[#F2D4DC] px-4 py-3">
+              <div className="flex items-center gap-2 text-sm text-[#965C57] bg-[#F2DCD6]/30 border border-[#F2DCD6] px-4 py-3">
                 <AlertCircle size={15} />
                 {error}
               </div>
@@ -526,7 +526,7 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] disabled:bg-[#D9C3CE] disabled:cursor-not-allowed transition-colors rounded-full"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#3A3431] disabled:bg-[#DCCFC4] disabled:cursor-not-allowed transition-colors rounded-full"
             >
               {paymentMethod === "contraentrega" ? (
                 <Truck size={13} strokeWidth={1.5} />
@@ -541,11 +541,11 @@ export default function CheckoutPage() {
             </button>
 
             {paymentMethod === "contraentrega" ? (
-              <p className="text-[10px] text-center text-[#6E6680] flex items-center justify-center gap-1.5">
+              <p className="text-[10px] text-center text-[#766A63] flex items-center justify-center gap-1.5">
                 <Truck size={10} /> Ten el efectivo listo cuando llegue tu domicilio
               </p>
             ) : (
-              <p className="text-[10px] text-center text-[#6E6680] flex items-center justify-center gap-1.5">
+              <p className="text-[10px] text-center text-[#766A63] flex items-center justify-center gap-1.5">
                 <Lock size={10} /> Pago seguro procesado por Wompi (Bancolombia)
               </p>
             )}
@@ -553,50 +553,50 @@ export default function CheckoutPage() {
 
           {/* ── RESUMEN ── */}
           <div className="lg:col-span-2">
-            <div className="bg-[#F2D4DC]/15 border border-[#E9DDE3] p-5 sticky top-24">
-              <h2 className="text-[10px] tracking-[0.25em] uppercase text-[#6E6680] font-[600] mb-4">
+            <div className="bg-[#F2DCD6]/15 border border-[#E8DED4] p-5 sticky top-24">
+              <h2 className="text-[10px] tracking-[0.25em] uppercase text-[#766A63] font-[600] mb-4">
                 Tu pedido ({items.length} {items.length === 1 ? "prenda" : "prendas"})
               </h2>
 
               <div className="space-y-3 mb-5">
                 {items.map((item) => (
                   <div key={item.variantId} className="flex justify-between gap-2 text-xs">
-                    <span className="text-[#1E1B2E] leading-snug">
+                    <span className="text-[#1F1B19] leading-snug">
                       {item.productName}{" "}
-                      <span className="text-[#6E6680]">× {item.quantity}</span>
+                      <span className="text-[#766A63]">× {item.quantity}</span>
                     </span>
-                    <span className="text-[#1E1B2E] font-[500] shrink-0">
+                    <span className="text-[#1F1B19] font-[500] shrink-0">
                       {formatCOP(item.unitPrice * item.quantity)}
                     </span>
                   </div>
                 ))}
               </div>
 
-              <div className="border-t border-[#E9DDE3] pt-4 space-y-2 text-sm">
-                <div className="flex justify-between text-[#6E6680]">
+              <div className="border-t border-[#E8DED4] pt-4 space-y-2 text-sm">
+                <div className="flex justify-between text-[#766A63]">
                   <span>Subtotal</span>
                   <span>{formatCOP(subtotal)}</span>
                 </div>
                 {discountAmount > 0 && (
-                  <div className="flex justify-between text-[#A0647E]">
+                  <div className="flex justify-between text-[#965C57]">
                     <span>Descuento</span>
                     <span>−{formatCOP(discountAmount)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-[#6E6680]">
+                <div className="flex justify-between text-[#766A63]">
                   <div>
                     <span>Envío</span>
                     {shippingZone && (
-                      <p className="text-[10px] text-[#D9C3CE]">{shippingZone.name}</p>
+                      <p className="text-[10px] text-[#DCCFC4]">{shippingZone.name}</p>
                     )}
                   </div>
                   <span className="text-right text-xs">
                     {shippingCost > 0 ? formatCOP(shippingCost) : (
-                      <span className="text-[#D9C3CE]">Selecciona ciudad</span>
+                      <span className="text-[#DCCFC4]">Selecciona ciudad</span>
                     )}
                   </span>
                 </div>
-                <div className="flex justify-between font-[600] text-[#1E1B2E] text-base pt-1 border-t border-[#E9DDE3]">
+                <div className="flex justify-between font-[600] text-[#1F1B19] text-base pt-1 border-t border-[#E8DED4]">
                   <span>Total</span>
                   <span>{formatCOP(total)}</span>
                 </div>
@@ -614,7 +614,7 @@ export default function CheckoutPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-4">
-      <h2 className="text-[10px] tracking-[0.25em] uppercase text-[#6E6680] font-[600] border-b border-[#E9DDE3] pb-2">
+      <h2 className="text-[10px] tracking-[0.25em] uppercase text-[#766A63] font-[600] border-b border-[#E8DED4] pb-2">
         {title}
       </h2>
       {children}
@@ -625,7 +625,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Field({ label, id, children }: { label: string; id: string; children: React.ReactNode }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-xs text-[#6E6680] mb-1.5 font-[500]">
+      <label htmlFor={id} className="block text-xs text-[#766A63] mb-1.5 font-[500]">
         {label}
       </label>
       {children}
@@ -644,7 +644,7 @@ function Input({
       id={id} type={type} value={value} autoComplete={autoComplete}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full border border-[#E9DDE3] bg-[#FAF6F7] px-3 py-2.5 text-sm text-[#1E1B2E] placeholder:text-[#D9C3CE] outline-none focus:border-[#6E6680] transition-colors"
+      className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2.5 text-sm text-[#1F1B19] placeholder:text-[#DCCFC4] outline-none focus:border-[#766A63] transition-colors"
     />
   );
 }
@@ -654,12 +654,12 @@ function WompiWidget({ data }: { data: NonNullable<ReturnType<typeof useState<an
     <div className="max-w-md mx-auto text-center py-16">
       <div className="mb-6">
         <h2
-          className="text-3xl text-[#1E1B2E] mb-2"
+          className="text-3xl text-[#1F1B19] mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Completa tu pago
         </h2>
-        <p className="text-sm text-[#6E6680]">
+        <p className="text-sm text-[#766A63]">
           Total a pagar: <strong>{formatCOP(data.amountInCents / 100)}</strong>
         </p>
       </div>
@@ -674,14 +674,14 @@ function WompiWidget({ data }: { data: NonNullable<ReturnType<typeof useState<an
 
         <button
           type="submit"
-          className="w-full py-4 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors flex items-center justify-center gap-2 rounded-full"
+          className="w-full py-4 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#3A3431] transition-colors flex items-center justify-center gap-2 rounded-full"
         >
           <Lock size={13} strokeWidth={1.5} />
           Pagar con Wompi
         </button>
       </form>
 
-      <p className="mt-4 text-[10px] text-[#6E6680]">
+      <p className="mt-4 text-[10px] text-[#766A63]">
         Tarjeta de crédito/débito · PSE · Nequi · Daviplata
       </p>
     </div>

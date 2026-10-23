@@ -3,22 +3,22 @@
 /* ── PALETA DE LA TIENDA ─────────────────────────────────── */
 @theme {
   /* Colores de marca */
-  --color-ivory:       #FAF6F7;
-  --color-sand:        #D9C3CE;
-  --color-taupe:       #6E6680;
-  --color-espresso:    #1E1B2E;
-  --color-dusty-rose:  #A0647E;
-  --color-blush:       #F2D4DC;
+  --color-ivory:       #F7F2EC;
+  --color-sand:        #DCCFC4;
+  --color-taupe:       #766A63;
+  --color-espresso:    #1F1B19;
+  --color-dusty-rose:  #965C57;
+  --color-blush:       #F2DCD6;
 
   /* Alias semánticos */
-  --color-background:  #FAF6F7;
-  --color-foreground:  #1E1B2E;
-  --color-primary:     #F2D4DC;
-  --color-primary-fg:  #1E1B2E;
-  --color-accent:      #A0647E;
-  --color-muted:       #D9C3CE;
-  --color-muted-fg:    #6E6680;
-  --color-border:      #E9DDE3;
+  --color-background:  #F7F2EC;
+  --color-foreground:  #1F1B19;
+  --color-primary:     #F2DCD6;
+  --color-primary-fg:  #1F1B19;
+  --color-accent:      #965C57;
+  --color-muted:       #DCCFC4;
+  --color-muted-fg:    #766A63;
+  --color-border:      #E8DED4;
 
   /* Tipografía — variables inyectadas por next/font/google en layout.tsx */
   --font-display: var(--font-lora), Georgia, serif;
@@ -32,8 +32,8 @@
   --radius-full: 9999px;
 
   /* Sombras suaves */
-  --shadow-card: 0 2px 16px rgba(30,27,46,0.07);
-  --shadow-modal: 0 8px 40px rgba(30,27,46,0.14);
+  --shadow-card: 0 2px 16px rgba(31,27,25,0.07);
+  --shadow-modal: 0 8px 40px rgba(31,27,25,0.14);
 }
 
 /* ── RESET Y BASE ────────────────────────────────────────── */

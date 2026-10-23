@@ -5,12 +5,12 @@ import { getStoreName } from "@/lib/config/store-name";
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   const storeName = await getStoreName();
   return (
-    <div className="min-h-screen bg-[#FAF6F7] flex flex-col">
+    <div className="min-h-screen bg-[#F7F2EC] flex flex-col">
       {/* Header minimal */}
-      <header className="py-6 px-8 border-b border-[#E9DDE3]">
+      <header className="py-6 px-8 border-b border-[#E8DED4]">
         <Link href="/" className="inline-block">
           <span
-            className="text-4xl text-[#1E1B2E]"
+            className="text-4xl text-[#1F1B19]"
             style={{ fontFamily: "var(--font-script)" }}
           >
             {storeName}
@@ -23,7 +23,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         {children}
       </main>
 
-      <footer className="py-4 text-center text-[10px] tracking-[0.15em] uppercase text-[#D9C3CE]">
+      <footer className="py-4 text-center text-[10px] tracking-[0.15em] uppercase text-[#DCCFC4]">
         © {new Date().getFullYear()} {storeName} · {location}
       </footer>
     </div>

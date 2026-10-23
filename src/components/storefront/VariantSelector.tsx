@@ -146,12 +146,12 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       {sizes.length > 0 && (
         <div>
           <div className="flex justify-between items-center mb-2.5">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600]">
+            <span className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600]">
               Talla{selectedSize ? `: ${selectedSize}` : ""}
             </span>
             <button
               onClick={() => setShowSizeGuide(true)}
-              className="text-[10px] text-[#A0647E] underline underline-offset-2"
+              className="text-[10px] text-[#965C57] underline underline-offset-2"
             >
               Guía de tallas
             </button>
@@ -167,10 +167,10 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
                   className={cn(
                     "min-w-11 h-11 px-3 rounded-full text-sm font-[500] border transition-colors",
                     selectedSize === size
-                      ? "border-[#1E1B2E] bg-[#1E1B2E] text-white"
+                      ? "border-[#1F1B19] bg-[#1F1B19] text-white"
                       : hasStock
-                      ? "border-[#E9DDE3] text-[#1E1B2E] hover:border-[#6E6680]"
-                      : "border-[#E9DDE3] text-[#D9C3CE] cursor-not-allowed line-through"
+                      ? "border-[#E8DED4] text-[#1F1B19] hover:border-[#766A63]"
+                      : "border-[#E8DED4] text-[#DCCFC4] cursor-not-allowed line-through"
                   )}
                 >
                   {size}
@@ -184,7 +184,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       {/* COLORES */}
       {colors.length > 0 && (
         <div>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] block mb-2.5">
+          <span className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600] block mb-2.5">
             Color{selectedColor ? `: ${selectedColor}` : ""}
           </span>
           <div className="flex flex-wrap gap-3">
@@ -202,13 +202,13 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
                   aria-label={color}
                   aria-pressed={selected}
                   className={cn(
-                    "relative w-9 h-9 rounded-full border border-[#1E1B2E]/15 transition-shadow",
-                    selected ? "ring-2 ring-offset-2 ring-offset-[#FAF6F7] ring-[#1E1B2E]" : "hover:ring-1 hover:ring-offset-2 hover:ring-[#6E6680]",
+                    "relative w-9 h-9 rounded-full border border-[#1F1B19]/15 transition-shadow",
+                    selected ? "ring-2 ring-offset-2 ring-offset-[#F7F2EC] ring-[#1F1B19]" : "hover:ring-1 hover:ring-offset-2 hover:ring-[#766A63]",
                     !hasStock && "opacity-35 cursor-not-allowed"
                   )}
                   style={{ backgroundColor: hex }}
                 >
-                  {!hasStock && <span className="absolute inset-0 m-auto w-full h-px bg-[#6E6680] rotate-45" />}
+                  {!hasStock && <span className="absolute inset-0 m-auto w-full h-px bg-[#766A63] rotate-45" />}
                 </button>
               ) : (
                 <button
@@ -218,10 +218,10 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
                   className={cn(
                     "px-4 h-9 rounded-full text-xs font-[400] border transition-colors",
                     selected
-                      ? "border-[#1E1B2E] bg-[#1E1B2E] text-white"
+                      ? "border-[#1F1B19] bg-[#1F1B19] text-white"
                       : hasStock
-                      ? "border-[#E9DDE3] text-[#1E1B2E] hover:border-[#6E6680]"
-                      : "border-[#E9DDE3] text-[#D9C3CE] cursor-not-allowed line-through"
+                      ? "border-[#E8DED4] text-[#1F1B19] hover:border-[#766A63]"
+                      : "border-[#E8DED4] text-[#DCCFC4] cursor-not-allowed line-through"
                   )}
                 >
                   {color}
@@ -235,28 +235,28 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       {/* CANTIDAD */}
       {!isSoldOut && selectedVariant && available > 0 && (
         <div>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-[#6E6680] font-[600] block mb-2.5">
+          <span className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600] block mb-2.5">
             Cantidad
           </span>
-          <div className="flex items-center border border-[#E9DDE3] rounded-full w-fit px-1">
+          <div className="flex items-center border border-[#E8DED4] rounded-full w-fit px-1">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="w-10 h-10 flex items-center justify-center text-[#6E6680] hover:text-[#1E1B2E] text-lg"
+              className="w-10 h-10 flex items-center justify-center text-[#766A63] hover:text-[#1F1B19] text-lg"
             >
               −
             </button>
-            <span className="w-10 text-center text-sm text-[#1E1B2E] font-[500]">
+            <span className="w-10 text-center text-sm text-[#1F1B19] font-[500]">
               {quantity}
             </span>
             <button
               onClick={() => setQuantity((q) => Math.min(available, q + 1))}
-              className="w-10 h-10 flex items-center justify-center text-[#6E6680] hover:text-[#1E1B2E] text-lg"
+              className="w-10 h-10 flex items-center justify-center text-[#766A63] hover:text-[#1F1B19] text-lg"
             >
               +
             </button>
           </div>
           {available <= 5 && (
-            <p className="text-xs text-[#A0647E] mt-1.5">
+            <p className="text-xs text-[#965C57] mt-1.5">
               Solo {available} disponibles
             </p>
           )}
@@ -268,7 +268,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
         {isSoldOut ? (
           <button
             disabled
-            className="w-full py-4 bg-[#D9C3CE] text-[#6E6680] text-[11px] tracking-[0.2em] uppercase font-[500] cursor-not-allowed rounded-full"
+            className="w-full py-4 bg-[#DCCFC4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] cursor-not-allowed rounded-full"
           >
             Agotado
           </button>
@@ -279,8 +279,8 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
             className={cn(
               "w-full py-4 flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-full",
               canAddToCart && !adding
-                ? "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#34304A]"
-                : "bg-[#D9C3CE] text-[#6E6680] cursor-not-allowed"
+                ? "bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#3A3431]"
+                : "bg-[#DCCFC4] text-[#766A63] cursor-not-allowed"
             )}
           >
             <ShoppingBag size={15} strokeWidth={1.5} />
@@ -294,8 +294,8 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
           className={cn(
             "w-full py-3 border flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-full",
             wishlisted
-              ? "border-[#A0647E] text-[#A0647E]"
-              : "border-[#E9DDE3] text-[#6E6680] hover:border-[#A0647E] hover:text-[#A0647E]"
+              ? "border-[#965C57] text-[#965C57]"
+              : "border-[#E8DED4] text-[#766A63] hover:border-[#965C57] hover:text-[#965C57]"
           )}
         >
           <Heart size={14} strokeWidth={1.5} fill={wishlisted ? "currentColor" : "none"} />
@@ -310,7 +310,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
         </p>
       )}
       {feedback === "error" && (
-        <p className="text-xs text-[#A0647E] flex items-center gap-1.5">
+        <p className="text-xs text-[#965C57] flex items-center gap-1.5">
           <AlertCircle size={12} />
           Sin stock disponible. Intenta de nuevo.
         </p>
@@ -320,19 +320,19 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       {!isSoldOut && (
         <div
           className={cn(
-            "lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#FAF6F7]/95 backdrop-blur border-t border-[#E9DDE3] shadow-[0_-4px_20px_rgba(30,27,46,0.08)]",
+            "lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#F7F2EC]/95 backdrop-blur border-t border-[#E8DED4] shadow-[0_-4px_20px_rgba(31,27,25,0.08)]",
             "pl-4 pr-24 py-3 flex items-center gap-3 transition-transform duration-300",
             showStickyBar ? "translate-y-0" : "translate-y-full"
           )}
         >
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-[#1E1B2E] truncate">{product.name}</p>
-            <p className="text-sm text-[#A0647E] font-[600]">{formatCOP(unitPrice)}</p>
+            <p className="text-xs text-[#1F1B19] truncate">{product.name}</p>
+            <p className="text-sm text-[#965C57] font-[600]">{formatCOP(unitPrice)}</p>
           </div>
           <button
             onClick={canAddToCart ? handleAddToCart : () => ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
             disabled={adding}
-            className="shrink-0 px-5 py-3 rounded-full bg-[#1E1B2E] text-[#FAF6F7] text-[10px] tracking-[0.18em] uppercase font-[600]"
+            className="shrink-0 px-5 py-3 rounded-full bg-[#1F1B19] text-[#F7F2EC] text-[10px] tracking-[0.18em] uppercase font-[600]"
           >
             {canAddToCart ? (adding ? "Añadiendo..." : "Añadir") : sizes.length && !selectedSize ? "Elegir talla" : colors.length && !selectedColor ? "Elegir color" : "Ver opciones"}
           </button>
@@ -351,7 +351,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
           >
             <button
               onClick={() => setShowSizeGuide(false)}
-              className="absolute top-3 right-3 text-[#6E6680] hover:text-[#1E1B2E] transition-colors z-10"
+              className="absolute top-3 right-3 text-[#766A63] hover:text-[#1F1B19] transition-colors z-10"
               aria-label="Cerrar"
             >
               <X size={20} strokeWidth={1.5} />

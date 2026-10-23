@@ -45,7 +45,7 @@ export function CatalogFilters({ categories, collections, occasions, current, on
       {hasFilters && (
         <button
           onClick={clearAll}
-          className="text-[10px] tracking-[0.2em] uppercase text-[#A0647E] hover:text-[#1E1B2E] font-[500] transition-colors"
+          className="text-[10px] tracking-[0.2em] uppercase text-[#965C57] hover:text-[#1F1B19] font-[500] transition-colors"
         >
           Limpiar filtros ×
         </button>
@@ -168,7 +168,7 @@ function FilterGroup({
 }) {
   return (
     <div>
-      <h4 className="text-[9px] tracking-[0.25em] uppercase text-[#6E6680] font-[600] mb-3">
+      <h4 className="text-[9px] tracking-[0.25em] uppercase text-[#766A63] font-[600] mb-3">
         {title}
       </h4>
       <div className="space-y-1.5">{children}</div>
@@ -191,8 +191,8 @@ function FilterOption({
       className={cn(
         "block w-full text-left text-xs py-1 transition-colors",
         active
-          ? "text-[#1E1B2E] font-[500]"
-          : "text-[#6E6680] hover:text-[#1E1B2E]"
+          ? "text-[#1F1B19] font-[500]"
+          : "text-[#766A63] hover:text-[#1F1B19]"
       )}
     >
       {active ? "→ " : ""}{label}

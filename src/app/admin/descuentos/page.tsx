@@ -33,7 +33,7 @@ const EMPTY: Omit<Promo, "id" | "used_count"> = {
   is_cumulative: false,
 };
 
-const INPUT = "w-full border border-[#e5e7eb] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#6E6680] transition-colors placeholder:text-gray-300";
+const INPUT = "w-full border border-[#e5e7eb] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-gray-300";
 const LABEL = "block text-xs font-[500] text-gray-500 mb-1";
 
 function promoStatus(p: Promo): { label: string; cls: string } {
@@ -127,7 +127,7 @@ export default function AdminDescuentosPage() {
         <h1 className="text-xl font-semibold text-gray-800">Descuentos y Cupones</h1>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1E1B2E] text-white text-xs rounded hover:bg-[#34304A] transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors"
         >
           <Plus size={14} /> Nuevo descuento
         </button>
@@ -233,7 +233,7 @@ export default function AdminDescuentosPage() {
                   type="checkbox"
                   checked={form.is_active}
                   onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-                  className="accent-[#1E1B2E]"
+                  className="accent-[#1F1B19]"
                 />
                 <span className="text-xs text-gray-600">Activo</span>
               </label>
@@ -242,7 +242,7 @@ export default function AdminDescuentosPage() {
                   type="checkbox"
                   checked={form.is_cumulative}
                   onChange={(e) => setForm({ ...form, is_cumulative: e.target.checked })}
-                  className="accent-[#1E1B2E]"
+                  className="accent-[#1F1B19]"
                 />
                 <span className="text-xs text-gray-600">Acumulable con otros descuentos</span>
               </label>
@@ -252,7 +252,7 @@ export default function AdminDescuentosPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2 bg-[#1E1B2E] text-white text-xs rounded hover:bg-[#34304A] disabled:opacity-50"
+                className="px-5 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>

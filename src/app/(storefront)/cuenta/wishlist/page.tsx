@@ -52,7 +52,7 @@ export default function WishlistPage() {
     return (
       <div className="space-y-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-24 bg-white border border-[#E9DDE3] animate-pulse" />
+          <div key={i} className="h-24 bg-white border border-[#E8DED4] animate-pulse" />
         ))}
       </div>
     );
@@ -61,19 +61,19 @@ export default function WishlistPage() {
   return (
     <div>
       <h2
-        className="text-xl text-[#1E1B2E] mb-5"
+        className="text-xl text-[#1F1B19] mb-5"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Wishlist
       </h2>
 
       {products.length === 0 ? (
-        <div className="bg-white border border-[#E9DDE3] py-16 text-center">
-          <Heart size={40} className="mx-auto mb-4 text-[#D9C3CE]" />
-          <p className="text-sm text-[#6E6680] mb-4">Tu wishlist está vacía.</p>
+        <div className="bg-white border border-[#E8DED4] py-16 text-center">
+          <Heart size={40} className="mx-auto mb-4 text-[#DCCFC4]" />
+          <p className="text-sm text-[#766A63] mb-4">Tu wishlist está vacía.</p>
           <Link
             href="/catalogo"
-            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1E1B2E] border-b border-[#1E1B2E] pb-0.5"
+            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1F1B19] border-b border-[#1F1B19] pb-0.5"
           >
             Explorar catálogo
           </Link>
@@ -87,10 +87,10 @@ export default function WishlistPage() {
             return (
               <div
                 key={p.id}
-                className="bg-white border border-[#E9DDE3] flex items-center gap-4 p-4"
+                className="bg-white border border-[#E8DED4] flex items-center gap-4 p-4"
               >
                 {/* Imagen */}
-                <div className="w-16 h-20 shrink-0 overflow-hidden bg-[#FAF6F7] relative">
+                <div className="w-16 h-20 shrink-0 overflow-hidden bg-[#F7F2EC] relative">
                   {img ? (
                     <Image
                       src={img}
@@ -101,7 +101,7 @@ export default function WishlistPage() {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-[#F2D4DC]/30" />
+                    <div className="w-full h-full bg-[#F2DCD6]/30" />
                   )}
                 </div>
 
@@ -109,22 +109,22 @@ export default function WishlistPage() {
                 <div className="flex-1 min-w-0">
                   <Link
                     href={`/producto/${p.slug}`}
-                    className="text-sm font-[500] text-[#1E1B2E] hover:text-[#A0647E] transition-colors line-clamp-2 block"
+                    className="text-sm font-[500] text-[#1F1B19] hover:text-[#965C57] transition-colors line-clamp-2 block"
                   >
                     {p.name}
                   </Link>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm font-[600] text-[#1E1B2E]">
+                    <span className="text-sm font-[600] text-[#1F1B19]">
                       {formatCOP(p.base_price)}
                     </span>
                     {p.compare_price && p.compare_price > p.base_price && (
-                      <span className="text-xs text-[#6E6680] line-through">
+                      <span className="text-xs text-[#766A63] line-through">
                         {formatCOP(p.compare_price)}
                       </span>
                     )}
                   </div>
                   {!isAvailable && (
-                    <span className="text-[10px] uppercase tracking-wide text-[#A0647E] font-[500] mt-1 block">
+                    <span className="text-[10px] uppercase tracking-wide text-[#965C57] font-[500] mt-1 block">
                       Agotado
                     </span>
                   )}
@@ -135,7 +135,7 @@ export default function WishlistPage() {
                   {isAvailable && (
                     <Link
                       href={`/producto/${p.slug}`}
-                      className="inline-flex items-center gap-1 px-3 py-2 bg-[#1E1B2E] text-[#FAF6F7] text-[10px] uppercase tracking-[0.12em] font-[500] hover:bg-[#A0647E] transition-colors rounded-full"
+                      className="inline-flex items-center gap-1 px-3 py-2 bg-[#1F1B19] text-[#F7F2EC] text-[10px] uppercase tracking-[0.12em] font-[500] hover:bg-[#965C57] transition-colors rounded-full"
                     >
                       <ShoppingBag size={11} /> Ver
                     </Link>
@@ -143,7 +143,7 @@ export default function WishlistPage() {
                   <button
                     onClick={() => toggle(p.id)}
                     title="Eliminar de wishlist"
-                    className="p-1.5 text-[#D9C3CE] hover:text-[#A0647E] transition-colors"
+                    className="p-1.5 text-[#DCCFC4] hover:text-[#965C57] transition-colors"
                   >
                     <Trash2 size={14} />
                   </button>

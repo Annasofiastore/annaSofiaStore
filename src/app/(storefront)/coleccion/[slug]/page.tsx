@@ -60,21 +60,21 @@ export default async function ColeccionPage({ params }: Props) {
         className="relative min-h-[40vh] flex items-end justify-start overflow-hidden"
         style={{
           background: collection.hero_url
-            ? `linear-gradient(to top, #1E1B2ECC, transparent), url(${collection.hero_url}) center/cover`
-            : "linear-gradient(135deg, #F2D4DC 0%, #FAF6F7 50%, #D9C3CE 100%)",
+            ? `linear-gradient(to top, #1F1B19CC, transparent), url(${collection.hero_url}) center/cover`
+            : "linear-gradient(135deg, #F2DCD6 0%, #F7F2EC 50%, #DCCFC4 100%)",
         }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10">
           <span
             className={`text-[10px] tracking-[0.28em] uppercase font-[500] ${
-              collection.hero_url ? "text-[#F2D4DC]" : "text-[#A0647E]"
+              collection.hero_url ? "text-[#F2DCD6]" : "text-[#965C57]"
             }`}
           >
             Colección
           </span>
           <h1
             className={`text-5xl mt-1 ${
-              collection.hero_url ? "text-white" : "text-[#1E1B2E]"
+              collection.hero_url ? "text-white" : "text-[#1F1B19]"
             }`}
             style={{ fontFamily: "var(--font-display)" }}
           >
@@ -83,7 +83,7 @@ export default async function ColeccionPage({ params }: Props) {
           {collection.description && (
             <p
               className={`text-sm mt-2 max-w-md font-[300] ${
-                collection.hero_url ? "text-[#FAF6F7]/80" : "text-[#6E6680]"
+                collection.hero_url ? "text-[#F7F2EC]/80" : "text-[#766A63]"
               }`}
             >
               {collection.description}
@@ -96,13 +96,13 @@ export default async function ColeccionPage({ params }: Props) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {products.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-sm text-[#6E6680]">
+            <p className="text-sm text-[#766A63]">
               Esta colección no tiene productos disponibles aún.
             </p>
           </div>
         ) : (
           <>
-            <p className="text-xs text-[#6E6680] mb-6">
+            <p className="text-xs text-[#766A63] mb-6">
               {products.length} {products.length === 1 ? "prenda" : "prendas"}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">

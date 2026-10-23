@@ -46,7 +46,7 @@ export function NewArrivals({
       {/* Encabezado: título y pestañas a la izquierda; flechas y "Ver todo" a la derecha */}
       <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 mb-8 sm:mb-10">
         <div className="min-w-0">
-          <h2 className="text-4xl sm:text-5xl text-[#1E1B2E]" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-4xl sm:text-5xl text-[#1F1B19]" style={{ fontFamily: "var(--font-display)" }}>
             {title}
           </h2>
           {tabs.length > 0 && (
@@ -59,8 +59,8 @@ export function NewArrivals({
                       "text-xs tracking-[0.2em] uppercase font-[500] transition-colors",
                       "px-3 py-1.5 border sm:px-0 sm:py-1 sm:border-0 sm:border-b",
                       active === t.slug
-                        ? "text-[#A0647E] border-[#A0647E]"
-                        : "text-[#1E1B2E] border-[#E9DDE3] sm:border-transparent hover:text-[#A0647E]"
+                        ? "text-[#965C57] border-[#965C57]"
+                        : "text-[#1F1B19] border-[#E8DED4] sm:border-transparent hover:text-[#965C57]"
                     )}
                   >
                     {t.name}
@@ -79,7 +79,7 @@ export function NewArrivals({
                   key={dir}
                   onClick={() => scroll(dir)}
                   aria-label={dir === 1 ? "Siguientes" : "Anteriores"}
-                  className="w-9 h-9 rounded-full border border-[#E9DDE3] text-[#1E1B2E] flex items-center justify-center hover:border-[#A0647E] hover:text-[#A0647E] transition-colors"
+                  className="w-9 h-9 rounded-full border border-[#E8DED4] text-[#1F1B19] flex items-center justify-center hover:border-[#965C57] hover:text-[#965C57] transition-colors"
                 >
                   {dir === 1 ? <ArrowRight size={14} /> : <ArrowLeft size={14} />}
                 </button>
@@ -88,7 +88,7 @@ export function NewArrivals({
           )}
           <Link
             href={href}
-            className="inline-flex items-center gap-1.5 text-xs tracking-[0.15em] uppercase text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs tracking-[0.15em] uppercase text-[#766A63] hover:text-[#1F1B19] transition-colors"
           >
             Ver todo <ArrowRight size={12} />
           </Link>
@@ -111,7 +111,7 @@ export function NewArrivals({
           ))}
         </div>
       ) : (
-        <p className="py-16 text-center text-sm text-[#6E6680]">Pronto tendremos novedades aquí.</p>
+        <p className="py-16 text-center text-sm text-[#766A63]">Pronto tendremos novedades aquí.</p>
       )}
     </div>
   );

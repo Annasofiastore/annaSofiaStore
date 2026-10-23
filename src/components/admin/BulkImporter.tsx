@@ -112,15 +112,15 @@ export function BulkImporter() {
   // ── Done ──────────────────────────────────────────────────────────────────
   if (step === "done" && result) {
     return (
-      <div className="bg-white border border-[#E9DDE3] p-8 space-y-6">
+      <div className="bg-white border border-[#E8DED4] p-8 space-y-6">
         <div className="flex items-center gap-3">
-          <CheckCircle size={24} className="text-[#1E1B2E] shrink-0" />
+          <CheckCircle size={24} className="text-[#1F1B19] shrink-0" />
           <div>
-            <p className="font-[500] text-[#1E1B2E]">
+            <p className="font-[500] text-[#1F1B19]">
               Importación completada: {result.created} de {result.total} productos creados.
             </p>
             {result.failed.length > 0 && (
-              <p className="text-xs text-[#A0647E] mt-0.5">
+              <p className="text-xs text-[#965C57] mt-0.5">
                 {result.failed.length} producto(s) no se pudieron crear.
               </p>
             )}
@@ -128,9 +128,9 @@ export function BulkImporter() {
         </div>
 
         {result.failed.length > 0 && (
-          <div className="border border-[#F2D4DC] bg-[#F2D4DC]/10 p-4 space-y-1.5">
+          <div className="border border-[#F2DCD6] bg-[#F2DCD6]/10 p-4 space-y-1.5">
             {result.failed.map((f, i) => (
-              <p key={i} className="text-xs text-[#A0647E]">
+              <p key={i} className="text-xs text-[#965C57]">
                 <span className="font-[500]">{f.nombre}:</span> {f.message}
               </p>
             ))}
@@ -140,13 +140,13 @@ export function BulkImporter() {
         <div className="flex gap-3">
           <a
             href="/admin/productos"
-            className="text-[11px] tracking-[0.18em] uppercase font-[600] px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#A0647E] transition-colors"
+            className="text-[11px] tracking-[0.18em] uppercase font-[600] px-6 py-2.5 bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#965C57] transition-colors"
           >
             Ver productos
           </a>
           <button
             onClick={reset}
-            className="text-xs text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+            className="text-xs text-[#766A63] hover:text-[#1F1B19] transition-colors"
           >
             Importar otro archivo
           </button>
@@ -159,26 +159,26 @@ export function BulkImporter() {
   if (step === "error") {
     return (
       <div className="space-y-4">
-        <div className="bg-white border border-[#F2D4DC] p-6 space-y-3">
-          <p className="flex items-center gap-2 font-[500] text-[#A0647E]">
+        <div className="bg-white border border-[#F2DCD6] p-6 space-y-3">
+          <p className="flex items-center gap-2 font-[500] text-[#965C57]">
             <AlertCircle size={16} /> El archivo tiene errores y no puede importarse.
           </p>
-          <div className="divide-y divide-[#FAF6F7]">
+          <div className="divide-y divide-[#F7F2EC]">
             {parseErrors.map((e, i) => (
               <div key={i} className="py-2 flex gap-4 text-xs">
                 {e.row > 0 && (
-                  <span className="text-[#D9C3CE] shrink-0 w-14">Fila {e.row}</span>
+                  <span className="text-[#DCCFC4] shrink-0 w-14">Fila {e.row}</span>
                 )}
-                <span className="text-[#6E6680] shrink-0 w-28">{e.column}</span>
-                <span className="text-[#1E1B2E]">{e.message}</span>
+                <span className="text-[#766A63] shrink-0 w-28">{e.column}</span>
+                <span className="text-[#1F1B19]">{e.message}</span>
               </div>
             ))}
           </div>
-          {globalError && <p className="text-xs text-[#A0647E]">{globalError}</p>}
+          {globalError && <p className="text-xs text-[#965C57]">{globalError}</p>}
         </div>
         <button
           onClick={reset}
-          className="text-xs text-[#6E6680] hover:text-[#1E1B2E] flex items-center gap-1.5"
+          className="text-xs text-[#766A63] hover:text-[#1F1B19] flex items-center gap-1.5"
         >
           <X size={12} /> Subir otro archivo
         </button>
@@ -193,25 +193,25 @@ export function BulkImporter() {
       <div className="space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-[500] text-[#1E1B2E]">
+            <p className="text-sm font-[500] text-[#1F1B19]">
               Vista previa: {preview.length} producto(s) · {totalVariants} variante(s)
             </p>
-            <p className="text-xs text-[#6E6680] mt-0.5">{fileName}</p>
+            <p className="text-xs text-[#766A63] mt-0.5">{fileName}</p>
           </div>
           <button
             onClick={reset}
-            className="text-xs text-[#6E6680] hover:text-[#1E1B2E] flex items-center gap-1"
+            className="text-xs text-[#766A63] hover:text-[#1F1B19] flex items-center gap-1"
           >
             <X size={12} /> Cancelar
           </button>
         </div>
 
-        <div className="bg-white border border-[#E9DDE3] overflow-x-auto">
+        <div className="bg-white border border-[#E8DED4] overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-[#E9DDE3]">
+              <tr className="border-b border-[#E8DED4]">
                 {["Nombre", "Precio base", "Estado", "Categorías", "Variantes"].map((h) => (
-                  <th key={h} className="text-left text-[9px] tracking-[0.18em] uppercase text-[#6E6680] font-[600] px-4 py-3 whitespace-nowrap">
+                  <th key={h} className="text-left text-[9px] tracking-[0.18em] uppercase text-[#766A63] font-[600] px-4 py-3 whitespace-nowrap">
                     {h}
                   </th>
                 ))}
@@ -219,24 +219,24 @@ export function BulkImporter() {
             </thead>
             <tbody>
               {preview.map((p, i) => (
-                <tr key={i} className="border-b border-[#FAF6F7] hover:bg-[#FAF6F7]/40 transition-colors">
-                  <td className="px-4 py-3 font-[500] text-[#1E1B2E] max-w-[200px]">{p.nombre}</td>
-                  <td className="px-4 py-3 text-[#6E6680]">{formatCOP(p.precio_base)}</td>
+                <tr key={i} className="border-b border-[#F7F2EC] hover:bg-[#F7F2EC]/40 transition-colors">
+                  <td className="px-4 py-3 font-[500] text-[#1F1B19] max-w-[200px]">{p.nombre}</td>
+                  <td className="px-4 py-3 text-[#766A63]">{formatCOP(p.precio_base)}</td>
                   <td className="px-4 py-3">
                     <span className={cn(
                       "text-[9px] px-2 py-0.5 rounded-full font-[600] tracking-wide uppercase",
-                      p.estado === "active" ? "bg-[#FAF6F7] text-[#1E1B2E]" : "bg-[#F2D4DC]/40 text-[#6E6680]"
+                      p.estado === "active" ? "bg-[#F7F2EC] text-[#1F1B19]" : "bg-[#F2DCD6]/40 text-[#766A63]"
                     )}>
                       {STATUS_LABEL[p.estado] ?? p.estado}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-[#6E6680]">
+                  <td className="px-4 py-3 text-[#766A63]">
                     {[...p.categorias, ...p.colecciones].join(", ") || "—"}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
                       {p.variants.map((v, j) => (
-                        <span key={j} className="text-[9px] px-1.5 py-0.5 bg-[#FAF6F7] text-[#6E6680] rounded">
+                        <span key={j} className="text-[9px] px-1.5 py-0.5 bg-[#F7F2EC] text-[#766A63] rounded">
                           {v.talla}/{v.color} ({v.stock})
                         </span>
                       ))}
@@ -255,8 +255,8 @@ export function BulkImporter() {
             className={cn(
               "text-[11px] tracking-[0.18em] uppercase font-[600] px-8 py-3 transition-colors",
               step === "importing"
-                ? "bg-[#D9C3CE] text-white cursor-not-allowed"
-                : "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#A0647E]"
+                ? "bg-[#DCCFC4] text-white cursor-not-allowed"
+                : "bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#965C57]"
             )}
           >
             {step === "importing" ? "Importando…" : `Confirmar e importar ${preview.length} producto(s)`}
@@ -264,7 +264,7 @@ export function BulkImporter() {
           <button
             onClick={reset}
             disabled={step === "importing"}
-            className="text-xs text-[#6E6680] hover:text-[#1E1B2E]"
+            className="text-xs text-[#766A63] hover:text-[#1F1B19]"
           >
             Cancelar
           </button>
@@ -284,19 +284,19 @@ export function BulkImporter() {
         className={cn(
           "border-2 border-dashed rounded-none px-6 py-16 text-center cursor-pointer transition-colors",
           dragOver
-            ? "border-[#A0647E] bg-[#F2D4DC]/20"
-            : "border-[#E9DDE3] hover:border-[#6E6680] bg-[#FAF6F7]"
+            ? "border-[#965C57] bg-[#F2DCD6]/20"
+            : "border-[#E8DED4] hover:border-[#766A63] bg-[#F7F2EC]"
         )}
       >
         <FileSpreadsheet
           size={36}
           strokeWidth={1.2}
-          className={cn("mx-auto mb-4", dragOver ? "text-[#A0647E]" : "text-[#D9C3CE]")}
+          className={cn("mx-auto mb-4", dragOver ? "text-[#965C57]" : "text-[#DCCFC4]")}
         />
-        <p className="text-sm text-[#6E6680] mb-1">
+        <p className="text-sm text-[#766A63] mb-1">
           Arrastra tu archivo aquí o haz clic para seleccionar
         </p>
-        <p className="text-xs text-[#D9C3CE]">Excel (.xlsx, .xls) o CSV · máx. 10 MB</p>
+        <p className="text-xs text-[#DCCFC4]">Excel (.xlsx, .xls) o CSV · máx. 10 MB</p>
         <input
           ref={inputRef}
           type="file"
@@ -310,14 +310,14 @@ export function BulkImporter() {
       </div>
 
       {/* Pasos de referencia */}
-      <div className="grid grid-cols-3 gap-4 text-xs text-[#6E6680]">
+      <div className="grid grid-cols-3 gap-4 text-xs text-[#766A63]">
         {[
           { n: "1", text: "Descarga la plantilla Excel con el formato correcto." },
           { n: "2", text: "Completa filas: cada fila = una variante (talla + color)." },
           { n: "3", text: "Sube el archivo y revisa la vista previa antes de confirmar." },
         ].map((s) => (
-          <div key={s.n} className="border border-[#E9DDE3] p-3 bg-white">
-            <span className="text-[10px] tracking-[0.15em] uppercase font-[600] text-[#D9C3CE] block mb-1">
+          <div key={s.n} className="border border-[#E8DED4] p-3 bg-white">
+            <span className="text-[10px] tracking-[0.15em] uppercase font-[600] text-[#DCCFC4] block mb-1">
               Paso {s.n}
             </span>
             <p>{s.text}</p>

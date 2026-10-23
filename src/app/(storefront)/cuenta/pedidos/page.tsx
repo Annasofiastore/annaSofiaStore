@@ -62,19 +62,19 @@ export default async function PedidosPage() {
   return (
     <div>
       <h2
-        className="text-xl text-[#1E1B2E] mb-5"
+        className="text-xl text-[#1F1B19] mb-5"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Mis pedidos
       </h2>
 
       {!orders?.length ? (
-        <div className="bg-white border border-[#E9DDE3] py-16 text-center">
-          <Package size={40} className="mx-auto mb-4 text-[#D9C3CE]" />
-          <p className="text-sm text-[#6E6680] mb-4">Aún no tienes pedidos.</p>
+        <div className="bg-white border border-[#E8DED4] py-16 text-center">
+          <Package size={40} className="mx-auto mb-4 text-[#DCCFC4]" />
+          <p className="text-sm text-[#766A63] mb-4">Aún no tienes pedidos.</p>
           <Link
             href="/catalogo"
-            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1E1B2E] border-b border-[#1E1B2E] pb-0.5"
+            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1F1B19] border-b border-[#1F1B19] pb-0.5"
           >
             Ir al catálogo
           </Link>
@@ -91,14 +91,14 @@ export default async function PedidosPage() {
               <Link
                 key={order.id}
                 href={`/cuenta/pedidos/${order.id}`}
-                className="block bg-white border border-[#E9DDE3] px-5 py-4 hover:border-[#A0647E] transition-colors group"
+                className="block bg-white border border-[#E8DED4] px-5 py-4 hover:border-[#965C57] transition-colors group"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-sm font-[600] text-[#1E1B2E] group-hover:text-[#A0647E] transition-colors">
+                    <p className="text-sm font-[600] text-[#1F1B19] group-hover:text-[#965C57] transition-colors">
                       {order.order_number}
                     </p>
-                    <p className="text-[11px] text-[#6E6680] mt-0.5">
+                    <p className="text-[11px] text-[#766A63] mt-0.5">
                       {formatDate(order.created_at)} · {order.shipping_city},{" "}
                       {order.shipping_department}
                     </p>
@@ -107,10 +107,10 @@ export default async function PedidosPage() {
                     <span className={`text-[10px] px-2.5 py-1 border font-[500] ${s.cls}`}>
                       {s.label}
                     </span>
-                    <p className="text-sm font-[600] text-[#1E1B2E]">{formatCOP(order.total)}</p>
+                    <p className="text-sm font-[600] text-[#1F1B19]">{formatCOP(order.total)}</p>
                     <ArrowRight
                       size={14}
-                      className="text-[#D9C3CE] group-hover:text-[#6E6680] transition-colors"
+                      className="text-[#DCCFC4] group-hover:text-[#766A63] transition-colors"
                     />
                   </div>
                 </div>

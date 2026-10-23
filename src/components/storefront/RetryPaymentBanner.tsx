@@ -18,13 +18,13 @@ export function RetryPaymentBanner({ orderId, createdAt }: Props) {
 
   if (isExpired) {
     return (
-      <div className="border border-[#E9DDE3] bg-[#FAF6F7]/40 px-5 py-5 mb-6 text-center">
-        <p className="text-sm text-[#6E6680] mb-3">
+      <div className="border border-[#E8DED4] bg-[#F7F2EC]/40 px-5 py-5 mb-6 text-center">
+        <p className="text-sm text-[#766A63] mb-3">
           El tiempo para completar el pago expiró. Este pedido será cancelado automáticamente.
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center justify-center px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
+          className="inline-flex items-center justify-center px-6 py-2.5 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#3A3431] transition-colors rounded-full"
         >
           Ver catálogo
         </Link>
@@ -80,15 +80,15 @@ export function RetryPaymentBanner({ orderId, createdAt }: Props) {
 
   return (
     <div className="border border-amber-200 bg-amber-50 px-5 py-5 mb-6 text-center">
-      <p className="text-sm text-[#1E1B2E] font-[500] mb-1">Pago pendiente</p>
-      <p className="text-xs text-[#6E6680] mb-4">
+      <p className="text-sm text-[#1F1B19] font-[500] mb-1">Pago pendiente</p>
+      <p className="text-xs text-[#766A63] mb-4">
         Tu pedido está reservado. Tienes unos minutos para completar el pago.
       </p>
       {error && <p className="text-xs text-red-600 mb-3">{error}</p>}
       <button
         onClick={handleRetry}
         disabled={retrying}
-        className="px-6 py-2.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#34304A] transition-colors disabled:opacity-50 rounded-full"
+        className="px-6 py-2.5 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#3A3431] transition-colors disabled:opacity-50 rounded-full"
       >
         {retrying ? "Preparando pago…" : "Completar pago"}
       </button>

@@ -151,11 +151,11 @@ export default async function CatalogoPage({ searchParams }: Props) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* ENCABEZADO */}
       <div className="text-center mb-10">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0647E] font-[500]">
+        <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
           {filters.coleccion ?? "Todas las prendas"}
         </span>
         <h1
-          className="text-5xl text-[#1E1B2E] mt-1"
+          className="text-5xl text-[#1F1B19] mt-1"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Catálogo
@@ -165,7 +165,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
       <div className="flex gap-8">
         {/* SIDEBAR FILTROS — solo desktop */}
         <aside className="hidden lg:block w-56 shrink-0">
-          <Suspense fallback={<div className="space-y-8 animate-pulse"><div className="h-4 bg-[#E9DDE3] rounded w-3/4"/><div className="h-4 bg-[#E9DDE3] rounded w-1/2"/></div>}>
+          <Suspense fallback={<div className="space-y-8 animate-pulse"><div className="h-4 bg-[#E8DED4] rounded w-3/4"/><div className="h-4 bg-[#E8DED4] rounded w-1/2"/></div>}>
             <CatalogFilters
               categories={filterOptions.categories}
               collections={filterOptions.collections}
@@ -192,7 +192,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
                   />
                 </Suspense>
               </div>
-              <p className="text-sm text-[#6E6680]">
+              <p className="text-sm text-[#766A63]">
                 {products.length} {products.length === 1 ? "prenda" : "prendas"}
               </p>
             </div>
@@ -202,12 +202,12 @@ export default async function CatalogoPage({ searchParams }: Props) {
           {products.length === 0 ? (
             <div className="text-center py-24">
               <p
-                className="text-2xl text-[#6E6680]"
+                className="text-2xl text-[#766A63]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Sin resultados
               </p>
-              <p className="text-sm text-[#6E6680] mt-2">
+              <p className="text-sm text-[#766A63] mt-2">
                 Prueba con otros filtros o busca algo diferente.
               </p>
             </div>

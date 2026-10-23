@@ -56,27 +56,27 @@ function LoginForm() {
     }
   }
 
-  const inputCls = "w-full border border-[#E9DDE3] bg-white px-4 py-3 text-sm text-[#1E1B2E] focus:outline-none focus:border-[#6E6680] transition-colors placeholder:text-[#D9C3CE]";
+  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
 
   return (
     <div className="w-full max-w-md">
       <div className="mb-8 text-center">
         <h1
-          className="text-3xl text-[#1E1B2E] mb-2"
+          className="text-3xl text-[#1F1B19] mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Bienvenida
         </h1>
-        <p className="text-sm text-[#6E6680]">Inicia sesión en tu cuenta</p>
+        <p className="text-sm text-[#766A63]">Inicia sesión en tu cuenta</p>
       </div>
 
-      <div className="bg-white border border-[#E9DDE3] p-8 space-y-5">
+      <div className="bg-white border border-[#E8DED4] p-8 space-y-5">
         {/* Google OAuth */}
         <button
           type="button"
           onClick={handleGoogle}
           disabled={googleLoading || loading}
-          className="w-full flex items-center justify-center gap-3 border border-[#E9DDE3] py-3 text-sm text-[#1E1B2E] hover:border-[#6E6680] transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 border border-[#E8DED4] py-3 text-sm text-[#1F1B19] hover:border-[#766A63] transition-colors disabled:opacity-50"
         >
           {/* Google icon SVG */}
           <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -89,15 +89,15 @@ function LoginForm() {
         </button>
 
         <div className="flex items-center gap-3">
-          <div className="flex-1 h-px bg-[#E9DDE3]" />
-          <span className="text-[10px] tracking-[0.15em] uppercase text-[#D9C3CE]">o</span>
-          <div className="flex-1 h-px bg-[#E9DDE3]" />
+          <div className="flex-1 h-px bg-[#E8DED4]" />
+          <span className="text-[10px] tracking-[0.15em] uppercase text-[#DCCFC4]">o</span>
+          <div className="flex-1 h-px bg-[#E8DED4]" />
         </div>
 
         {/* Email / Password */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[10px] tracking-[0.18em] uppercase text-[#6E6680] font-[600] mb-1.5">
+            <label className="block text-[10px] tracking-[0.18em] uppercase text-[#766A63] font-[600] mb-1.5">
               Email
             </label>
             <input
@@ -113,12 +113,12 @@ function LoginForm() {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-[10px] tracking-[0.18em] uppercase text-[#6E6680] font-[600]">
+              <label className="block text-[10px] tracking-[0.18em] uppercase text-[#766A63] font-[600]">
                 Contraseña
               </label>
               <Link
                 href="/auth/recuperar"
-                className="text-[10px] text-[#A0647E] hover:text-[#1E1B2E] transition-colors"
+                className="text-[10px] text-[#965C57] hover:text-[#1F1B19] transition-colors"
               >
                 ¿Olvidaste tu contraseña?
               </Link>
@@ -136,7 +136,7 @@ function LoginForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#D9C3CE] hover:text-[#6E6680]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#DCCFC4] hover:text-[#766A63]"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -144,7 +144,7 @@ function LoginForm() {
           </div>
 
           {error && (
-            <p className="text-xs text-[#A0647E] bg-[#F2D4DC]/20 border border-[#F2D4DC] px-3 py-2">
+            <p className="text-xs text-[#965C57] bg-[#F2DCD6]/20 border border-[#F2DCD6] px-3 py-2">
               {error}
             </p>
           )}
@@ -152,16 +152,16 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading || googleLoading}
-            className="w-full bg-[#1E1B2E] text-[#FAF6F7] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0647E] transition-colors disabled:opacity-50 rounded-full"
+            className="w-full bg-[#1F1B19] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#965C57] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Iniciando sesión…" : "Iniciar sesión"}
           </button>
         </form>
       </div>
 
-      <p className="text-center text-xs text-[#6E6680] mt-5">
+      <p className="text-center text-xs text-[#766A63] mt-5">
         ¿No tienes cuenta?{" "}
-        <Link href="/auth/registro" className="text-[#A0647E] hover:text-[#1E1B2E] transition-colors font-[500]">
+        <Link href="/auth/registro" className="text-[#965C57] hover:text-[#1F1B19] transition-colors font-[500]">
           Regístrate
         </Link>
       </p>

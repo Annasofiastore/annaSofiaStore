@@ -146,31 +146,31 @@ export default async function HomePage() {
       {/* ── HERO ───────────────────────────────────────────────── */}
       <section
         className={`relative min-h-[75vh] flex items-end overflow-hidden ${
-          hasSlides ? "bg-[#1E1B2E]" : "bg-[#FAF6F7]"
+          hasSlides ? "bg-[#1F1B19]" : "bg-[#F7F2EC]"
         }`}
       >
         {hasSlides ? (
           <HeroSlider slides={heroSlides} />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FAF6F7] via-[#F2D4DC]/20 to-[#D9C3CE]/30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#F7F2EC] via-[#F2DCD6]/20 to-[#DCCFC4]/30" />
         )}
 
         {/* Texto abajo a la izquierda, alineado con el contenido del resto de la página */}
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pb-20">
           <div
             className="max-w-2xl animate-hero-in"
-            style={hasSlides ? { textShadow: "0 2px 18px rgba(30,27,46,0.45)" } : undefined}
+            style={hasSlides ? { textShadow: "0 2px 18px rgba(31,27,25,0.45)" } : undefined}
           >
             <span
               className={`block text-xs tracking-[0.3em] uppercase font-[500] mb-5 ${
-                hasSlides ? "text-[#F2D4DC]" : "text-[#A0647E]"
+                hasSlides ? "text-[#F2DCD6]" : "text-[#965C57]"
               }`}
             >
               {hero.eyebrow}
             </span>
             <h1
               className={`text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-5 ${
-                hasSlides ? "text-white" : "text-[#1E1B2E]"
+                hasSlides ? "text-white" : "text-[#1F1B19]"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
             >
@@ -178,7 +178,7 @@ export default async function HomePage() {
             </h1>
             <p
               className={`text-base sm:text-lg leading-relaxed mb-9 max-w-lg ${
-                hasSlides ? "text-white/90" : "text-[#6E6680]"
+                hasSlides ? "text-white/90" : "text-[#766A63]"
               }`}
             >
               {hero.subtitle}
@@ -188,8 +188,8 @@ export default async function HomePage() {
                 href="/catalogo"
                 className={`inline-flex items-center gap-2 px-9 py-3.5 text-xs tracking-[0.2em] uppercase font-[600] transition-colors rounded-full ${
                   hasSlides
-                    ? "bg-white text-[#1E1B2E] hover:bg-[#F2D4DC]"
-                    : "bg-[#1E1B2E] text-[#FAF6F7] hover:bg-[#34304A]"
+                    ? "bg-white text-[#1F1B19] hover:bg-[#F2DCD6]"
+                    : "bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#3A3431]"
                 }`}
                 style={{ textShadow: "none" }}
               >
@@ -200,7 +200,7 @@ export default async function HomePage() {
                 className={`inline-flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase font-[500] border-b pb-1 transition-colors ${
                   hasSlides
                     ? "text-white border-white/60 hover:border-white"
-                    : "text-[#1E1B2E] border-[#1E1B2E]/40 hover:border-[#1E1B2E]"
+                    : "text-[#1F1B19] border-[#1F1B19]/40 hover:border-[#1F1B19]"
                 }`}
               >
                 Ver colecciones <ArrowRight size={12} />
@@ -214,7 +214,7 @@ export default async function HomePage() {
           href="#valores"
           aria-label="Ver más"
           className={`hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-float ${
-            hasSlides ? "text-white/80" : "text-[#6E6680]"
+            hasSlides ? "text-white/80" : "text-[#766A63]"
           }`}
         >
           <ChevronDown size={22} strokeWidth={1.5} />
@@ -225,14 +225,14 @@ export default async function HomePage() {
       <MarqueeStrip />
 
       {/* ── VALORES DE MARCA ───────────────────────────────────── */}
-      <section id="valores" className="bg-[#FAF6F7] border-b border-[#E9DDE3] px-4 sm:px-6 lg:px-8 py-20 sm:py-28 overflow-hidden scroll-mt-16">
+      <section id="valores" className="bg-[#F7F2EC] border-b border-[#E8DED4] px-4 sm:px-6 lg:px-8 py-20 sm:py-28 overflow-hidden scroll-mt-16">
         <div className="max-w-[1376px] mx-auto grid md:grid-cols-[2fr_3fr] gap-12 md:gap-20 items-center">
           <ScrollReveal variant="fadeUp">
-            <span className="text-xs tracking-[0.3em] uppercase text-[#A0647E] font-[500]">
+            <span className="text-xs tracking-[0.3em] uppercase text-[#965C57] font-[500]">
               Lo que nos define
             </span>
             <p
-              className="text-4xl sm:text-5xl lg:text-6xl text-[#1E1B2E] leading-[1.1] mt-5"
+              className="text-4xl sm:text-5xl lg:text-6xl text-[#1F1B19] leading-[1.1] mt-5"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Prendas que cuentan quién eres.
@@ -241,14 +241,14 @@ export default async function HomePage() {
           <StaggeredGrid className="grid sm:grid-cols-2 gap-x-14 gap-y-12" itemDelay={120}>
             {BRAND_VALUES.map((v) => (
               <div key={v.title}>
-                <div className="w-14 h-px bg-[#A0647E] mb-5" />
+                <div className="w-14 h-px bg-[#965C57] mb-5" />
                 <h3
-                  className="text-2xl sm:text-[28px] text-[#1E1B2E] mb-2.5"
+                  className="text-2xl sm:text-[28px] text-[#1F1B19] mb-2.5"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {v.title}
                 </h3>
-                <p className="text-sm sm:text-[15px] text-[#6E6680] leading-relaxed">{v.desc}</p>
+                <p className="text-sm sm:text-[15px] text-[#766A63] leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </StaggeredGrid>
@@ -266,7 +266,7 @@ export default async function HomePage() {
               <Link
                 key={c.id}
                 href={`/coleccion/${c.slug}`}
-                className="group relative block aspect-[4/3] overflow-hidden bg-[#1E1B2E]"
+                className="group relative block aspect-[4/3] overflow-hidden bg-[#1F1B19]"
               >
                 {c.hero_url && (
                   <Image
@@ -278,11 +278,11 @@ export default async function HomePage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 )}
-                <div className="absolute inset-0 bg-[#1E1B2E]/20 group-hover:bg-[#1E1B2E]/30 transition-colors" />
+                <div className="absolute inset-0 bg-[#1F1B19]/20 group-hover:bg-[#1F1B19]/30 transition-colors" />
                 {/* Marco interior */}
                 <div className="absolute inset-5 sm:inset-6 border border-white/80 flex items-center justify-center">
                   <span
-                    className={`text-2xl sm:text-3xl text-center px-4 ${c.hero_url ? "text-white" : "text-[#D29DB9]"}`}
+                    className={`text-2xl sm:text-3xl text-center px-4 ${c.hero_url ? "text-white" : "text-[#E3BDB6]"}`}
                     style={{ fontFamily: "var(--font-display)", textShadow: c.hero_url ? "0 1px 12px rgba(0,0,0,0.5)" : undefined }}
                   >
                     {c.name}
@@ -295,7 +295,7 @@ export default async function HomePage() {
             <div className="text-center mt-6">
               <Link
                 href="/colecciones"
-                className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#6E6680] hover:text-[#1E1B2E] transition-colors"
+                className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#766A63] hover:text-[#1F1B19] transition-colors"
               >
                 Ver todas las colecciones <ArrowRight size={12} />
               </Link>
@@ -315,7 +315,7 @@ export default async function HomePage() {
       <MarqueeStrip inverted />
 
       {/* ── CONÓCENOS ──────────────────────────────────────────── */}
-      <section className="bg-[#1E1B2E] px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="bg-[#1F1B19] px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="max-w-[1376px] mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
           {/* Foto completa, con su proporción original (sin recortes) */}
           <Image
@@ -328,18 +328,18 @@ export default async function HomePage() {
             unoptimized
           />
           <ScrollReveal variant="fadeUp">
-            <span className="text-xs tracking-[0.3em] uppercase text-[#D29DB9] font-[500]">
+            <span className="text-xs tracking-[0.3em] uppercase text-[#E3BDB6] font-[500]">
               Conócenos
             </span>
-            <h2 className="text-4xl sm:text-5xl text-[#FAF6F7] mt-4 mb-6" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="text-4xl sm:text-5xl text-[#F7F2EC] mt-4 mb-6" style={{ fontFamily: "var(--font-display)" }}>
               {nosotras.title}
             </h2>
-            <p className="text-[15px] text-[#D9C3CE] leading-relaxed mb-10 max-w-md">
+            <p className="text-[15px] text-[#DCCFC4] leading-relaxed mb-10 max-w-md">
               {nosotras.summary}
             </p>
             <Link
               href="/nosotras"
-              className="inline-flex items-center gap-2 px-8 py-3 border border-[#FAF6F7]/70 text-[#FAF6F7] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#FAF6F7] hover:text-[#1E1B2E] transition-colors rounded-full"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-[#F7F2EC]/70 text-[#F7F2EC] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#F7F2EC] hover:text-[#1F1B19] transition-colors rounded-full"
             >
               Nuestra historia <ArrowRight size={13} />
             </Link>
@@ -350,21 +350,21 @@ export default async function HomePage() {
       {/* ── CTA WISHLIST ───────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
         <ScrollReveal variant="scale" duration={800}>
-          <span className="block text-[10px] tracking-[0.3em] uppercase text-[#A0647E] font-[500] mb-4">
+          <span className="block text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500] mb-4">
             Tu lista de deseos
           </span>
           <h2
-            className="text-4xl sm:text-5xl text-[#1E1B2E] mb-4"
+            className="text-4xl sm:text-5xl text-[#1F1B19] mb-4"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Guarda tus favoritos
           </h2>
-          <p className="text-sm text-[#6E6680] mb-10 font-[300] max-w-sm mx-auto leading-relaxed">
+          <p className="text-sm text-[#766A63] mb-10 font-[300] max-w-sm mx-auto leading-relaxed">
             Añade prendas a tu wishlist y te avisamos cuando baje el precio.
           </p>
           <Link
             href="/cuenta/wishlist"
-            className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#1E1B2E] text-[#FAF6F7] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#34304A] transition-colors rounded-full"
+            className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#3A3431] transition-colors rounded-full"
           >
             Ver wishlist <ArrowRight size={12} />
           </Link>

@@ -50,14 +50,14 @@ export default async function NosotrasPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-[#F2D4DC]/30 py-24 px-4 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6F7] to-transparent opacity-60" />
+      <section className="relative bg-[#F2DCD6]/30 py-24 px-4 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F7F2EC] to-transparent opacity-60" />
         <div className="relative z-10 max-w-xl mx-auto">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0647E] font-[500]">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
             Nuestra historia
           </span>
           <h1
-            className="text-5xl text-[#1E1B2E] mt-3 mb-5 leading-tight"
+            className="text-5xl text-[#1F1B19] mt-3 mb-5 leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Conócenos
@@ -83,16 +83,16 @@ export default async function NosotrasPage() {
           </div>
 
           <div>
-            <span className="text-[10px] tracking-[0.28em] uppercase text-[#A0647E] font-[500]">
+            <span className="text-[10px] tracking-[0.28em] uppercase text-[#965C57] font-[500]">
               El origen
             </span>
             <h2
-              className="text-3xl text-[#1E1B2E] mt-2 mb-5"
+              className="text-3xl text-[#1F1B19] mt-2 mb-5"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {content.title}
             </h2>
-            <div className="space-y-4 text-sm text-[#6E6680] leading-loose font-[300]">
+            <div className="space-y-4 text-sm text-[#766A63] leading-loose font-[300]">
               {toParagraphs(content.body).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
@@ -102,14 +102,14 @@ export default async function NosotrasPage() {
       </section>
 
       {/* Valores */}
-      <section className="bg-[#FAF6F7] border-y border-[#E9DDE3] py-20 px-4">
+      <section className="bg-[#F7F2EC] border-y border-[#E8DED4] py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-[10px] tracking-[0.28em] uppercase text-[#A0647E] font-[500]">
+            <span className="text-[10px] tracking-[0.28em] uppercase text-[#965C57] font-[500]">
               Lo que nos define
             </span>
             <h2
-              className="text-4xl text-[#1E1B2E] mt-2"
+              className="text-4xl text-[#1F1B19] mt-2"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Nuestros valores
@@ -118,14 +118,14 @@ export default async function NosotrasPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {VALUES.map((v) => (
               <div key={v.title} className="text-center">
-                <div className="w-10 h-px bg-[#A0647E] mx-auto mb-4" />
+                <div className="w-10 h-px bg-[#965C57] mx-auto mb-4" />
                 <h3
-                  className="text-lg text-[#1E1B2E] mb-2"
+                  className="text-lg text-[#1F1B19] mb-2"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {v.title}
                 </h3>
-                <p className="text-xs text-[#6E6680] leading-relaxed">{v.desc}</p>
+                <p className="text-xs text-[#766A63] leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>
@@ -133,22 +133,22 @@ export default async function NosotrasPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#1E1B2E] py-20 px-4 text-center">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0647E] font-[500]">
+      <section className="bg-[#1F1B19] py-20 px-4 text-center">
+        <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
           Únete a nuestra comunidad
         </span>
         <h2
-          className="text-3xl text-[#FAF6F7] mt-3 mb-5"
+          className="text-3xl text-[#F7F2EC] mt-3 mb-5"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Viste con intención
         </h2>
-        <p className="text-sm text-[#D9C3CE] mb-8 font-[300] max-w-md mx-auto">
+        <p className="text-sm text-[#DCCFC4] mb-8 font-[300] max-w-md mx-auto">
           Descubre prendas curaduras para mujeres que saben lo que quieren.
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#F2D4DC] text-[#1E1B2E] text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#FAF6F7] transition-colors rounded-full"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-[#F2DCD6] text-[#1F1B19] text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#F7F2EC] transition-colors rounded-full"
         >
           Ver catálogo <ArrowRight size={13} />
         </Link>

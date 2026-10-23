@@ -8,7 +8,7 @@ import { slugify } from "@/lib/utils/format";
 type Category = { id: string; name: string; slug: string; description: string | null; sort_order: number };
 type Occasion = { id: string; name: string; slug: string; sort_order: number };
 
-const INPUT = "w-full border border-[#e5e7eb] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#6E6680] transition-colors placeholder:text-gray-300";
+const INPUT = "w-full border border-[#e5e7eb] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-gray-300";
 const LABEL = "block text-xs font-[500] text-gray-500 mb-1";
 
 function CrudSection<T extends { id: string; name: string; slug: string; sort_order: number }>({
@@ -84,7 +84,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
         <h2 className="text-base font-semibold text-gray-800">{title}</h2>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1E1B2E] text-white text-xs rounded hover:bg-[#34304A] transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors"
         >
           <Plus size={12} /> Nuevo
         </button>
@@ -138,7 +138,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
               <button
                 type="submit"
                 disabled={saving}
-                className="px-4 py-1.5 bg-[#1E1B2E] text-white text-xs rounded hover:bg-[#34304A] disabled:opacity-50"
+                className="px-4 py-1.5 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>
