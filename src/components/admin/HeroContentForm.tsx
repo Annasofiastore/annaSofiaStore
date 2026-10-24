@@ -8,10 +8,10 @@ type Content = { eyebrow: string; title: string; subtitle: string; cta: string }
 
 const FIELD = "mt-1 w-full border border-gray-200 rounded px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-gray-400";
 
-const FIELDS: { key: keyof Content; label: string; hint: string }[] = [
-  { key: "eyebrow", label: "Etiqueta", hint: "Texto pequeño sobre el título. Ej.: Nueva colección" },
+const FIELDS: { key: keyof Content; label: string; hint: string; optional?: boolean }[] = [
+  { key: "eyebrow", label: "Etiqueta", hint: "Texto pequeño sobre el título. Ej.: Nueva colección. Opcional: si lo dejas vacío no se muestra.", optional: true },
   { key: "title", label: "Título", hint: "El mensaje principal. Ej.: Vestidos para brillar esta noche" },
-  { key: "subtitle", label: "Frase", hint: "Una línea de apoyo debajo del título." },
+  { key: "subtitle", label: "Frase", hint: "Una línea de apoyo debajo del título. Opcional: si la dejas vacía no se muestra.", optional: true },
   { key: "cta", label: "Texto del botón", hint: "El botón lleva al catálogo. Ej.: Comprar ahora" },
 ];
 
@@ -49,15 +49,18 @@ export function HeroContentForm({
   return (
     <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded overflow-hidden">
       <div className="px-5 py-4 space-y-4">
-        {FIELDS.map(({ key, label, hint }) => (
+        {FIELDS.map(({ key, label, hint, optional }) => (
           <label key={key} className="block">
-            <span className="text-sm text-gray-700">{label}</span>
+            <span className="text-sm text-gray-700">
+              {label}
+              {optional && <span className="text-xs text-gray-400"> (opcional)</span>}
+            </span>
             <input
               type="text"
               value={form[key]}
               onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
               maxLength={limits[key]}
-              required
+              required={!optional}
               className={FIELD}
             />
             <span className="block text-xs text-gray-400 mt-1">{hint}</span>

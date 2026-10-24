@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { STORE_NAME_KEY, STORE_NAME_MAX_LENGTH, STORE_NAME_TAG } from "@/lib/config/store-name";
 import { NOSOTRAS_KEYS, NOSOTRAS_LIMITS, NOSOTRAS_TAG, type NosotrasContent } from "@/lib/config/nosotras";
-import { HERO_KEYS, HERO_LIMITS, HERO_TAG, type HeroContent } from "@/lib/config/hero";
+import { HERO_KEYS, HERO_LIMITS, HERO_OPTIONAL, HERO_TAG, type HeroContent } from "@/lib/config/hero";
 
 async function isAdmin(): Promise<boolean> {
   const supabase = await createClient();
@@ -80,7 +80,9 @@ export async function updateHeroContent(input: HeroContent): Promise<{ error?: s
   const clean = {} as HeroContent;
   for (const field of Object.keys(HERO_KEYS) as (keyof HeroContent)[]) {
     const value = input[field].trim().replace(/\s+/g, " ");
-    if (!value) return { error: "Completa todos los campos." };
+    if (!value && !(HERO_OPTIONAL as readonly string[]).includes(field)) {
+      return { error: `${HERO_LABELS[field]} es obligatorio.` };
+    }
     if (value.length > HERO_LIMITS[field]) {
       return { error: `${HERO_LABELS[field]} admite máximo ${HERO_LIMITS[field]} caracteres.` };
     }

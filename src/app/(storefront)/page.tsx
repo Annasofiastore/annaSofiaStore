@@ -176,28 +176,32 @@ export default async function HomePage() {
             className="max-w-2xl animate-hero-in"
             style={hasSlides ? { textShadow: "0 2px 18px rgba(31,27,25,0.45)" } : undefined}
           >
-            <span
-              className={`block text-xs tracking-[0.3em] uppercase font-[500] mb-5 ${
-                hasSlides ? "text-[#F2DCD6]" : "text-[#965C57]"
-              }`}
-            >
-              {hero.eyebrow}
-            </span>
+            {hero.eyebrow && (
+              <span
+                className={`block text-xs tracking-[0.3em] uppercase font-[500] mb-5 ${
+                  hasSlides ? "text-[#F2DCD6]" : "text-[#965C57]"
+                }`}
+              >
+                {hero.eyebrow}
+              </span>
+            )}
             <h1
-              className={`text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-5 ${
+              className={`text-5xl sm:text-6xl lg:text-7xl leading-[1.05] ${hero.subtitle ? "mb-5" : "mb-9"} ${
                 hasSlides ? "text-white" : "text-[#1F1B19]"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
             >
               {hero.title}
             </h1>
-            <p
-              className={`text-base sm:text-lg leading-relaxed mb-9 max-w-lg ${
-                hasSlides ? "text-white/90" : "text-[#766A63]"
-              }`}
-            >
-              {hero.subtitle}
-            </p>
+            {hero.subtitle && (
+              <p
+                className={`text-base sm:text-lg leading-relaxed mb-9 max-w-lg ${
+                  hasSlides ? "text-white/90" : "text-[#766A63]"
+                }`}
+              >
+                {hero.subtitle}
+              </p>
+            )}
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
               <Link
                 href="/catalogo"

@@ -18,6 +18,9 @@ export const HERO_KEYS = {
 
 export const HERO_LIMITS = { eyebrow: 40, title: 80, subtitle: 160, cta: 30 } as const;
 
+/** Opcionales: vacíos no se muestran (el título y el botón siempre usan respaldo). */
+export const HERO_OPTIONAL = ["eyebrow", "subtitle"] as const;
+
 export type HeroContent = { eyebrow: string; title: string; subtitle: string; cta: string };
 
 /** {tienda} se reemplaza por el nombre de la tienda. */
@@ -39,7 +42,10 @@ const getStoredHero = unstable_cache(
       const stored: Partial<HeroContent> = {};
       for (const [field, key] of Object.entries(HERO_KEYS) as [keyof HeroContent, string][]) {
         const value = byKey.get(key);
-        if (value) stored[field] = value;
+        // Un valor vacío guardado en un campo opcional significa "ocultar"
+        if (value || (value === "" && (HERO_OPTIONAL as readonly string[]).includes(field))) {
+          stored[field] = value;
+        }
       }
       return stored;
     } catch {
