@@ -23,12 +23,12 @@ export function CatalogMobileFilters({ categories, collections, occasions, curre
       {/* Botón disparador */}
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 border border-[#E8DED4] text-xs text-[#1F1B19] font-[500] tracking-[0.1em] uppercase hover:border-[#766A63] transition-colors relative rounded-full"
+        className="inline-flex items-center gap-2 px-4 py-2 border border-[#E8DED4] text-xs text-[#1C1B2E] font-[500] tracking-[0.1em] uppercase hover:border-[#766A63] transition-colors relative rounded-full"
       >
         <SlidersHorizontal size={13} strokeWidth={1.5} />
         Filtros
         {activeCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#965C57] text-white text-[9px] flex items-center justify-center font-[600]">
+          <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#A0526C] text-white text-[9px] flex items-center justify-center font-[600]">
             {activeCount}
           </span>
         )}
@@ -56,12 +56,12 @@ export function CatalogMobileFilters({ categories, collections, occasions, curre
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-[#F1E9E1]">
-          <span className="text-sm font-[600] text-[#1F1B19] tracking-[0.05em]">
-            Filtros {activeCount > 0 && <span className="text-[#965C57]">({activeCount})</span>}
+          <span className="text-sm font-[600] text-[#1C1B2E] tracking-[0.05em]">
+            Filtros {activeCount > 0 && <span className="text-[#A0526C]">({activeCount})</span>}
           </span>
           <button
             onClick={() => setOpen(false)}
-            className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
+            className="text-[#766A63] hover:text-[#1C1B2E] transition-colors"
           >
             <X size={18} strokeWidth={1.5} />
           </button>
@@ -82,7 +82,7 @@ export function CatalogMobileFilters({ categories, collections, occasions, curre
         <div className="px-5 py-4 border-t border-[#F1E9E1]">
           <button
             onClick={() => setOpen(false)}
-            className="w-full py-3 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#3A3431] transition-colors rounded-full"
+            className="w-full py-3 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors rounded-full"
           >
             Ver {totalProducts} {totalProducts === 1 ? "prenda" : "prendas"}
           </button>

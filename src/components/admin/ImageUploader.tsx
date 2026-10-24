@@ -90,14 +90,14 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
           className={cn(
             "border-2 border-dashed rounded-none px-6 py-10 text-center cursor-pointer transition-colors",
             dragOver
-              ? "border-[#965C57] bg-[#F2DCD6]/20"
+              ? "border-[#A0526C] bg-[#F5DDE5]/20"
               : "border-[#E8DED4] hover:border-[#766A63] bg-[#F7F2EC]"
           )}
         >
           <Upload
             size={28}
             strokeWidth={1.5}
-            className={cn("mx-auto mb-3", dragOver ? "text-[#965C57]" : "text-[#DCCFC4]")}
+            className={cn("mx-auto mb-3", dragOver ? "text-[#A0526C]" : "text-[#DCCFC4]")}
           />
           <p className="text-sm text-[#766A63]">
             {uploading ? "Subiendo…" : "Arrastra imágenes aquí o haz clic para seleccionar"}
@@ -117,7 +117,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
       )}
 
       {error && (
-        <p className="flex items-center gap-1.5 text-xs text-[#965C57]">
+        <p className="flex items-center gap-1.5 text-xs text-[#A0526C]">
           <AlertCircle size={13} /> {error}
         </p>
       )}
@@ -136,9 +136,9 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
               onDragEnd={() => { setDraggingIdx(null); setDragTargetIdx(null); }}
               className={cn(
                 "relative group aspect-[3/4] overflow-hidden border transition-all",
-                idx === 0 ? "border-[#1F1B19]" : "border-[#E8DED4]",
+                idx === 0 ? "border-[#1C1B2E]" : "border-[#E8DED4]",
                 draggingIdx === idx && "opacity-40",
-                dragTargetIdx === idx && draggingIdx !== idx && "border-[#965C57] scale-105"
+                dragTargetIdx === idx && draggingIdx !== idx && "border-[#A0526C] scale-105"
               )}
             >
               <Image
@@ -157,7 +157,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
-                  className="text-white hover:text-[#F2DCD6]"
+                  className="text-white hover:text-[#F5DDE5]"
                   aria-label="Eliminar imagen"
                 >
                   <X size={14} />
@@ -166,7 +166,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
 
               {/* Badge principal */}
               {idx === 0 && (
-                <span className="absolute bottom-0 left-0 right-0 bg-[#1F1B19]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
+                <span className="absolute bottom-0 left-0 right-0 bg-[#1C1B2E]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
                   Principal
                 </span>
               )}

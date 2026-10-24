@@ -50,7 +50,7 @@ export default async function AdminInventarioPage() {
   return (
     <div>
       <h1
-        className="text-2xl md:text-3xl text-[#1F1B19] mb-2"
+        className="text-2xl md:text-3xl text-[#1C1B2E] mb-2"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Inventario

@@ -127,7 +127,7 @@ export default function AdminDescuentosPage() {
         <h1 className="text-xl font-semibold text-gray-800">Descuentos y Cupones</h1>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors"
         >
           <Plus size={14} /> Nuevo descuento
         </button>
@@ -233,7 +233,7 @@ export default function AdminDescuentosPage() {
                   type="checkbox"
                   checked={form.is_active}
                   onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-                  className="accent-[#1F1B19]"
+                  className="accent-[#1C1B2E]"
                 />
                 <span className="text-xs text-gray-600">Activo</span>
               </label>
@@ -242,7 +242,7 @@ export default function AdminDescuentosPage() {
                   type="checkbox"
                   checked={form.is_cumulative}
                   onChange={(e) => setForm({ ...form, is_cumulative: e.target.checked })}
-                  className="accent-[#1F1B19]"
+                  className="accent-[#1C1B2E]"
                 />
                 <span className="text-xs text-gray-600">Acumulable con otros descuentos</span>
               </label>
@@ -252,7 +252,7 @@ export default function AdminDescuentosPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] disabled:opacity-50"
+                className="px-5 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>

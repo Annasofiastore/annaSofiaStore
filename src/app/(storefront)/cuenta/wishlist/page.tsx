@@ -61,7 +61,7 @@ export default function WishlistPage() {
   return (
     <div>
       <h2
-        className="text-xl text-[#1F1B19] mb-5"
+        className="text-xl text-[#1C1B2E] mb-5"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Wishlist
@@ -73,7 +73,7 @@ export default function WishlistPage() {
           <p className="text-sm text-[#766A63] mb-4">Tu wishlist está vacía.</p>
           <Link
             href="/catalogo"
-            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1F1B19] border-b border-[#1F1B19] pb-0.5"
+            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1C1B2E] border-b border-[#1C1B2E] pb-0.5"
           >
             Explorar catálogo
           </Link>
@@ -96,12 +96,11 @@ export default function WishlistPage() {
                       src={img}
                       alt={p.name}
                       fill
-                      unoptimized
                       sizes="64px"
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-[#F2DCD6]/30" />
+                    <div className="w-full h-full bg-[#F5DDE5]/30" />
                   )}
                 </div>
 
@@ -109,12 +108,12 @@ export default function WishlistPage() {
                 <div className="flex-1 min-w-0">
                   <Link
                     href={`/producto/${p.slug}`}
-                    className="text-sm font-[500] text-[#1F1B19] hover:text-[#965C57] transition-colors line-clamp-2 block"
+                    className="text-sm font-[500] text-[#1C1B2E] hover:text-[#A0526C] transition-colors line-clamp-2 block"
                   >
                     {p.name}
                   </Link>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm font-[600] text-[#1F1B19]">
+                    <span className="text-sm font-[600] text-[#1C1B2E]">
                       {formatCOP(p.base_price)}
                     </span>
                     {p.compare_price && p.compare_price > p.base_price && (
@@ -124,7 +123,7 @@ export default function WishlistPage() {
                     )}
                   </div>
                   {!isAvailable && (
-                    <span className="text-[10px] uppercase tracking-wide text-[#965C57] font-[500] mt-1 block">
+                    <span className="text-[10px] uppercase tracking-wide text-[#A0526C] font-[500] mt-1 block">
                       Agotado
                     </span>
                   )}
@@ -135,7 +134,7 @@ export default function WishlistPage() {
                   {isAvailable && (
                     <Link
                       href={`/producto/${p.slug}`}
-                      className="inline-flex items-center gap-1 px-3 py-2 bg-[#1F1B19] text-[#F7F2EC] text-[10px] uppercase tracking-[0.12em] font-[500] hover:bg-[#965C57] transition-colors rounded-full"
+                      className="inline-flex items-center gap-1 px-3 py-2 bg-[#1C1B2E] text-[#F7F2EC] text-[10px] uppercase tracking-[0.12em] font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
                     >
                       <ShoppingBag size={11} /> Ver
                     </Link>
@@ -143,7 +142,7 @@ export default function WishlistPage() {
                   <button
                     onClick={() => toggle(p.id)}
                     title="Eliminar de wishlist"
-                    className="p-1.5 text-[#DCCFC4] hover:text-[#965C57] transition-colors"
+                    className="p-1.5 text-[#DCCFC4] hover:text-[#A0526C] transition-colors"
                   >
                     <Trash2 size={14} />
                   </button>

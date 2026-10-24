@@ -60,7 +60,7 @@ const STATUS_BADGE: Record<string, string> = {
   paid: "bg-green-100 text-green-800",
   preparing: "bg-blue-100 text-blue-800",
   shipped: "bg-purple-100 text-purple-800",
-  delivered: "bg-[#F2DCD6] text-[#1F1B19]",
+  delivered: "bg-[#F5DDE5] text-[#1C1B2E]",
   cancelled: "bg-red-100 text-red-700",
 };
 const STATUS_LABEL: Record<string, string> = {
@@ -81,7 +81,7 @@ export default async function AdminDashboard() {
       {/* Header */}
       <div className="mb-8">
         <h1
-          className="text-3xl text-[#1F1B19]"
+          className="text-3xl text-[#1C1B2E]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Dashboard
@@ -95,26 +95,26 @@ export default async function AdminDashboard() {
           title="Ventas hoy"
           value={formatCOP(stats.todaySales)}
           sub={`${stats.todayOrders} pedidos`}
-          icon={<DollarSign size={20} strokeWidth={1.5} className="text-[#965C57]" />}
+          icon={<DollarSign size={20} strokeWidth={1.5} className="text-[#A0526C]" />}
         />
         <StatCard
           title="Ventas del mes"
           value={formatCOP(stats.monthSales)}
           sub={`${stats.monthOrders} pedidos`}
-          icon={<DollarSign size={20} strokeWidth={1.5} className="text-[#965C57]" />}
+          icon={<DollarSign size={20} strokeWidth={1.5} className="text-[#A0526C]" />}
         />
         <StatCard
           title="Pedidos pendientes"
           value={String(stats.pendingOrders)}
           sub="por despachar"
-          icon={<ShoppingBag size={20} strokeWidth={1.5} className="text-[#965C57]" />}
+          icon={<ShoppingBag size={20} strokeWidth={1.5} className="text-[#A0526C]" />}
           alert={stats.pendingOrders > 0}
         />
         <StatCard
           title="Clientas totales"
           value={String(stats.totalCustomers)}
           sub="registradas + invitadas"
-          icon={<Users size={20} strokeWidth={1.5} className="text-[#965C57]" />}
+          icon={<Users size={20} strokeWidth={1.5} className="text-[#A0526C]" />}
         />
       </div>
 
@@ -125,7 +125,7 @@ export default async function AdminDashboard() {
             <h2 className="text-[10px] tracking-[0.25em] uppercase text-[#766A63] font-[600]">
               Pedidos recientes
             </h2>
-            <a href="/admin/pedidos" className="text-xs text-[#965C57] hover:text-[#1F1B19]">
+            <a href="/admin/pedidos" className="text-xs text-[#A0526C] hover:text-[#1C1B2E]">
               Ver todos →
             </a>
           </div>
@@ -137,14 +137,14 @@ export default async function AdminDashboard() {
                 className={`flex items-center justify-between py-3 hover:bg-[#F7F2EC] -mx-2 px-2 transition-colors ${idx !== 0 ? "border-t border-[#F7F2EC]" : ""}`}
               >
                 <div>
-                  <p className="text-sm text-[#1F1B19] font-[500]">{order.order_number}</p>
+                  <p className="text-sm text-[#1C1B2E] font-[500]">{order.order_number}</p>
                   <p className="text-xs text-[#766A63]">{order.shipping_name}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className={`text-[9px] px-2 py-0.5 rounded-full font-[600] tracking-wide uppercase ${STATUS_BADGE[order.status] ?? "bg-gray-100 text-gray-600"}`}>
                     {STATUS_LABEL[order.status] ?? order.status}
                   </span>
-                  <span className="text-sm text-[#1F1B19] font-[500]">
+                  <span className="text-sm text-[#1C1B2E] font-[500]">
                     {formatCOP(order.total)}
                   </span>
                 </div>
@@ -164,9 +164,9 @@ export default async function AdminDashboard() {
             <div className="space-y-3">
               {stats.lowStock.map((v: any) => (
                 <div key={v.id} className="flex items-start gap-2">
-                  <AlertTriangle size={14} className="text-[#965C57] shrink-0 mt-0.5" strokeWidth={1.5} />
+                  <AlertTriangle size={14} className="text-[#A0526C] shrink-0 mt-0.5" strokeWidth={1.5} />
                   <div>
-                    <p className="text-xs text-[#1F1B19] font-[500] leading-snug">
+                    <p className="text-xs text-[#1C1B2E] font-[500] leading-snug">
                       {v.products?.name ?? v.sku}
                     </p>
                     <p className="text-[10px] text-[#766A63]">
@@ -179,7 +179,7 @@ export default async function AdminDashboard() {
           )}
           <a
             href="/admin/inventario"
-            className="block mt-4 text-xs text-[#965C57] hover:text-[#1F1B19]"
+            className="block mt-4 text-xs text-[#A0526C] hover:text-[#1C1B2E]"
           >
             Ver inventario completo →
           </a>
@@ -195,12 +195,12 @@ function StatCard({
   title: string; value: string; sub: string; icon: React.ReactNode; alert?: boolean;
 }) {
   return (
-    <div className={`bg-white border p-5 ${alert ? "border-[#965C57]" : "border-[#E8DED4]"}`}>
+    <div className={`bg-white border p-5 ${alert ? "border-[#A0526C]" : "border-[#E8DED4]"}`}>
       <div className="flex justify-between items-start mb-3">
         <p className="text-[9px] tracking-[0.2em] uppercase text-[#766A63] font-[600]">{title}</p>
         {icon}
       </div>
-      <p className="text-2xl text-[#1F1B19] font-[600] leading-none mb-1">{value}</p>
+      <p className="text-2xl text-[#1C1B2E] font-[600] leading-none mb-1">{value}</p>
       <p className="text-xs text-[#766A63]">{sub}</p>
     </div>
   );

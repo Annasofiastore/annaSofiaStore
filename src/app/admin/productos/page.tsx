@@ -6,8 +6,8 @@ import { ProductThumb } from "@/components/admin/ProductThumb";
 import { getStoreName } from "@/lib/config/store-name";
 
 const STATUS_BADGE: Record<string, string> = {
-  active: "bg-[#F7F2EC] text-[#1F1B19]",
-  draft: "bg-[#F2DCD6]/40 text-[#766A63]",
+  active: "bg-[#F7F2EC] text-[#1C1B2E]",
+  draft: "bg-[#F5DDE5]/40 text-[#766A63]",
   archived: "bg-gray-100 text-gray-400",
 };
 const STATUS_LABEL: Record<string, string> = {
@@ -29,7 +29,7 @@ export default async function AdminProductosPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1
-          className="text-3xl text-[#1F1B19]"
+          className="text-3xl text-[#1C1B2E]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Productos
@@ -37,13 +37,13 @@ export default async function AdminProductosPage() {
         <div className="flex gap-3">
           <Link
             href="/admin/productos/importar"
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#E8DED4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] hover:border-[#766A63] hover:text-[#1F1B19] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#E8DED4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] hover:border-[#766A63] hover:text-[#1C1B2E] transition-colors"
           >
             Carga masiva
           </Link>
           <Link
             href="/admin/productos/nuevo"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#3A3431] transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors"
           >
             <Plus size={14} /> Nuevo producto
           </Link>
@@ -73,7 +73,7 @@ export default async function AdminProductosPage() {
                     {product.images?.[0] ? (
                       <ProductThumb src={product.images[0]} alt={product.name} />
                     ) : (
-                      <div className="w-10 h-12 bg-[#F2DCD6]/20 flex items-center justify-center">
+                      <div className="w-10 h-12 bg-[#F5DDE5]/20 flex items-center justify-center">
                         <span className="text-[10px] text-[#766A63]"
                           style={{ fontFamily: "var(--font-display)" }}>
                           {monogram}
@@ -82,12 +82,12 @@ export default async function AdminProductosPage() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    <p className="font-[500] text-[#1F1B19]">{product.name}</p>
+                    <p className="font-[500] text-[#1C1B2E]">{product.name}</p>
                     <p className="text-xs text-[#766A63]">{product.slug}</p>
                   </td>
-                  <td className="px-4 py-3 text-[#1F1B19]">{formatCOP(product.base_price)}</td>
+                  <td className="px-4 py-3 text-[#1C1B2E]">{formatCOP(product.base_price)}</td>
                   <td className="px-4 py-3">
-                    <span className={totalStock === 0 ? "text-[#965C57] font-[500]" : "text-[#1F1B19]"}>
+                    <span className={totalStock === 0 ? "text-[#A0526C] font-[500]" : "text-[#1C1B2E]"}>
                       {totalStock === 0 ? "Agotado" : `${totalStock} uds`}
                     </span>
                   </td>
@@ -99,7 +99,7 @@ export default async function AdminProductosPage() {
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/productos/${product.id}`}
-                      className="text-xs text-[#965C57] hover:text-[#1F1B19] font-[500]"
+                      className="text-xs text-[#A0526C] hover:text-[#1C1B2E] font-[500]"
                     >
                       Editar →
                     </Link>
@@ -112,7 +112,7 @@ export default async function AdminProductosPage() {
         {!products?.length && (
           <div className="py-16 text-center text-[#766A63] text-sm">
             Aún no hay productos.{" "}
-            <Link href="/admin/productos/nuevo" className="text-[#965C57] underline">
+            <Link href="/admin/productos/nuevo" className="text-[#A0526C] underline">
               Crea el primero
             </Link>
           </div>

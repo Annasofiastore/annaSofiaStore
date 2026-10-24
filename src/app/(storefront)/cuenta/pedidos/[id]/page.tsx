@@ -78,7 +78,7 @@ export default async function PedidoDetallePage({
     <div>
       <Link
         href="/cuenta/pedidos"
-        className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.15em] text-[#766A63] hover:text-[#1F1B19] mb-5 transition-colors"
+        className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.15em] text-[#766A63] hover:text-[#1C1B2E] mb-5 transition-colors"
       >
         <ArrowLeft size={12} /> Mis pedidos
       </Link>
@@ -86,7 +86,7 @@ export default async function PedidoDetallePage({
       <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
         <div>
           <h2
-            className="text-xl text-[#1F1B19]"
+            className="text-xl text-[#1C1B2E]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {order.order_number}
@@ -105,8 +105,8 @@ export default async function PedidoDetallePage({
         {/* Prendas */}
         <div className="bg-white border border-[#E8DED4]">
           <div className="px-5 py-3 border-b border-[#F7F2EC] flex items-center gap-2">
-            <Package size={13} className="text-[#965C57]" />
-            <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1F1B19]">
+            <Package size={13} className="text-[#A0526C]" />
+            <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E]">
               Prendas
             </p>
           </div>
@@ -119,14 +119,14 @@ export default async function PedidoDetallePage({
                 className="flex items-start justify-between px-5 py-4 border-b border-[#F7F2EC] last:border-0 gap-4"
               >
                 <div className="min-w-0">
-                  <p className="text-sm font-[500] text-[#1F1B19]">{item.product_name}</p>
+                  <p className="text-sm font-[500] text-[#1C1B2E]">{item.product_name}</p>
                   {attrStr && (
                     <p className="text-[11px] text-[#766A63] mt-0.5">{attrStr}</p>
                   )}
                   <p className="text-[11px] text-[#DCCFC4] mt-0.5">SKU: {item.variant_sku}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-sm font-[600] text-[#1F1B19]">
+                  <p className="text-sm font-[600] text-[#1C1B2E]">
                     {formatCOP(item.total_price)}
                   </p>
                   <p className="text-[11px] text-[#766A63]">
@@ -143,7 +143,7 @@ export default async function PedidoDetallePage({
               <span>{formatCOP(order.subtotal)}</span>
             </div>
             {order.discount_amount > 0 && (
-              <div className="flex justify-between text-sm text-[#965C57]">
+              <div className="flex justify-between text-sm text-[#A0526C]">
                 <span>Descuento</span>
                 <span>−{formatCOP(order.discount_amount)}</span>
               </div>
@@ -154,7 +154,7 @@ export default async function PedidoDetallePage({
                 {order.shipping_cost > 0 ? formatCOP(order.shipping_cost) : "Gratis"}
               </span>
             </div>
-            <div className="flex justify-between text-base font-[600] text-[#1F1B19] pt-2 border-t border-[#E8DED4]">
+            <div className="flex justify-between text-base font-[600] text-[#1C1B2E] pt-2 border-t border-[#E8DED4]">
               <span>Total</span>
               <span>{formatCOP(order.total)}</span>
             </div>
@@ -164,13 +164,13 @@ export default async function PedidoDetallePage({
         {/* Dirección de envío */}
         <div className="bg-white border border-[#E8DED4]">
           <div className="px-5 py-3 border-b border-[#F7F2EC] flex items-center gap-2">
-            <MapPin size={13} className="text-[#965C57]" />
-            <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1F1B19]">
+            <MapPin size={13} className="text-[#A0526C]" />
+            <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E]">
               Envío
             </p>
           </div>
           <div className="px-5 py-4 text-sm text-[#766A63] space-y-0.5">
-            <p className="text-[#1F1B19] font-[500]">{order.shipping_name}</p>
+            <p className="text-[#1C1B2E] font-[500]">{order.shipping_name}</p>
             <p>{order.shipping_address}</p>
             <p>
               {order.shipping_city}, {order.shipping_department}
@@ -184,25 +184,25 @@ export default async function PedidoDetallePage({
           order.tracking_number && (
             <div className="bg-white border border-[#E8DED4]">
               <div className="px-5 py-3 border-b border-[#F7F2EC] flex items-center gap-2">
-                <Truck size={13} className="text-[#965C57]" />
-                <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1F1B19]">
+                <Truck size={13} className="text-[#A0526C]" />
+                <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E]">
                   Seguimiento
                 </p>
               </div>
               <div className="px-5 py-4 text-sm space-y-1">
                 <p className="text-[#766A63]">
                   Guía:{" "}
-                  <span className="text-[#1F1B19] font-[600]">{order.tracking_number}</span>
+                  <span className="text-[#1C1B2E] font-[600]">{order.tracking_number}</span>
                 </p>
                 {order.courier && (
                   <p className="text-[#766A63]">
-                    Courier: <span className="text-[#1F1B19]">{order.courier}</span>
+                    Courier: <span className="text-[#1C1B2E]">{order.courier}</span>
                   </p>
                 )}
                 {order.shipped_at && (
                   <p className="text-[#766A63]">
                     Despachado:{" "}
-                    <span className="text-[#1F1B19]">{formatDate(order.shipped_at)}</span>
+                    <span className="text-[#1C1B2E]">{formatDate(order.shipped_at)}</span>
                   </p>
                 )}
               </div>

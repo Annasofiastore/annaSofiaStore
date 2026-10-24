@@ -44,14 +44,14 @@ const SOCIAL: { label: string; href: string | null; icon: React.ReactNode }[] = 
 export async function Footer() {
   const storeName = await getStoreName();
   return (
-    <footer className="bg-[#1F1B19] text-[#DCCFC4] mt-auto">
+    <footer className="bg-[#1C1B2E] text-[#DCCFC4] mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
           {/* MARCA */}
           <div className="sm:col-span-2 md:col-span-2">
             <span
-              className="block text-4xl text-[#E3BDB6] mb-3"
+              className="block text-4xl text-[#E8B9C7] mb-3"
               style={{ fontFamily: "var(--font-script)" }}
             >
               {storeName}
@@ -67,7 +67,7 @@ export async function Footer() {
                   target={href!.startsWith("mailto") ? undefined : "_blank"}
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="text-[#766A63] hover:text-[#F2DCD6] transition-colors"
+                  className="text-[#766A63] hover:text-[#F5DDE5] transition-colors"
                 >
                   {icon}
                 </a>
@@ -77,7 +77,7 @@ export async function Footer() {
 
           {/* TIENDA */}
           <div>
-            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#F2DCD6] mb-4 font-[500]">
+            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#F5DDE5] mb-4 font-[500]">
               Tienda
             </h4>
             <ul className="space-y-2.5">
@@ -101,7 +101,7 @@ export async function Footer() {
 
           {/* INFORMACIÓN */}
           <div>
-            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#F2DCD6] mb-4 font-[500]">
+            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#F5DDE5] mb-4 font-[500]">
               Información
             </h4>
             <ul className="space-y-2.5">
@@ -124,7 +124,7 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#3A3431] mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="border-t border-[#2D2C44] mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#A39890]">
             © {new Date().getFullYear()} {storeName}. Todos los derechos reservados.
           </p>

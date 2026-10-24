@@ -62,7 +62,7 @@ export default async function PedidosPage() {
   return (
     <div>
       <h2
-        className="text-xl text-[#1F1B19] mb-5"
+        className="text-xl text-[#1C1B2E] mb-5"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Mis pedidos
@@ -74,7 +74,7 @@ export default async function PedidosPage() {
           <p className="text-sm text-[#766A63] mb-4">Aún no tienes pedidos.</p>
           <Link
             href="/catalogo"
-            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1F1B19] border-b border-[#1F1B19] pb-0.5"
+            className="inline-block text-[11px] uppercase tracking-[0.15em] text-[#1C1B2E] border-b border-[#1C1B2E] pb-0.5"
           >
             Ir al catálogo
           </Link>
@@ -91,11 +91,11 @@ export default async function PedidosPage() {
               <Link
                 key={order.id}
                 href={`/cuenta/pedidos/${order.id}`}
-                className="block bg-white border border-[#E8DED4] px-5 py-4 hover:border-[#965C57] transition-colors group"
+                className="block bg-white border border-[#E8DED4] px-5 py-4 hover:border-[#A0526C] transition-colors group"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-sm font-[600] text-[#1F1B19] group-hover:text-[#965C57] transition-colors">
+                    <p className="text-sm font-[600] text-[#1C1B2E] group-hover:text-[#A0526C] transition-colors">
                       {order.order_number}
                     </p>
                     <p className="text-[11px] text-[#766A63] mt-0.5">
@@ -107,7 +107,7 @@ export default async function PedidosPage() {
                     <span className={`text-[10px] px-2.5 py-1 border font-[500] ${s.cls}`}>
                       {s.label}
                     </span>
-                    <p className="text-sm font-[600] text-[#1F1B19]">{formatCOP(order.total)}</p>
+                    <p className="text-sm font-[600] text-[#1C1B2E]">{formatCOP(order.total)}</p>
                     <ArrowRight
                       size={14}
                       className="text-[#DCCFC4] group-hover:text-[#766A63] transition-colors"

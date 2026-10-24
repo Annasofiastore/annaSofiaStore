@@ -83,7 +83,7 @@ export default function RegistroPage() {
     });
   }
 
-  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
+  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
 
   async function handleResend() {
     setResendLoading(true);
@@ -105,7 +105,7 @@ export default function RegistroPage() {
             ¡Casi listo!
           </div>
           <p className="text-sm text-[#766A63]">
-            Enviamos un correo de confirmación a <strong className="text-[#1F1B19]">{form.email}</strong>.
+            Enviamos un correo de confirmación a <strong className="text-[#1C1B2E]">{form.email}</strong>.
             Haz clic en el enlace para activar tu cuenta.
           </p>
           <p className="text-xs text-[#DCCFC4]">Revisa también tu carpeta de spam.</p>
@@ -121,7 +121,7 @@ export default function RegistroPage() {
                 type="button"
                 onClick={handleResend}
                 disabled={resendLoading}
-                className="text-[11px] tracking-[0.18em] uppercase font-[600] text-[#965C57] hover:text-[#1F1B19] transition-colors disabled:opacity-50"
+                className="text-[11px] tracking-[0.18em] uppercase font-[600] text-[#A0526C] hover:text-[#1C1B2E] transition-colors disabled:opacity-50"
               >
                 {resendLoading ? "Enviando…" : "Reenviar correo de confirmación"}
               </button>
@@ -130,7 +130,7 @@ export default function RegistroPage() {
 
           <Link
             href="/auth/login"
-            className="inline-block text-[11px] tracking-[0.18em] uppercase font-[600] text-[#DCCFC4] hover:text-[#1F1B19] transition-colors"
+            className="inline-block text-[11px] tracking-[0.18em] uppercase font-[600] text-[#DCCFC4] hover:text-[#1C1B2E] transition-colors"
           >
             Volver al inicio de sesión
           </Link>
@@ -143,7 +143,7 @@ export default function RegistroPage() {
     <div className="w-full max-w-md">
       <div className="mb-8 text-center">
         <h1
-          className="text-3xl text-[#1F1B19] mb-2"
+          className="text-3xl text-[#1C1B2E] mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Crear cuenta
@@ -157,7 +157,7 @@ export default function RegistroPage() {
           type="button"
           onClick={handleGoogle}
           disabled={googleLoading || loading}
-          className="w-full flex items-center justify-center gap-3 border border-[#E8DED4] py-3 text-sm text-[#1F1B19] hover:border-[#766A63] transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 border border-[#E8DED4] py-3 text-sm text-[#1C1B2E] hover:border-[#766A63] transition-colors disabled:opacity-50"
         >
           <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
@@ -275,7 +275,7 @@ export default function RegistroPage() {
                 type="checkbox"
                 checked={marketingEmail}
                 onChange={(e) => setMarketingEmail(e.target.checked)}
-                className="mt-0.5 accent-[#1F1B19]"
+                className="mt-0.5 accent-[#1C1B2E]"
               />
               <span className="text-xs text-[#766A63]">
                 Quiero recibir novedades, colecciones y ofertas exclusivas por email.
@@ -286,7 +286,7 @@ export default function RegistroPage() {
                 type="checkbox"
                 checked={marketingWhatsapp}
                 onChange={(e) => setMarketingWhatsapp(e.target.checked)}
-                className="mt-0.5 accent-[#1F1B19]"
+                className="mt-0.5 accent-[#1C1B2E]"
               />
               <span className="text-xs text-[#766A63]">
                 Quiero recibir novedades y ofertas por WhatsApp.
@@ -295,7 +295,7 @@ export default function RegistroPage() {
           </div>
 
           {error && (
-            <p className="text-xs text-[#965C57] bg-[#F2DCD6]/20 border border-[#F2DCD6] px-3 py-2">
+            <p className="text-xs text-[#A0526C] bg-[#F5DDE5]/20 border border-[#F5DDE5] px-3 py-2">
               {error}{" "}
               {error.includes("iniciar sesión") && (
                 <Link href="/auth/login" className="underline font-[500]">Ir al login</Link>
@@ -306,7 +306,7 @@ export default function RegistroPage() {
           <button
             type="submit"
             disabled={loading || googleLoading}
-            className="w-full bg-[#1F1B19] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#965C57] transition-colors disabled:opacity-50 rounded-full"
+            className="w-full bg-[#1C1B2E] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0526C] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Creando cuenta…" : "Crear cuenta"}
           </button>
@@ -315,7 +315,7 @@ export default function RegistroPage() {
 
       <p className="text-center text-xs text-[#766A63] mt-5">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/auth/login" className="text-[#965C57] hover:text-[#1F1B19] transition-colors font-[500]">
+        <Link href="/auth/login" className="text-[#A0526C] hover:text-[#1C1B2E] transition-colors font-[500]">
           Inicia sesión
         </Link>
       </p>

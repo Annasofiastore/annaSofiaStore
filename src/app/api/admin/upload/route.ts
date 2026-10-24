@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import sharp from "sharp";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const heicConvert = require("heic-convert");
 
 const MAX_SIZE = 20 * 1024 * 1024; // 20 MB
+
+// Las fotos se reducen antes de guardarlas: lado largo máximo y calidad WebP.
+const MAX_DIMENSION = 2000;
+const WEBP_QUALITY = 82;
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -25,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Máximo 20 MB por imagen" }, { status: 400 });
   }
 
-  let buffer = Buffer.from(await file.arrayBuffer());
+  let buffer: Buffer = Buffer.from(await file.arrayBuffer());
   let contentType = file.type;
   let uploadExt = ext;
 
@@ -37,6 +42,21 @@ export async function POST(req: NextRequest) {
       uploadExt = "jpg";
     } catch {
       return NextResponse.json({ error: "No se pudo convertir el archivo HEIC" }, { status: 400 });
+    }
+  }
+
+  // Reducir y pasar a WebP. Los GIF se dejan tal cual para no perder la animación.
+  if (contentType !== "image/gif") {
+    try {
+      buffer = await sharp(buffer)
+        .rotate() // aplica la orientación EXIF de las fotos de celular
+        .resize({ width: MAX_DIMENSION, height: MAX_DIMENSION, fit: "inside", withoutEnlargement: true })
+        .webp({ quality: WEBP_QUALITY })
+        .toBuffer();
+      contentType = "image/webp";
+      uploadExt = "webp";
+    } catch {
+      return NextResponse.json({ error: "No se pudo procesar la imagen" }, { status: 400 });
     }
   }
 

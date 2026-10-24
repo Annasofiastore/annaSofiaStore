@@ -56,13 +56,13 @@ function LoginForm() {
     }
   }
 
-  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
+  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
 
   return (
     <div className="w-full max-w-md">
       <div className="mb-8 text-center">
         <h1
-          className="text-3xl text-[#1F1B19] mb-2"
+          className="text-3xl text-[#1C1B2E] mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Bienvenida
@@ -76,7 +76,7 @@ function LoginForm() {
           type="button"
           onClick={handleGoogle}
           disabled={googleLoading || loading}
-          className="w-full flex items-center justify-center gap-3 border border-[#E8DED4] py-3 text-sm text-[#1F1B19] hover:border-[#766A63] transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 border border-[#E8DED4] py-3 text-sm text-[#1C1B2E] hover:border-[#766A63] transition-colors disabled:opacity-50"
         >
           {/* Google icon SVG */}
           <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +118,7 @@ function LoginForm() {
               </label>
               <Link
                 href="/auth/recuperar"
-                className="text-[10px] text-[#965C57] hover:text-[#1F1B19] transition-colors"
+                className="text-[10px] text-[#A0526C] hover:text-[#1C1B2E] transition-colors"
               >
                 ¿Olvidaste tu contraseña?
               </Link>
@@ -144,7 +144,7 @@ function LoginForm() {
           </div>
 
           {error && (
-            <p className="text-xs text-[#965C57] bg-[#F2DCD6]/20 border border-[#F2DCD6] px-3 py-2">
+            <p className="text-xs text-[#A0526C] bg-[#F5DDE5]/20 border border-[#F5DDE5] px-3 py-2">
               {error}
             </p>
           )}
@@ -152,7 +152,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading || googleLoading}
-            className="w-full bg-[#1F1B19] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#965C57] transition-colors disabled:opacity-50 rounded-full"
+            className="w-full bg-[#1C1B2E] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0526C] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Iniciando sesión…" : "Iniciar sesión"}
           </button>
@@ -161,7 +161,7 @@ function LoginForm() {
 
       <p className="text-center text-xs text-[#766A63] mt-5">
         ¿No tienes cuenta?{" "}
-        <Link href="/auth/registro" className="text-[#965C57] hover:text-[#1F1B19] transition-colors font-[500]">
+        <Link href="/auth/registro" className="text-[#A0526C] hover:text-[#1C1B2E] transition-colors font-[500]">
           Regístrate
         </Link>
       </p>

@@ -40,7 +40,7 @@ export function AdminSidebar() {
   return (
     <>
       {/* Barra superior solo en celular */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-[#1F1B19] flex items-center px-3 z-50">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-[#1C1B2E] flex items-center px-3 z-50">
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -67,12 +67,12 @@ export function AdminSidebar() {
 
       <aside
         className={cn(
-          "fixed left-0 top-0 h-full w-60 bg-[#1F1B19] flex flex-col z-50 transition-transform md:z-40 md:translate-x-0",
+          "fixed left-0 top-0 h-full w-60 bg-[#1C1B2E] flex flex-col z-50 transition-transform md:z-40 md:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full"
         )}
       >
       {/* Logo */}
-      <div className="px-6 py-6 border-b border-[#3A3431]">
+      <div className="px-6 py-6 border-b border-[#2D2C44]">
         <Link href="/" target="_blank">
           <span
             className="text-xl text-[#F7F2EC]"
@@ -98,7 +98,7 @@ export function AdminSidebar() {
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm transition-colors",
                 active
-                  ? "bg-[#F2DCD6]/15 text-[#F2DCD6] font-[500]"
+                  ? "bg-[#F5DDE5]/15 text-[#F5DDE5] font-[500]"
                   : "text-[#766A63] hover:text-[#DCCFC4] hover:bg-white/5"
               )}
             >
@@ -110,7 +110,7 @@ export function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-4 border-t border-[#3A3431]">
+      <div className="px-3 py-4 border-t border-[#2D2C44]">
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2.5 w-full text-sm text-[#766A63] hover:text-[#DCCFC4] transition-colors"

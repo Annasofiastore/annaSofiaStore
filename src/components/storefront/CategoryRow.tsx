@@ -60,7 +60,6 @@ export function CategoryRow({ categories }: { categories: CategoryTile[] }) {
                 alt={c.name}
                 fill
                 sizes="(max-width:640px) 50vw, 33vw"
-                unoptimized
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             )}
@@ -73,7 +72,7 @@ export function CategoryRow({ categories }: { categories: CategoryTile[] }) {
               >
                 {c.name}
               </span>
-              <span className="border border-white/70 px-5 py-1.5 text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white group-hover:bg-white group-hover:text-[#1F1B19] transition-colors">
+              <span className="border border-white/70 px-5 py-1.5 text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white group-hover:bg-white group-hover:text-[#1C1B2E] transition-colors">
                 Comprar
               </span>
             </div>

@@ -15,7 +15,7 @@ export default async function AdminClientesPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1
-            className="text-3xl text-[#1F1B19]"
+            className="text-3xl text-[#1C1B2E]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Clientes
@@ -26,7 +26,7 @@ export default async function AdminClientesPage() {
         </div>
         <a
           href="/api/admin/customers/export"
-          className="text-[11px] tracking-[0.15em] uppercase border border-[#E8DED4] text-[#766A63] px-4 py-2 hover:border-[#766A63] hover:text-[#1F1B19] transition-colors font-[500]"
+          className="text-[11px] tracking-[0.15em] uppercase border border-[#E8DED4] text-[#766A63] px-4 py-2 hover:border-[#766A63] hover:text-[#1C1B2E] transition-colors font-[500]"
         >
           Exportar CSV
         </a>
@@ -46,11 +46,11 @@ export default async function AdminClientesPage() {
           <tbody>
             {(customers ?? []).map((c) => (
               <tr key={c.id} className="border-b border-[#F7F2EC] hover:bg-[#F7F2EC]/50 transition-colors">
-                <td className="px-4 py-3 font-[400] text-[#1F1B19]">{c.full_name}</td>
+                <td className="px-4 py-3 font-[400] text-[#1C1B2E]">{c.full_name}</td>
                 <td className="px-4 py-3 text-[#766A63]">{c.email}</td>
                 <td className="px-4 py-3 text-[#766A63]">{c.phone ?? "—"}</td>
                 <td className="px-4 py-3">
-                  <span className={`text-[9px] px-2 py-0.5 rounded-full font-[600] tracking-wide uppercase ${c.is_guest ? "bg-[#F7F2EC] text-[#766A63]" : "bg-[#F2DCD6] text-[#1F1B19]"}`}>
+                  <span className={`text-[9px] px-2 py-0.5 rounded-full font-[600] tracking-wide uppercase ${c.is_guest ? "bg-[#F7F2EC] text-[#766A63]" : "bg-[#F5DDE5] text-[#1C1B2E]"}`}>
                     {c.is_guest ? "Invitada" : "Registrada"}
                   </span>
                 </td>

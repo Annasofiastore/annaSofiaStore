@@ -42,8 +42,8 @@ export default function AccountSidebar() {
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 text-[13px] border-b border-[#F7F2EC] last:border-0 transition-colors ${
                   active
-                    ? "bg-[#F7F2EC] text-[#1F1B19] font-[600]"
-                    : "text-[#766A63] hover:bg-[#F7F2EC]/60 hover:text-[#1F1B19]"
+                    ? "bg-[#F7F2EC] text-[#1C1B2E] font-[600]"
+                    : "text-[#766A63] hover:bg-[#F7F2EC]/60 hover:text-[#1C1B2E]"
                 }`}
               >
                 <item.icon size={14} />
@@ -53,7 +53,7 @@ export default function AccountSidebar() {
           })}
           <button
             onClick={logout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-[13px] text-[#766A63] hover:bg-[#F2DCD6]/20 hover:text-[#965C57] transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-[13px] text-[#766A63] hover:bg-[#F5DDE5]/20 hover:text-[#A0526C] transition-colors"
           >
             <LogOut size={14} />
             Salir
@@ -71,7 +71,7 @@ export default function AccountSidebar() {
               href={item.href}
               className={`flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border rounded-full transition-colors ${
                 active
-                  ? "bg-[#1F1B19] text-[#F7F2EC] border-[#1F1B19]"
+                  ? "bg-[#1C1B2E] text-[#F7F2EC] border-[#1C1B2E]"
                   : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
               }`}
             >
@@ -82,7 +82,7 @@ export default function AccountSidebar() {
         })}
         <button
           onClick={logout}
-          className="flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border bg-white text-[#766A63] border-[#E8DED4] hover:text-[#965C57] hover:border-[#965C57] transition-colors rounded-full"
+          className="flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border bg-white text-[#766A63] border-[#E8DED4] hover:text-[#A0526C] hover:border-[#A0526C] transition-colors rounded-full"
         >
           <LogOut size={12} />
           Salir

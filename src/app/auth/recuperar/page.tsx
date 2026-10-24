@@ -34,19 +34,19 @@ export default function RecuperarPage() {
       <div className="w-full max-w-md text-center">
         <div className="bg-white border border-[#E8DED4] p-10 space-y-4">
           <h1
-            className="text-2xl text-[#1F1B19]"
+            className="text-2xl text-[#1C1B2E]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Revisa tu correo
           </h1>
           <p className="text-sm text-[#766A63]">
-            Si <strong className="text-[#1F1B19]">{email}</strong> está registrado, recibirás
+            Si <strong className="text-[#1C1B2E]">{email}</strong> está registrado, recibirás
             un enlace para restablecer tu contraseña.
           </p>
           <p className="text-xs text-[#DCCFC4]">Revisa también la carpeta de spam.</p>
           <Link
             href="/auth/login"
-            className="inline-block mt-4 text-[11px] tracking-[0.18em] uppercase font-[600] text-[#965C57] hover:text-[#1F1B19] transition-colors"
+            className="inline-block mt-4 text-[11px] tracking-[0.18em] uppercase font-[600] text-[#A0526C] hover:text-[#1C1B2E] transition-colors"
           >
             Volver al inicio de sesión
           </Link>
@@ -59,7 +59,7 @@ export default function RecuperarPage() {
     <div className="w-full max-w-md">
       <div className="mb-8 text-center">
         <h1
-          className="text-3xl text-[#1F1B19] mb-2"
+          className="text-3xl text-[#1C1B2E] mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Recuperar contraseña
@@ -82,12 +82,12 @@ export default function RecuperarPage() {
               placeholder="tu@email.com"
               required
               autoComplete="email"
-              className="w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]"
+              className="w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]"
             />
           </div>
 
           {error && (
-            <p className="text-xs text-[#965C57] bg-[#F2DCD6]/20 border border-[#F2DCD6] px-3 py-2">
+            <p className="text-xs text-[#A0526C] bg-[#F5DDE5]/20 border border-[#F5DDE5] px-3 py-2">
               {error}
             </p>
           )}
@@ -95,7 +95,7 @@ export default function RecuperarPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1F1B19] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#965C57] transition-colors disabled:opacity-50 rounded-full"
+            className="w-full bg-[#1C1B2E] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0526C] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Enviando…" : "Enviar enlace de recuperación"}
           </button>
@@ -103,7 +103,7 @@ export default function RecuperarPage() {
       </div>
 
       <p className="text-center text-xs text-[#766A63] mt-5">
-        <Link href="/auth/login" className="text-[#965C57] hover:text-[#1F1B19] transition-colors">
+        <Link href="/auth/login" className="text-[#A0526C] hover:text-[#1C1B2E] transition-colors">
           ← Volver al inicio de sesión
         </Link>
       </p>

@@ -11,14 +11,14 @@ export function InstagramBlock() {
   return (
     <section className="bg-[#DCCFC4]/50 px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
       <div className="max-w-[1440px] mx-auto">
-      <span className="block text-xs tracking-[0.3em] uppercase text-[#965C57] font-[500] mb-4">
+      <span className="block text-xs tracking-[0.3em] uppercase text-[#A0526C] font-[500] mb-4">
         Síguenos en Instagram
       </span>
       <a
         href={brand.social.instagram}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-3xl sm:text-4xl text-[#1F1B19] hover:text-[#965C57] transition-colors"
+        className="text-3xl sm:text-4xl text-[#1C1B2E] hover:text-[#A0526C] transition-colors"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {instagramHandle}
@@ -52,7 +52,7 @@ export function InstagramBlock() {
           href={brand.social.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-3 border border-[#1F1B19]/70 text-[#1F1B19] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#1F1B19] hover:text-[#F7F2EC] transition-colors rounded-full"
+          className="inline-flex items-center gap-2 px-8 py-3 border border-[#1C1B2E]/70 text-[#1C1B2E] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors rounded-full"
         >
           Ver perfil <ArrowRight size={13} />
         </a>

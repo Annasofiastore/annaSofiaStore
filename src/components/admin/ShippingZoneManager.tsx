@@ -16,7 +16,7 @@ type Zone = {
 };
 
 const ZONE_COLORS: Record<string, string> = {
-  local: "bg-[#F2DCD6]/50 text-[#965C57]",
+  local: "bg-[#F5DDE5]/50 text-[#A0526C]",
   main_cities: "bg-[#F7F2EC] text-[#766A63]",
   municipalities: "bg-gray-100 text-gray-500",
 };
@@ -177,7 +177,7 @@ export function ShippingZoneManager() {
                 </>
               ) : (
                 <>
-                  <span className="text-sm font-[600] text-[#1F1B19]">{formatCOP(zone.price)}</span>
+                  <span className="text-sm font-[600] text-[#1C1B2E]">{formatCOP(zone.price)}</span>
                   <button
                     onClick={() => { setEditingZone(zone.id); setEditPrice(String(zone.price)); }}
                     className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
@@ -232,7 +232,7 @@ export function ShippingZoneManager() {
                 <button
                   onClick={() => addCity(zone.id)}
                   disabled={addingCity === zone.id || !newCity[zone.id]?.trim()}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-1 px-3 py-1.5 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Plus size={12} />
                   {addingCity === zone.id ? "…" : "Agregar"}
@@ -290,7 +290,7 @@ export function ShippingZoneManager() {
               <button
                 onClick={createZone}
                 disabled={creatingZone}
-                className="flex items-center gap-1 px-4 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors disabled:opacity-50"
+                className="flex items-center gap-1 px-4 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors disabled:opacity-50"
               >
                 {creatingZone ? "Creando…" : "Crear zona"}
               </button>
@@ -305,7 +305,7 @@ export function ShippingZoneManager() {
         ) : (
           <button
             onClick={() => setShowAddZone(true)}
-            className="w-full flex items-center justify-center gap-2 px-5 py-4 text-sm text-gray-500 hover:text-[#1F1B19] hover:bg-gray-50 transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-5 py-4 text-sm text-gray-500 hover:text-[#1C1B2E] hover:bg-gray-50 transition-colors"
           >
             <Plus size={15} />
             Agregar nueva zona

@@ -44,14 +44,14 @@ export default function NuevaContrasenaPage() {
     setTimeout(() => router.push("/auth/login"), 3000);
   }
 
-  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
+  const inputCls = "w-full border border-[#E8DED4] bg-white px-4 py-3 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
 
   if (done) {
     return (
       <div className="w-full max-w-md text-center">
         <div className="bg-white border border-[#E8DED4] p-10 space-y-4">
           <h1
-            className="text-2xl text-[#1F1B19]"
+            className="text-2xl text-[#1C1B2E]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             ¡Contraseña actualizada!
@@ -61,7 +61,7 @@ export default function NuevaContrasenaPage() {
           </p>
           <Link
             href="/auth/login"
-            className="inline-block text-[11px] tracking-[0.18em] uppercase font-[600] text-[#965C57] hover:text-[#1F1B19] transition-colors"
+            className="inline-block text-[11px] tracking-[0.18em] uppercase font-[600] text-[#A0526C] hover:text-[#1C1B2E] transition-colors"
           >
             Ir al login →
           </Link>
@@ -74,7 +74,7 @@ export default function NuevaContrasenaPage() {
     <div className="w-full max-w-md">
       <div className="mb-8 text-center">
         <h1
-          className="text-3xl text-[#1F1B19] mb-2"
+          className="text-3xl text-[#1C1B2E] mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Nueva contraseña
@@ -122,7 +122,7 @@ export default function NuevaContrasenaPage() {
           </div>
 
           {error && (
-            <p className="text-xs text-[#965C57] bg-[#F2DCD6]/20 border border-[#F2DCD6] px-3 py-2">
+            <p className="text-xs text-[#A0526C] bg-[#F5DDE5]/20 border border-[#F5DDE5] px-3 py-2">
               {error}
             </p>
           )}
@@ -130,7 +130,7 @@ export default function NuevaContrasenaPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1F1B19] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#965C57] transition-colors disabled:opacity-50 rounded-full"
+            className="w-full bg-[#1C1B2E] text-[#F7F2EC] py-3 text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#A0526C] transition-colors disabled:opacity-50 rounded-full"
           >
             {loading ? "Actualizando…" : "Actualizar contraseña"}
           </button>

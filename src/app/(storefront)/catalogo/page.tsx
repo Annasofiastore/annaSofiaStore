@@ -152,11 +152,11 @@ export default async function CatalogoPage({ searchParams }: Props) {
     <div className="px-4 sm:px-8 lg:px-12 py-10">
       {/* ENCABEZADO */}
       <div className="text-center mb-10">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
+        <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
           {filters.coleccion ?? "Todas las prendas"}
         </span>
         <h1
-          className="text-5xl text-[#1F1B19] mt-1"
+          className="text-5xl text-[#1C1B2E] mt-1"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Catálogo

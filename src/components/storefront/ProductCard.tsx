@@ -31,13 +31,12 @@ export function ProductCard({ product }: ProductCardProps) {
     <article className="group relative">
       {/* IMAGEN */}
       <Link href={`/producto/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] overflow-hidden bg-[#F2DCD6]/20">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#F5DDE5]/20">
           {product.images.length > 0 && !imgError ? (
             <Image
               src={product.images[imgIdx]}
               alt={product.name}
               fill
-              unoptimized
               sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
               className={cn(
                 "object-cover transition-transform duration-500",
@@ -62,7 +61,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {/* BADGES */}
           <div className="absolute top-3 left-3 flex flex-col gap-1.5">
             {product.is_pre_sale && (
-              <span className="bg-[#F7F2EC] border border-[#1F1B19] text-[#1F1B19] text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-[700]">
+              <span className="bg-[#F7F2EC] border border-[#1C1B2E] text-[#1C1B2E] text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-[700]">
                 ◈ Pre Orden
               </span>
             )}
@@ -72,12 +71,12 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
             {isSoldOut && (
-              <span className="bg-[#1F1B19] text-[#F7F2EC] text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-[500]">
+              <span className="bg-[#1C1B2E] text-[#F7F2EC] text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-[500]">
                 Agotado
               </span>
             )}
             {isOnSale && !isSoldOut && (
-              <span className="bg-[#965C57] text-white text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-[500]">
+              <span className="bg-[#A0526C] text-white text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-[500]">
                 -{discountPercent(product.compare_price!, price)}%
               </span>
             )}
@@ -97,8 +96,8 @@ export function ProductCard({ product }: ProductCardProps) {
               "absolute top-3 right-3 p-1.5 rounded-full transition-all duration-200",
               "opacity-0 group-hover:opacity-100",
               wishlisted
-                ? "opacity-100 text-[#965C57]"
-                : "text-[#766A63] bg-white/70 hover:text-[#965C57]"
+                ? "opacity-100 text-[#A0526C]"
+                : "text-[#766A63] bg-white/70 hover:text-[#A0526C]"
             )}
           >
             <Heart
@@ -110,7 +109,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {/* TOAST WISHLIST */}
           {toast && (
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#1F1B19] text-[#F7F2EC] text-[10px] tracking-[0.12em] uppercase px-3 py-1.5 pointer-events-none">
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#1C1B2E] text-[#F7F2EC] text-[10px] tracking-[0.12em] uppercase px-3 py-1.5 pointer-events-none">
               {toast}
             </div>
           )}
@@ -120,13 +119,13 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* INFO */}
       <div className="mt-4 sm:mt-5 text-center">
         <Link href={`/producto/${product.slug}`}>
-          <h3 className="text-[15px] sm:text-base text-[#1F1B19] font-[500] leading-snug hover:text-[#965C57] transition-colors truncate">
+          <h3 className="text-[15px] sm:text-base text-[#1C1B2E] font-[500] leading-snug hover:text-[#A0526C] transition-colors truncate">
             {product.name}
           </h3>
         </Link>
 
         <div className="flex items-baseline justify-center gap-2 mt-1.5">
-          <span className="text-[15px] sm:text-base text-[#965C57] font-[600]">
+          <span className="text-[15px] sm:text-base text-[#A0526C] font-[600]">
             {formatCOP(price)}
           </span>
           {isOnSale && product.compare_price && (

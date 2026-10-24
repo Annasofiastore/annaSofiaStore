@@ -85,7 +85,7 @@ export function NosotrasImageManager() {
           {loading ? (
             <div className="w-40 h-52 bg-gray-100 animate-pulse rounded" />
           ) : currentUrl ? (
-            <div className="relative w-40 h-52 rounded overflow-hidden bg-[#F2DCD6]/20 border border-gray-100">
+            <div className="relative w-40 h-52 rounded overflow-hidden bg-[#F5DDE5]/20 border border-gray-100">
               <Image
                 src={currentUrl}
                 alt="Imagen actual de Nosotras"
@@ -125,7 +125,7 @@ export function NosotrasImageManager() {
           <button
             onClick={() => inputRef.current?.click()}
             disabled={uploading}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Upload size={13} strokeWidth={1.5} />
             {uploading ? "Subiendo…" : "Cambiar imagen"}

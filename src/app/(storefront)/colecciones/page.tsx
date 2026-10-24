@@ -28,11 +28,11 @@ export default async function ColeccionesPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       {/* Encabezado */}
       <div className="text-center mb-14">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
+        <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
           {storeName}
         </span>
         <h1
-          className="text-5xl text-[#1F1B19] mt-1"
+          className="text-5xl text-[#1C1B2E] mt-1"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Colecciones
@@ -55,7 +55,7 @@ export default async function ColeccionesPage() {
           </p>
           <Link
             href="/catalogo"
-            className="inline-block mt-6 text-[11px] tracking-[0.2em] uppercase font-[500] text-[#1F1B19] border border-[#1F1B19] px-8 py-3 hover:bg-[#1F1B19] hover:text-[#F7F2EC] transition-colors rounded-full"
+            className="inline-block mt-6 text-[11px] tracking-[0.2em] uppercase font-[500] text-[#1C1B2E] border border-[#1C1B2E] px-8 py-3 hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors rounded-full"
           >
             Ver catálogo completo
           </Link>
@@ -69,7 +69,7 @@ export default async function ColeccionesPage() {
               className="group block relative overflow-hidden"
             >
               {/* Imagen / fondo */}
-              <div className="aspect-[3/4] relative overflow-hidden bg-[#F2DCD6]/30">
+              <div className="aspect-[3/4] relative overflow-hidden bg-[#F5DDE5]/30">
                 {col.hero_url ? (
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
@@ -78,9 +78,9 @@ export default async function ColeccionesPage() {
                 ) : (
                   <div className="absolute inset-0 flex items-end justify-start p-0">
                     {/* Gradiente decorativo cuando no hay imagen */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#F2DCD6]/60 via-[#F7F2EC] to-[#E8DED4]/60" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#F5DDE5]/60 via-[#F7F2EC] to-[#E8DED4]/60" />
                     <span
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl text-[#1F1B19]/20 select-none"
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl text-[#1C1B2E]/20 select-none"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {monogramOf(storeName)}
@@ -89,7 +89,7 @@ export default async function ColeccionesPage() {
                 )}
 
                 {/* Overlay oscuro al hover */}
-                <div className="absolute inset-0 bg-[#1F1B19]/0 group-hover:bg-[#1F1B19]/25 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-[#1C1B2E]/0 group-hover:bg-[#1C1B2E]/25 transition-colors duration-500" />
 
                 {/* Texto sobre imagen */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
@@ -116,7 +116,7 @@ export default async function ColeccionesPage() {
               {!col.hero_url && (
                 <div className="pt-4 pb-2">
                   <h2
-                    className="text-xl text-[#1F1B19]"
+                    className="text-xl text-[#1C1B2E]"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {col.name}
@@ -124,7 +124,7 @@ export default async function ColeccionesPage() {
                   {col.description && (
                     <p className="text-xs text-[#766A63] mt-1 line-clamp-2">{col.description}</p>
                   )}
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-[#965C57] font-[500] mt-2 inline-block">
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-[#A0526C] font-[500] mt-2 inline-block">
                     Ver colección →
                   </span>
                 </div>
@@ -139,7 +139,7 @@ export default async function ColeccionesPage() {
         <div className="text-center mt-16">
           <Link
             href="/catalogo"
-            className="inline-block text-[11px] tracking-[0.2em] uppercase font-[500] text-[#766A63] border border-[#E8DED4] px-8 py-3 hover:border-[#1F1B19] hover:text-[#1F1B19] transition-colors rounded-full"
+            className="inline-block text-[11px] tracking-[0.2em] uppercase font-[500] text-[#766A63] border border-[#E8DED4] px-8 py-3 hover:border-[#1C1B2E] hover:text-[#1C1B2E] transition-colors rounded-full"
           >
             Ver catálogo completo
           </Link>

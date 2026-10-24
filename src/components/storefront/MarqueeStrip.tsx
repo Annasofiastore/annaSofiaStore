@@ -16,8 +16,8 @@ const wordsFor = (storeName: string) => [
 export async function MarqueeStrip({ inverted = false }: { inverted?: boolean }) {
   const words = wordsFor(await getStoreName());
   const surface = inverted
-    ? "bg-[#F7F2EC] border-y border-[#E8DED4] text-[#1F1B19]"
-    : "bg-[#1F1B19] text-[#F7F2EC]";
+    ? "bg-[#F7F2EC] border-y border-[#E8DED4] text-[#1C1B2E]"
+    : "bg-[#1C1B2E] text-[#F7F2EC]";
 
   // Seis copias para que el loop (que avanza la mitad del ancho) no muestre cortes
   const items = Array.from({ length: 6 }, () => words).flat();
@@ -32,7 +32,7 @@ export async function MarqueeStrip({ inverted = false }: { inverted?: boolean })
           {items.map((w, i) => (
             <span key={i} className="inline-flex items-center">
               <span className={i % 2 ? "italic" : undefined}>{w}</span>
-              <span className="text-[#E3BDB6] mx-6 sm:mx-9 text-sm">✦</span>
+              <span className="text-[#E8B9C7] mx-6 sm:mx-9 text-sm">✦</span>
             </span>
           ))}
         </span>

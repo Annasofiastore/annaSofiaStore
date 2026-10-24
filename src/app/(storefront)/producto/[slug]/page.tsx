@@ -124,7 +124,7 @@ function Accordion({ title, open = false, children }: { title: string; open?: bo
   return (
     <details open={open} className="group border-b border-[#E8DED4]">
       <summary className="flex items-center justify-between py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-        <span className="text-xs tracking-[0.2em] uppercase text-[#1F1B19] font-[600]">{title}</span>
+        <span className="text-xs tracking-[0.2em] uppercase text-[#1C1B2E] font-[600]">{title}</span>
         <ChevronDown size={16} strokeWidth={1.5} className="text-[#766A63] transition-transform group-open:rotate-180" />
       </summary>
       <div className="pb-5 space-y-3 text-sm text-[#766A63] leading-relaxed">{children}</div>
@@ -161,17 +161,17 @@ export default async function ProductPage({ params }: Props) {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8 pb-16">
         {/* Ruta de navegación */}
         <nav aria-label="Ruta" className="flex items-center gap-1.5 text-xs text-[#766A63] mb-6 min-w-0">
-          <Link href="/" className="hover:text-[#1F1B19] transition-colors shrink-0">Inicio</Link>
+          <Link href="/" className="hover:text-[#1C1B2E] transition-colors shrink-0">Inicio</Link>
           <ChevronRight size={12} className="shrink-0" />
           {collection ? (
-            <Link href={`/coleccion/${collection.slug}`} className="hover:text-[#1F1B19] transition-colors shrink-0">
+            <Link href={`/coleccion/${collection.slug}`} className="hover:text-[#1C1B2E] transition-colors shrink-0">
               {collection.name}
             </Link>
           ) : (
-            <Link href="/catalogo" className="hover:text-[#1F1B19] transition-colors shrink-0">Catálogo</Link>
+            <Link href="/catalogo" className="hover:text-[#1C1B2E] transition-colors shrink-0">Catálogo</Link>
           )}
           <ChevronRight size={12} className="shrink-0" />
-          <span className="text-[#1F1B19] truncate">{product.name}</span>
+          <span className="text-[#1C1B2E] truncate">{product.name}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-8 lg:gap-16">
@@ -181,24 +181,24 @@ export default async function ProductPage({ params }: Props) {
           {/* ── DETALLE (fijo al hacer scroll en escritorio) ── */}
           <div className="lg:sticky lg:top-24 self-start">
             {collection && (
-              <span className="block text-xs tracking-[0.25em] uppercase text-[#965C57] font-[500] mb-3">
+              <span className="block text-xs tracking-[0.25em] uppercase text-[#A0526C] font-[500] mb-3">
                 {collection.name}
               </span>
             )}
 
             <h1
-              className="text-3xl sm:text-4xl lg:text-[44px] text-[#1F1B19] leading-tight mb-4"
+              className="text-3xl sm:text-4xl lg:text-[44px] text-[#1C1B2E] leading-tight mb-4"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {product.name}
             </h1>
 
             <div className="flex items-baseline gap-3 mb-8">
-              <span className="text-2xl text-[#965C57] font-[600]">{formatCOP(price)}</span>
+              <span className="text-2xl text-[#A0526C] font-[600]">{formatCOP(price)}</span>
               {isOnSale && product.compare_price && (
                 <>
                   <span className="text-base text-[#766A63] line-through">{formatCOP(product.compare_price)}</span>
-                  <span className="text-xs bg-[#965C57] text-white px-2.5 py-0.5 rounded-full font-[500]">
+                  <span className="text-xs bg-[#A0526C] text-white px-2.5 py-0.5 rounded-full font-[500]">
                     -{discountPercent(product.compare_price, price)}%
                   </span>
                 </>
@@ -210,7 +210,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="mt-8 border-t border-[#E8DED4]">
               {product.description && (
                 <Accordion title="Descripción" open>
-                  <div className="text-[#1F1B19] space-y-3"><Paragraphs text={product.description} /></div>
+                  <div className="text-[#1C1B2E] space-y-3"><Paragraphs text={product.description} /></div>
                 </Accordion>
               )}
               {product.care_instructions && (
@@ -220,18 +220,18 @@ export default async function ProductPage({ params }: Props) {
               )}
               <Accordion title="Envíos y cambios" open={!product.description}>
                 <p className="flex gap-3">
-                  <Truck size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#965C57]" />
+                  <Truck size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#A0526C]" />
                   Envío a todo Colombia. Tiempo estimado 3–5 días hábiles.
                 </p>
                 <p className="flex gap-3">
-                  <ShieldCheck size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#965C57]" />
+                  <ShieldCheck size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#A0526C]" />
                   Pago 100% seguro con Wompi.
                 </p>
                 <p className="flex gap-3">
-                  <RotateCcw size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#965C57]" />
+                  <RotateCcw size={16} strokeWidth={1.5} className="shrink-0 mt-0.5 text-[#A0526C]" />
                   <span>
                     Consulta nuestra{" "}
-                    <Link href="/devoluciones" className="underline underline-offset-2 text-[#1F1B19]">
+                    <Link href="/devoluciones" className="underline underline-offset-2 text-[#1C1B2E]">
                       política de cambios y devoluciones
                     </Link>
                     .

@@ -113,9 +113,9 @@ export function HeroSlideManager() {
                 draggingIdx === idx
                   ? "opacity-40 border-gray-300"
                   : dragTargetIdx === idx && draggingIdx !== idx
-                  ? "border-[#965C57] scale-105"
+                  ? "border-[#A0526C] scale-105"
                   : idx === 0
-                  ? "border-[#1F1B19]"
+                  ? "border-[#1C1B2E]"
                   : "border-gray-200"
               }`}
             >
@@ -133,14 +133,14 @@ export function HeroSlideManager() {
                 <button
                   type="button"
                   onClick={() => removeSlide(slide.id)}
-                  className="text-white hover:text-[#F2DCD6]"
+                  className="text-white hover:text-[#F5DDE5]"
                   aria-label="Eliminar slide"
                 >
                   <X size={14} />
                 </button>
               </div>
               {idx === 0 && (
-                <span className="absolute bottom-0 left-0 right-0 bg-[#1F1B19]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
+                <span className="absolute bottom-0 left-0 right-0 bg-[#1C1B2E]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
                   Primera
                 </span>
               )}
@@ -162,10 +162,10 @@ export function HeroSlideManager() {
         onDrop={(e) => { e.preventDefault(); setDragOver(false); if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files); }}
         onClick={() => inputRef.current?.click()}
         className={`border-2 border-dashed px-6 py-8 text-center cursor-pointer transition-colors ${
-          dragOver ? "border-[#965C57] bg-[#F2DCD6]/20" : "border-[#E8DED4] hover:border-[#766A63] bg-[#F7F2EC]"
+          dragOver ? "border-[#A0526C] bg-[#F5DDE5]/20" : "border-[#E8DED4] hover:border-[#766A63] bg-[#F7F2EC]"
         }`}
       >
-        <Upload size={24} strokeWidth={1.5} className={`mx-auto mb-2 ${dragOver ? "text-[#965C57]" : "text-[#DCCFC4]"}`} />
+        <Upload size={24} strokeWidth={1.5} className={`mx-auto mb-2 ${dragOver ? "text-[#A0526C]" : "text-[#DCCFC4]"}`} />
         <p className="text-sm text-[#766A63]">
           {uploading ? "Subiendo…" : "Arrastra fotos aquí o haz clic para seleccionar"}
         </p>

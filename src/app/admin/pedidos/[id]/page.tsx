@@ -27,11 +27,11 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
   return (
     <div className="max-w-3xl">
       <div className="flex items-center gap-4 mb-6">
-        <a href="/admin/pedidos" className="text-[#766A63] hover:text-[#1F1B19] text-sm">
+        <a href="/admin/pedidos" className="text-[#766A63] hover:text-[#1C1B2E] text-sm">
           ← Volver
         </a>
         <h1
-          className="text-2xl text-[#1F1B19]"
+          className="text-2xl text-[#1C1B2E]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {order.order_number}
@@ -42,7 +42,7 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
         {/* Info clienta */}
         <div className="bg-white border border-[#E8DED4] p-5">
           <h2 className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600] mb-3">Clienta</h2>
-          <p className="text-sm text-[#1F1B19] font-[500]">{order.shipping_name}</p>
+          <p className="text-sm text-[#1C1B2E] font-[500]">{order.shipping_name}</p>
           {order.customer_id_number && (
             <p className="text-xs text-[#766A63]">
               {order.customer_id_type ?? "CC"} {order.customer_id_number}
@@ -63,14 +63,14 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
               <span>Subtotal</span><span>{formatCOP(order.subtotal)}</span>
             </div>
             {order.discount_amount > 0 && (
-              <div className="flex justify-between text-[#965C57]">
+              <div className="flex justify-between text-[#A0526C]">
                 <span>Descuento</span><span>−{formatCOP(order.discount_amount)}</span>
               </div>
             )}
             <div className="flex justify-between text-[#766A63]">
               <span>Envío</span><span>{formatCOP(order.shipping_cost)}</span>
             </div>
-            <div className="flex justify-between font-[600] text-[#1F1B19] pt-1 border-t border-[#E8DED4]">
+            <div className="flex justify-between font-[600] text-[#1C1B2E] pt-1 border-t border-[#E8DED4]">
               <span>Total</span><span>{formatCOP(order.total)}</span>
             </div>
             <div className="flex justify-between text-[#766A63] pt-1 border-t border-[#F7F2EC]">
@@ -94,12 +94,12 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
           {(order.items ?? []).map((item: any) => (
             <div key={item.id} className="flex justify-between text-sm border-b border-[#F7F2EC] pb-2">
               <div>
-                <p className="text-[#1F1B19] font-[400]">{item.product_name}</p>
+                <p className="text-[#1C1B2E] font-[400]">{item.product_name}</p>
                 <p className="text-xs text-[#766A63]">
                   SKU: {item.variant_sku} · {Object.entries(item.variant_attrs ?? {}).map(([k,v])=>`${k}: ${v}`).join(" · ")} · ×{item.quantity}
                 </p>
               </div>
-              <span className="text-[#1F1B19] font-[500]">{formatCOP(item.total_price)}</span>
+              <span className="text-[#1C1B2E] font-[500]">{formatCOP(item.total_price)}</span>
             </div>
           ))}
         </div>
@@ -129,9 +129,9 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           ).map((log: any) => (
             <div key={log.id} className="flex gap-3 text-xs">
-              <div className="w-2 h-2 rounded-full bg-[#965C57] shrink-0 mt-1" />
+              <div className="w-2 h-2 rounded-full bg-[#A0526C] shrink-0 mt-1" />
               <div>
-                <p className="text-[#1F1B19]">{log.notes ?? `${log.from_status} → ${log.to_status}`}</p>
+                <p className="text-[#1C1B2E]">{log.notes ?? `${log.from_status} → ${log.to_status}`}</p>
                 <p className="text-[#766A63] mt-0.5">{formatDate(log.created_at)}</p>
               </div>
             </div>

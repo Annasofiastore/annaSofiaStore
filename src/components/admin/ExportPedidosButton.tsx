@@ -41,7 +41,7 @@ export function ExportPedidosButton({ currentStatus }: Props) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 border border-[#1F1B19] text-[#1F1B19] font-[500] hover:bg-[#1F1B19] hover:text-[#F7F2EC] transition-colors"
+        className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 border border-[#1C1B2E] text-[#1C1B2E] font-[500] hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors"
       >
         <Download size={13} strokeWidth={1.5} />
         Exportar a Excel
@@ -60,7 +60,7 @@ export function ExportPedidosButton({ currentStatus }: Props) {
                 value={from}
                 max={to}
                 onChange={(e) => setFrom(e.target.value)}
-                className="border border-[#E8DED4] px-2 py-1.5 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63]"
+                className="border border-[#E8DED4] px-2 py-1.5 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63]"
               />
             </label>
             <label className="flex flex-col gap-1">
@@ -71,7 +71,7 @@ export function ExportPedidosButton({ currentStatus }: Props) {
                 min={from}
                 max={todayISO()}
                 onChange={(e) => setTo(e.target.value)}
-                className="border border-[#E8DED4] px-2 py-1.5 text-sm text-[#1F1B19] focus:outline-none focus:border-[#766A63]"
+                className="border border-[#E8DED4] px-2 py-1.5 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63]"
               />
             </label>
           </div>
@@ -82,7 +82,7 @@ export function ExportPedidosButton({ currentStatus }: Props) {
           )}
           <button
             onClick={handleDownload}
-            className="w-full text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 bg-[#1F1B19] text-[#F7F2EC] font-[500] hover:bg-[#3A3431] transition-colors"
+            className="w-full text-[10px] tracking-[0.15em] uppercase px-4 py-2.5 bg-[#1C1B2E] text-[#F7F2EC] font-[500] hover:bg-[#2D2C44] transition-colors"
           >
             Descargar reporte
           </button>

@@ -112,7 +112,7 @@ const STATUS_BADGE: Record<string, string> = {
   paid: "bg-green-100 text-green-800",
   preparing: "bg-blue-100 text-blue-800",
   shipped: "bg-purple-100 text-purple-800",
-  delivered: "bg-[#F2DCD6] text-[#1F1B19]",
+  delivered: "bg-[#F5DDE5] text-[#1C1B2E]",
   cancelled: "bg-red-100 text-red-700",
 };
 const STATUS_LABEL: Record<string, string> = {
@@ -167,7 +167,7 @@ export default async function AdminReportesPage({ searchParams }: Props) {
             label: "Ticket promedio",
             value: formatCOP(data.avgTicket),
             sub: null,
-            color: "text-[#965C57]",
+            color: "text-[#A0526C]",
           },
           {
             icon: Users,
@@ -203,7 +203,7 @@ export default async function AdminReportesPage({ searchParams }: Props) {
                 <span className="text-xs text-gray-600 w-20 shrink-0">{monthLabel(m.month)}</span>
                 <div className="flex-1 h-6 bg-gray-100 rounded relative overflow-hidden">
                   <div
-                    className="h-full bg-[#965C57] rounded"
+                    className="h-full bg-[#A0526C] rounded"
                     style={{ width: `${(m.revenue / data.maxMonthlyRevenue) * 100}%` }}
                   />
                 </div>

@@ -43,11 +43,11 @@ export default async function CuentaLayout({ children }: { children: React.React
     <div className="min-h-screen bg-[#F7F2EC]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="mb-6">
-          <p className="text-[10px] tracking-[0.28em] uppercase text-[#965C57] font-[500]">
+          <p className="text-[10px] tracking-[0.28em] uppercase text-[#A0526C] font-[500]">
             Mi cuenta
           </p>
           <h1
-            className="text-2xl text-[#1F1B19] mt-1"
+            className="text-2xl text-[#1C1B2E] mt-1"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {displayName}

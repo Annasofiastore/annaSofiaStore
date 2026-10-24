@@ -40,17 +40,17 @@ export default async function BestSellersPage() {
 
       {/* ── HERO ── */}
       <section className="relative py-20 border-b border-[#E8DED4] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F2DCD6]/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F5DDE5]/20 to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-xl">
             <div className="flex items-center gap-2 mb-4">
-              <TrendingUp size={14} className="text-[#965C57]" strokeWidth={1.5} />
-              <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
+              <TrendingUp size={14} className="text-[#A0526C]" strokeWidth={1.5} />
+              <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
                 Lo más amado
               </span>
             </div>
             <h1
-              className="text-5xl sm:text-6xl text-[#1F1B19] mb-4 leading-[1.08]"
+              className="text-5xl sm:text-6xl text-[#1C1B2E] mb-4 leading-[1.08]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Best Sellers
@@ -89,7 +89,7 @@ export default async function BestSellersPage() {
             </p>
             <Link
               href="/catalogo"
-              className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-[#1F1B19] border-b border-[#1F1B19] pb-0.5 hover:border-[#965C57] hover:text-[#965C57] transition-colors font-[500]"
+              className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-[#1C1B2E] border-b border-[#1C1B2E] pb-0.5 hover:border-[#A0526C] hover:text-[#A0526C] transition-colors font-[500]"
             >
               Ver catálogo completo <ArrowRight size={12} />
             </Link>
@@ -99,19 +99,19 @@ export default async function BestSellersPage() {
 
       {/* ── CTA ── */}
       {products.length > 0 && (
-        <section className="bg-[#F2DCD6]/25 border-t border-[#E8DED4] py-16 text-center">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
+        <section className="bg-[#F5DDE5]/25 border-t border-[#E8DED4] py-16 text-center">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
             Hay más donde elegir
           </span>
           <p
-            className="text-2xl text-[#1F1B19] mt-2 mb-6"
+            className="text-2xl text-[#1C1B2E] mt-2 mb-6"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Explora todo el catálogo
           </p>
           <Link
             href="/catalogo"
-            className="inline-flex items-center gap-2 px-8 py-3 border border-[#1F1B19] text-[#1F1B19] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#1F1B19] hover:text-[#F7F2EC] transition-colors rounded-full"
+            className="inline-flex items-center gap-2 px-8 py-3 border border-[#1C1B2E] text-[#1C1B2E] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors rounded-full"
           >
             Ver todo <ArrowRight size={13} />
           </Link>

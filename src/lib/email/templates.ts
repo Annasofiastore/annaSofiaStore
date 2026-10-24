@@ -30,15 +30,15 @@ function emailBase(storeName: string, preheader: string, content: string): strin
           <tr>
             <td align="center" style="padding-bottom:28px;">
               <a href="${SITE_URL}" style="text-decoration:none;">
-                <span style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:30px;color:#1F1B19;letter-spacing:0.02em;">${name}</span>
+                <span style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:30px;color:#1C1B2E;letter-spacing:0.02em;">${name}</span>
               </a>
-              <div style="width:40px;height:1px;background:#F2DCD6;margin:10px auto 0;"></div>
+              <div style="width:40px;height:1px;background:#F5DDE5;margin:10px auto 0;"></div>
             </td>
           </tr>
         </table>
 
         <!-- CARD -->
-        <table width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;background:#ffffff;border:1px solid #F2DCD6;">
+        <table width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;background:#ffffff;border:1px solid #F5DDE5;">
           <tr>
             <td style="padding:40px 40px 32px;">
               ${content}
@@ -72,11 +72,11 @@ function emailBase(storeName: string, preheader: string, content: string): strin
 
 // ── Componentes reutilizables ──────────────────────────────────────
 function heading(text: string): string {
-  return `<h1 style="font-family:Georgia,'Times New Roman',serif;font-weight:400;font-style:italic;font-size:26px;color:#1F1B19;margin:0 0 8px;line-height:1.3;">${text}</h1>`;
+  return `<h1 style="font-family:Georgia,'Times New Roman',serif;font-weight:400;font-style:italic;font-size:26px;color:#1C1B2E;margin:0 0 8px;line-height:1.3;">${text}</h1>`;
 }
 
 function subheading(text: string): string {
-  return `<p style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#965C57;font-weight:600;margin:0 0 20px;">${text}</p>`;
+  return `<p style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#A0526C;font-weight:600;margin:0 0 20px;">${text}</p>`;
 }
 
 function bodyText(text: string, extra = ""): string {
@@ -85,7 +85,7 @@ function bodyText(text: string, extra = ""): string {
 
 function divider(): string {
   return `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
-    <tr><td style="border-top:1px solid #F2DCD6;font-size:0;line-height:0;">&nbsp;</td></tr>
+    <tr><td style="border-top:1px solid #F5DDE5;font-size:0;line-height:0;">&nbsp;</td></tr>
   </table>`;
 }
 
@@ -94,13 +94,13 @@ function label(text: string): string {
 }
 
 function value(text: string): string {
-  return `<p style="font-family:Arial,sans-serif;font-size:14px;color:#1F1B19;font-weight:600;margin:0 0 16px;">${text}</p>`;
+  return `<p style="font-family:Arial,sans-serif;font-size:14px;color:#1C1B2E;font-weight:600;margin:0 0 16px;">${text}</p>`;
 }
 
 function cta(text: string, url: string): string {
   return `<table cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
     <tr>
-      <td style="background:#1F1B19;">
+      <td style="background:#1C1B2E;">
         <a href="${url}" style="display:inline-block;padding:14px 32px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;color:#F7F2EC;text-decoration:none;">${text}</a>
       </td>
     </tr>
@@ -115,7 +115,7 @@ function orderHeader(orderNumber: string, status: string, statusColor: string): 
           <tr>
             <td>
               ${label("Número de pedido")}
-              <p style="font-family:Georgia,serif;font-size:18px;color:#1F1B19;font-weight:600;margin:0;">${orderNumber}</p>
+              <p style="font-family:Georgia,serif;font-size:18px;color:#1C1B2E;font-weight:600;margin:0;">${orderNumber}</p>
             </td>
             <td align="right" valign="middle">
               <span style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:${statusColor};font-weight:700;background:${statusColor}18;border:1px solid ${statusColor}40;padding:4px 10px;">${status}</span>
@@ -132,11 +132,11 @@ function itemsTable(items: any[]): string {
   const rows = items.map((item) => {
     const attrs = item.variant_attrs ? Object.values(item.variant_attrs).filter(Boolean).join(" · ") : "";
     return `<tr>
-      <td style="font-family:Arial,sans-serif;font-size:13px;color:#1F1B19;padding:10px 0;border-bottom:1px solid #F7F2EC;">
+      <td style="font-family:Arial,sans-serif;font-size:13px;color:#1C1B2E;padding:10px 0;border-bottom:1px solid #F7F2EC;">
         <span style="font-weight:500;">${item.product_name}</span>${attrs ? `<br><span style="font-size:11px;color:#766A63;">${attrs}</span>` : ""}
-        <span style="color:#965C57;font-size:12px;"> &nbsp;×${item.quantity}</span>
+        <span style="color:#A0526C;font-size:12px;"> &nbsp;×${item.quantity}</span>
       </td>
-      <td align="right" style="font-family:Arial,sans-serif;font-size:13px;color:#1F1B19;font-weight:600;padding:10px 0;border-bottom:1px solid #F7F2EC;white-space:nowrap;">
+      <td align="right" style="font-family:Arial,sans-serif;font-size:13px;color:#1C1B2E;font-weight:600;padding:10px 0;border-bottom:1px solid #F7F2EC;white-space:nowrap;">
         ${formatCOP(item.total_price)}
       </td>
     </tr>`;
@@ -154,20 +154,20 @@ function totalsTable(order: any): string {
       <td align="right" style="font-family:Arial,sans-serif;font-size:13px;color:#766A63;padding:8px 0 4px;">${formatCOP(order.subtotal)}</td>
     </tr>
     ${hasDiscount ? `<tr>
-      <td style="font-family:Arial,sans-serif;font-size:13px;color:#965C57;padding:4px 0;">Descuento</td>
-      <td align="right" style="font-family:Arial,sans-serif;font-size:13px;color:#965C57;padding:4px 0;">−${formatCOP(order.discount_amount)}</td>
+      <td style="font-family:Arial,sans-serif;font-size:13px;color:#A0526C;padding:4px 0;">Descuento</td>
+      <td align="right" style="font-family:Arial,sans-serif;font-size:13px;color:#A0526C;padding:4px 0;">−${formatCOP(order.discount_amount)}</td>
     </tr>` : ""}
     ${hasShipping ? `<tr>
       <td style="font-family:Arial,sans-serif;font-size:13px;color:#766A63;padding:4px 0;">Envío</td>
       <td align="right" style="font-family:Arial,sans-serif;font-size:13px;color:#766A63;padding:4px 0;">${formatCOP(order.shipping_cost)}</td>
     </tr>` : ""}
     <tr>
-      <td style="border-top:1px solid #F2DCD6;"></td>
-      <td style="border-top:1px solid #F2DCD6;"></td>
+      <td style="border-top:1px solid #F5DDE5;"></td>
+      <td style="border-top:1px solid #F5DDE5;"></td>
     </tr>
     <tr>
-      <td style="font-family:Georgia,serif;font-size:16px;color:#1F1B19;font-weight:600;padding:12px 0 0;">Total</td>
-      <td align="right" style="font-family:Georgia,serif;font-size:16px;color:#1F1B19;font-weight:600;padding:12px 0 0;">${formatCOP(order.total)}</td>
+      <td style="font-family:Georgia,serif;font-size:16px;color:#1C1B2E;font-weight:600;padding:12px 0 0;">Total</td>
+      <td align="right" style="font-family:Georgia,serif;font-size:16px;color:#1C1B2E;font-weight:600;padding:12px 0 0;">${formatCOP(order.total)}</td>
     </tr>
   </table>`;
 }
@@ -177,7 +177,7 @@ function shippingBlock(order: any): string {
     <tr>
       <td style="padding:16px 20px;">
         ${label("Dirección de entrega")}
-        <p style="font-family:Arial,sans-serif;font-size:13px;color:#1F1B19;margin:0;line-height:1.6;">
+        <p style="font-family:Arial,sans-serif;font-size:13px;color:#1C1B2E;margin:0;line-height:1.6;">
           <strong>${order.shipping_name}</strong><br>
           ${order.shipping_address}<br>
           ${order.shipping_city}, ${order.shipping_department}<br>
@@ -201,7 +201,7 @@ export async function sendOrderConfirmationEmail(order: any) {
   const content = `
     ${subheading("Confirmación de pedido")}
     ${heading("¡Gracias por tu compra!")}
-    ${bodyText(`Hola <strong style="color:#1F1B19;">${order.shipping_name}</strong>, tu pedido está confirmado y ya estamos preparándolo con cariño para ti.`)}
+    ${bodyText(`Hola <strong style="color:#1C1B2E;">${order.shipping_name}</strong>, tu pedido está confirmado y ya estamos preparándolo con cariño para ti.`)}
     ${divider()}
     ${orderHeader(order.order_number, "Confirmado", "#3D7A3D")}
     ${label("Tus prendas")}
@@ -211,7 +211,7 @@ export async function sendOrderConfirmationEmail(order: any) {
     ${shippingBlock(order)}
     ${cta("Seguir mi pedido", trackUrl)}
     ${divider()}
-    ${bodyText(`¿Tienes alguna pregunta? Escríbenos por <a href='${whatsappUrl}' style='color:#965C57;'>WhatsApp</a> o a <a href='mailto:${brand.email}' style='color:#965C57;'>${brand.email}</a>.`, "font-size:12px;")}
+    ${bodyText(`¿Tienes alguna pregunta? Escríbenos por <a href='${whatsappUrl}' style='color:#A0526C;'>WhatsApp</a> o a <a href='mailto:${brand.email}' style='color:#A0526C;'>${brand.email}</a>.`, "font-size:12px;")}
   `;
 
   return getResend().emails.send({
@@ -232,13 +232,13 @@ export async function sendNewOrderAdminEmail(order: any) {
   const content = `
     ${subheading("Panel administrativo")}
     ${heading("Nuevo pedido recibido")}
-    ${orderHeader(order.order_number, "Pendiente preparación", "#965C57")}
+    ${orderHeader(order.order_number, "Pendiente preparación", "#A0526C")}
     ${label("Clienta")}
     ${value(order.shipping_name)}
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
       <tr>
         <td style="font-family:Arial,sans-serif;font-size:13px;color:#766A63;">
-          <a href="mailto:${order.shipping_email}" style="color:#965C57;">${order.shipping_email}</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+          <a href="mailto:${order.shipping_email}" style="color:#A0526C;">${order.shipping_email}</a>&nbsp;&nbsp;·&nbsp;&nbsp;
           <a href="tel:${order.shipping_phone}" style="color:#766A63;text-decoration:none;">${order.shipping_phone}</a>
         </td>
       </tr>
@@ -266,7 +266,7 @@ export async function sendPaymentFailedEmail(order: any) {
   const content = `
     ${subheading("Estado del pago")}
     ${heading("No pudimos procesar tu pago")}
-    ${bodyText(`Hola <strong style="color:#1F1B19;">${order.shipping_name}</strong>, lamentablemente el pago de tu pedido <strong style="color:#1F1B19;">${order.order_number}</strong> no pudo completarse.`)}
+    ${bodyText(`Hola <strong style="color:#1C1B2E;">${order.shipping_name}</strong>, lamentablemente el pago de tu pedido <strong style="color:#1C1B2E;">${order.order_number}</strong> no pudo completarse.`)}
     ${bodyText("Esto puede ocurrir por fondos insuficientes, datos incorrectos o un rechazo temporal del banco. Tus productos siguen disponibles.")}
     ${divider()}
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F2EC;">
@@ -283,7 +283,7 @@ export async function sendPaymentFailedEmail(order: any) {
     </table>
     ${cta("Volver al carrito", `${SITE_URL}/carrito`)}
     ${divider()}
-    ${bodyText(`¿Necesitas ayuda? Escríbenos por <a href='${whatsappUrl}' style='color:#965C57;'>WhatsApp</a>.`, "font-size:12px;")}
+    ${bodyText(`¿Necesitas ayuda? Escríbenos por <a href='${whatsappUrl}' style='color:#A0526C;'>WhatsApp</a>.`, "font-size:12px;")}
   `;
 
   return getResend().emails.send({
@@ -305,22 +305,22 @@ export async function sendOrderStatusEmail(order: any, newStatus: string) {
       badge: "En preparación",
       badgeColor: "#7B5EA7",
       title: "Estamos preparando tu pedido",
-      body: `¡Buenas noticias! Estamos empacando tu pedido <strong style="color:#1F1B19;">${order.order_number}</strong> con mucho cariño. Te notificaremos cuando sea despachado.`,
+      body: `¡Buenas noticias! Estamos empacando tu pedido <strong style="color:#1C1B2E;">${order.order_number}</strong> con mucho cariño. Te notificaremos cuando sea despachado.`,
     },
     shipped: {
       preheader: `Tu pedido ${order.order_number} va en camino.`,
       badge: "En camino",
       badgeColor: "#1A7FA8",
       title: "Tu pedido va en camino",
-      body: `Tu pedido <strong style="color:#1F1B19;">${order.order_number}</strong> fue entregado al courier y está en camino hacia ti.${order.tracking_number ? ` Número de guía: <strong style="color:#1F1B19;">${order.tracking_number}</strong>${order.courier ? ` (${order.courier})` : ""}.` : ""} Tiempo estimado: 3–5 días hábiles.`,
+      body: `Tu pedido <strong style="color:#1C1B2E;">${order.order_number}</strong> fue entregado al courier y está en camino hacia ti.${order.tracking_number ? ` Número de guía: <strong style="color:#1C1B2E;">${order.tracking_number}</strong>${order.courier ? ` (${order.courier})` : ""}.` : ""} Tiempo estimado: 3–5 días hábiles.`,
     },
     delivered: {
       preheader: `Tu pedido ${order.order_number} fue entregado. ¡Disfrútalo!`,
       badge: "Entregado",
       badgeColor: "#3D7A3D",
       title: "¡Tu pedido llegó!",
-      body: `Tu pedido <strong style="color:#1F1B19;">${order.order_number}</strong> fue entregado exitosamente. Esperamos que ames tus nuevas prendas.`,
-      extra: `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F2EC;margin-top:20px;"><tr><td style="padding:16px 20px;text-align:center;"><p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:#1F1B19;margin:0;">"Vístete con intención, vive con propósito."</p></td></tr></table>`,
+      body: `Tu pedido <strong style="color:#1C1B2E;">${order.order_number}</strong> fue entregado exitosamente. Esperamos que ames tus nuevas prendas.`,
+      extra: `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F2EC;margin-top:20px;"><tr><td style="padding:16px 20px;text-align:center;"><p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:#1C1B2E;margin:0;">"Vístete con intención, vive con propósito."</p></td></tr></table>`,
     },
   };
 
@@ -337,7 +337,7 @@ export async function sendOrderStatusEmail(order: any, newStatus: string) {
     ${shippingBlock(order)}
     ${cta("Ver estado del pedido", trackUrl)}
     ${divider()}
-    ${bodyText(`¿Preguntas? Escríbenos por <a href='${whatsappUrl}' style='color:#965C57;'>WhatsApp</a>.`, "font-size:12px;")}
+    ${bodyText(`¿Preguntas? Escríbenos por <a href='${whatsappUrl}' style='color:#A0526C;'>WhatsApp</a>.`, "font-size:12px;")}
   `;
 
   return getResend().emails.send({
@@ -371,13 +371,13 @@ export async function sendWelcomeEmail(email: string, name: string) {
       </tr>
     </table>
     ${divider()}
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FBF6F1;border:1px dashed #F2DCD6;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FBF6F1;border:1px dashed #F5DDE5;">
       <tr>
         <td style="padding:20px;text-align:center;">
-          <p style="font-family:Arial,sans-serif;font-size:11px;color:#965C57;text-transform:uppercase;letter-spacing:0.2em;margin:0 0 10px;">Tu regalo de bienvenida</p>
-          <p style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:26px;color:#1F1B19;margin:0 0 6px;">10% de descuento</p>
+          <p style="font-family:Arial,sans-serif;font-size:11px;color:#A0526C;text-transform:uppercase;letter-spacing:0.2em;margin:0 0 10px;">Tu regalo de bienvenida</p>
+          <p style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:26px;color:#1C1B2E;margin:0 0 6px;">10% de descuento</p>
           <p style="font-family:Arial,sans-serif;font-size:13px;color:#766A63;margin:0 0 14px;">en tu primer pedido</p>
-          <div style="display:inline-block;background:#1F1B19;padding:10px 24px;">
+          <div style="display:inline-block;background:#1C1B2E;padding:10px 24px;">
             <span style="font-family:monospace;font-size:18px;color:#F7F2EC;font-weight:700;letter-spacing:0.15em;">BIENVENIDA10</span>
           </div>
           <p style="font-family:Arial,sans-serif;font-size:11px;color:#DCCFC4;margin:12px 0 0;">Aplica el código al hacer checkout · 1 uso por cuenta</p>
@@ -386,7 +386,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
     </table>
     ${cta("Explorar el catálogo", `${SITE_URL}/catalogo`)}
     ${divider()}
-    ${bodyText(`¿Tienes dudas? Escríbenos por <a href='${whatsappUrl}' style='color:#965C57;'>WhatsApp</a> o a <a href='mailto:${brand.email}' style='color:#965C57;'>${brand.email}</a>.`, "font-size:12px;")}
+    ${bodyText(`¿Tienes dudas? Escríbenos por <a href='${whatsappUrl}' style='color:#A0526C;'>WhatsApp</a> o a <a href='mailto:${brand.email}' style='color:#A0526C;'>${brand.email}</a>.`, "font-size:12px;")}
   `;
 
   return getResend().emails.send({

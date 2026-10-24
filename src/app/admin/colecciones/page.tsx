@@ -122,7 +122,7 @@ export default function AdminColeccionesPage() {
         <h1 className="text-xl font-semibold text-gray-800">Colecciones</h1>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors"
         >
           <Plus size={14} /> Nueva colección
         </button>
@@ -193,7 +193,7 @@ export default function AdminColeccionesPage() {
                   type="checkbox"
                   checked={form.is_active}
                   onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-                  className="accent-[#1F1B19]"
+                  className="accent-[#1C1B2E]"
                 />
                 <span className="text-xs text-gray-600">Colección activa (visible en el storefront)</span>
               </label>
@@ -202,10 +202,10 @@ export default function AdminColeccionesPage() {
                   type="checkbox"
                   checked={form.featured_on_home}
                   onChange={(e) => setForm({ ...form, featured_on_home: e.target.checked })}
-                  className="accent-[#965C57]"
+                  className="accent-[#A0526C]"
                 />
                 <span className="text-xs text-gray-600 flex items-center gap-1">
-                  <Home size={11} className="text-[#965C57]" />
+                  <Home size={11} className="text-[#A0526C]" />
                   Destacar en inicio (reemplaza la colección actual del home)
                 </span>
               </label>
@@ -221,7 +221,7 @@ export default function AdminColeccionesPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] transition-colors disabled:opacity-50"
+                className="px-5 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>
@@ -269,7 +269,7 @@ export default function AdminColeccionesPage() {
                   <td className="px-4 py-3 text-center text-gray-500">{c.sort_order}</td>
                   <td className="px-4 py-3 text-center">
                     {c.featured_on_home && (
-                      <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full font-[500] bg-[#F2DCD6]/60 text-[#965C57]">
+                      <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full font-[500] bg-[#F5DDE5]/60 text-[#A0526C]">
                         <Home size={11} /> Inicio
                       </span>
                     )}

@@ -10,7 +10,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
       <header className="py-6 px-8 border-b border-[#E8DED4]">
         <Link href="/" className="inline-block">
           <span
-            className="text-4xl text-[#1F1B19]"
+            className="text-4xl text-[#1C1B2E]"
             style={{ fontFamily: "var(--font-script)" }}
           >
             {storeName}

@@ -109,7 +109,7 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
   }
 
   const inputCls =
-    "w-full border border-[#E8DED4] bg-white px-2 py-1 text-xs text-[#1F1B19] focus:outline-none focus:border-[#766A63]";
+    "w-full border border-[#E8DED4] bg-white px-2 py-1 text-xs text-[#1C1B2E] focus:outline-none focus:border-[#766A63]";
 
   return (
     <div className="space-y-5">
@@ -127,7 +127,7 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               className={cn(
                 "px-3 py-1 text-xs border transition-colors",
                 tallas.includes(t)
-                  ? "bg-[#1F1B19] text-[#F7F2EC] border-[#1F1B19]"
+                  ? "bg-[#1C1B2E] text-[#F7F2EC] border-[#1C1B2E]"
                   : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
               )}
             >
@@ -143,12 +143,12 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               if (e.key === "Enter") { e.preventDefault(); addTalla(newTalla); setNewTalla(""); }
             }}
             placeholder="Otra talla…"
-            className="border border-[#E8DED4] px-2 py-1 text-xs text-[#1F1B19] focus:outline-none focus:border-[#766A63] w-32"
+            className="border border-[#E8DED4] px-2 py-1 text-xs text-[#1C1B2E] focus:outline-none focus:border-[#766A63] w-32"
           />
           <button
             type="button"
             onClick={() => { addTalla(newTalla); setNewTalla(""); }}
-            className="text-xs text-[#766A63] hover:text-[#1F1B19] flex items-center gap-1"
+            className="text-xs text-[#766A63] hover:text-[#1C1B2E] flex items-center gap-1"
           >
             <Plus size={12} /> Agregar
           </button>
@@ -164,11 +164,11 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
           {colores.map((c) => (
             <span
               key={c}
-              className="flex items-center gap-1 px-2 py-0.5 text-xs bg-[#F7F2EC] text-[#1F1B19] border border-[#E8DED4]"
+              className="flex items-center gap-1 px-2 py-0.5 text-xs bg-[#F7F2EC] text-[#1C1B2E] border border-[#E8DED4]"
             >
               {c}
               <button type="button" onClick={() => removeColor(c)}>
-                <X size={10} className="text-[#766A63] hover:text-[#965C57]" />
+                <X size={10} className="text-[#766A63] hover:text-[#A0526C]" />
               </button>
             </span>
           ))}
@@ -181,12 +181,12 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
               if (e.key === "Enter") { e.preventDefault(); addColor(newColor); setNewColor(""); }
             }}
             placeholder="Ej: Negro, Blanco, Rojo…"
-            className="border border-[#E8DED4] px-2 py-1 text-xs text-[#1F1B19] focus:outline-none focus:border-[#766A63] w-48"
+            className="border border-[#E8DED4] px-2 py-1 text-xs text-[#1C1B2E] focus:outline-none focus:border-[#766A63] w-48"
           />
           <button
             type="button"
             onClick={() => { addColor(newColor); setNewColor(""); }}
-            className="text-xs text-[#766A63] hover:text-[#1F1B19] flex items-center gap-1"
+            className="text-xs text-[#766A63] hover:text-[#1C1B2E] flex items-center gap-1"
           >
             <Plus size={12} /> Agregar
           </button>
@@ -215,7 +215,7 @@ export function VariantManager({ variants, onChange, basePrice, productName }: P
             <tbody>
               {tallas.map((t) => (
                 <tr key={t} className="border-t border-[#F7F2EC]">
-                  <td className="py-2 pr-4 font-[500] text-[#1F1B19] whitespace-nowrap">{t}</td>
+                  <td className="py-2 pr-4 font-[500] text-[#1C1B2E] whitespace-nowrap">{t}</td>
                   {colores.map((c) => {
                     const variant = getVariant(t, c);
                     if (!variant) return <td key={c} />;

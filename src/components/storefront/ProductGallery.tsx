@@ -22,7 +22,7 @@ export function ProductGallery({ images, name }: Props) {
 
   if (images.length === 0) {
     return (
-      <div className="aspect-[3/4] bg-[#F2DCD6]/20 flex items-center justify-center">
+      <div className="aspect-[3/4] bg-[#F5DDE5]/20 flex items-center justify-center">
         <span className="text-5xl text-[#766A63]" style={{ fontFamily: "var(--font-display)" }}>
           {monogramOf(storeName)}
         </span>
@@ -50,12 +50,11 @@ export function ProductGallery({ images, name }: Props) {
           className="flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {images.map((src, i) => (
-            <div key={i} className="relative shrink-0 w-full aspect-[3/4] snap-center bg-[#F2DCD6]/10">
+            <div key={i} className="relative shrink-0 w-full aspect-[3/4] snap-center bg-[#F5DDE5]/10">
               <Image
                 src={src}
                 alt={`${name} — foto ${i + 1}`}
                 fill
-                unoptimized
                 className="object-cover"
                 sizes="100vw"
                 priority={i === 0}
@@ -72,7 +71,7 @@ export function ProductGallery({ images, name }: Props) {
                 aria-label={`Ver foto ${i + 1}`}
                 className={cn(
                   "h-[3px] rounded-full transition-all duration-300",
-                  active === i ? "w-8 bg-[#1F1B19]" : "w-3 bg-[#DCCFC4]"
+                  active === i ? "w-8 bg-[#1C1B2E]" : "w-3 bg-[#DCCFC4]"
                 )}
               />
             ))}
@@ -83,12 +82,11 @@ export function ProductGallery({ images, name }: Props) {
       {/* Escritorio: fotos apiladas */}
       <div className="hidden lg:flex flex-col gap-3">
         {images.map((src, i) => (
-          <div key={i} className="relative aspect-[3/4] overflow-hidden bg-[#F2DCD6]/10">
+          <div key={i} className="relative aspect-[3/4] overflow-hidden bg-[#F5DDE5]/10">
             <Image
               src={src}
               alt={`${name} — foto ${i + 1}`}
               fill
-              unoptimized
               className="object-cover"
               sizes="55vw"
               priority={i === 0}

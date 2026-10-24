@@ -170,19 +170,19 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
       {/* Icono de estado */}
       {order.status === "paid" || order.status === "preparing" || order.status === "shipped" || order.status === "delivered" ? (
-        <CheckCircle className="mx-auto mb-6 text-[#965C57]" size={56} strokeWidth={1} />
+        <CheckCircle className="mx-auto mb-6 text-[#A0526C]" size={56} strokeWidth={1} />
       ) : (
         <Package className="mx-auto mb-6 text-[#DCCFC4]" size={56} strokeWidth={1} />
       )}
 
       <h1
-        className="text-4xl text-[#1F1B19] mb-2"
+        className="text-4xl text-[#1C1B2E] mb-2"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {order.status === "paid" ? "¡Pedido confirmado!" : "Tu pedido"}
       </h1>
       <p className="text-[#766A63] text-sm mb-2">
-        Pedido <span className="font-[600] text-[#1F1B19]">{order.order_number}</span>
+        Pedido <span className="font-[600] text-[#1C1B2E]">{order.order_number}</span>
       </p>
       <p className="text-xs text-[#766A63] mb-10">
         {formatDate(order.created_at)}
@@ -199,16 +199,16 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
                 <div
                   className={`w-3 h-3 rounded-full border-2 transition-colors ${
                     done
-                      ? "bg-[#1F1B19] border-[#1F1B19]"
+                      ? "bg-[#1C1B2E] border-[#1C1B2E]"
                       : "bg-transparent border-[#E8DED4]"
                   }`}
                 />
-                <span className={`text-[9px] tracking-wide uppercase whitespace-nowrap ${active ? "text-[#1F1B19] font-[600]" : done ? "text-[#766A63]" : "text-[#DCCFC4]"}`}>
+                <span className={`text-[9px] tracking-wide uppercase whitespace-nowrap ${active ? "text-[#1C1B2E] font-[600]" : done ? "text-[#766A63]" : "text-[#DCCFC4]"}`}>
                   {STATUS_LABELS[step]}
                 </span>
               </div>
               {i < STATUS_STEPS.length - 1 && (
-                <div className={`w-12 sm:w-20 h-px mb-5 ${done && currentStep > i ? "bg-[#1F1B19]" : "bg-[#E8DED4]"}`} />
+                <div className={`w-12 sm:w-20 h-px mb-5 ${done && currentStep > i ? "bg-[#1C1B2E]" : "bg-[#E8DED4]"}`} />
               )}
             </div>
           );
@@ -216,7 +216,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
       </div>
 
       {/* Detalle del pedido */}
-      <div className="bg-[#F2DCD6]/15 border border-[#E8DED4] p-6 text-left mb-8">
+      <div className="bg-[#F5DDE5]/15 border border-[#E8DED4] p-6 text-left mb-8">
         <h2 className="text-[10px] tracking-[0.25em] uppercase text-[#766A63] font-[600] mb-4">
           Detalle del pedido
         </h2>
@@ -224,16 +224,16 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
         <div className="space-y-2 mb-4">
           {(order.items ?? []).map((item: any) => (
             <div key={item.id} className="flex justify-between text-sm">
-              <span className="text-[#1F1B19]">
+              <span className="text-[#1C1B2E]">
                 {item.product_name}{" "}
                 <span className="text-[#766A63] text-xs">× {item.quantity}</span>
               </span>
-              <span className="text-[#1F1B19] font-[500]">{formatCOP(item.total_price)}</span>
+              <span className="text-[#1C1B2E] font-[500]">{formatCOP(item.total_price)}</span>
             </div>
           ))}
         </div>
 
-        <div className="border-t border-[#E8DED4] pt-4 flex justify-between font-[600] text-[#1F1B19]">
+        <div className="border-t border-[#E8DED4] pt-4 flex justify-between font-[600] text-[#1C1B2E]">
           <span>{isContraentrega ? "Total a pagar al recibir" : "Total pagado"}</span>
           <span>{formatCOP(order.total)}</span>
         </div>
@@ -242,7 +242,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
           <p className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600] mb-1">
             Envío a
           </p>
-          <p className="text-sm text-[#1F1B19]">
+          <p className="text-sm text-[#1C1B2E]">
             {order.shipping_name} · {order.shipping_address}, {order.shipping_city}
           </p>
           <p className="text-xs text-[#766A63] mt-0.5">{order.shipping_email}</p>
@@ -253,7 +253,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
             <p className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600] mb-1">
               Guía de envío
             </p>
-            <p className="text-sm text-[#1F1B19] font-[500]">{order.tracking_number}</p>
+            <p className="text-sm text-[#1C1B2E] font-[500]">{order.tracking_number}</p>
             {order.courier && <p className="text-xs text-[#766A63]">{order.courier}</p>}
           </div>
         )}
@@ -264,7 +264,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
         <div className="flex items-start gap-3 bg-[#F7F2EC] border border-[#DCCFC4] px-5 py-4 text-left mb-6">
           <Truck size={18} className="text-[#766A63] shrink-0 mt-0.5" strokeWidth={1.5} />
           <div>
-            <p className="text-sm font-[600] text-[#1F1B19]">Pago contraentrega</p>
+            <p className="text-sm font-[600] text-[#1C1B2E]">Pago contraentrega</p>
             <p className="text-xs text-[#766A63] mt-1 leading-relaxed">
               Ten el dinero listo cuando llegue tu domiciliario.
               El valor a pagar es <strong>{formatCOP(order.total)}</strong>.
@@ -285,13 +285,13 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <Link
           href={`/seguimiento?orden=${order.order_number}&email=${encodeURIComponent(order.shipping_email)}`}
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#1F1B19] text-[#1F1B19] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#1F1B19] hover:text-[#F7F2EC] transition-colors rounded-full"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#1C1B2E] text-[#1C1B2E] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors rounded-full"
         >
           Seguir pedido
         </Link>
         <Link
           href="/catalogo"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1F1B19] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#3A3431] transition-colors rounded-full"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors rounded-full"
         >
           Seguir comprando <ArrowRight size={13} />
         </Link>

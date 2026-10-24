@@ -60,21 +60,21 @@ export default async function ColeccionPage({ params }: Props) {
         className="relative min-h-[40vh] flex items-end justify-start overflow-hidden"
         style={{
           background: collection.hero_url
-            ? `linear-gradient(to top, #1F1B19CC, transparent), url(${collection.hero_url}) center/cover`
-            : "linear-gradient(135deg, #F2DCD6 0%, #F7F2EC 50%, #DCCFC4 100%)",
+            ? `linear-gradient(to top, #1C1B2ECC, transparent), url(${collection.hero_url}) center/cover`
+            : "linear-gradient(135deg, #F5DDE5 0%, #F7F2EC 50%, #DCCFC4 100%)",
         }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10">
           <span
             className={`text-[10px] tracking-[0.28em] uppercase font-[500] ${
-              collection.hero_url ? "text-[#F2DCD6]" : "text-[#965C57]"
+              collection.hero_url ? "text-[#F5DDE5]" : "text-[#A0526C]"
             }`}
           >
             Colección
           </span>
           <h1
             className={`text-5xl mt-1 ${
-              collection.hero_url ? "text-white" : "text-[#1F1B19]"
+              collection.hero_url ? "text-white" : "text-[#1C1B2E]"
             }`}
             style={{ fontFamily: "var(--font-display)" }}
           >

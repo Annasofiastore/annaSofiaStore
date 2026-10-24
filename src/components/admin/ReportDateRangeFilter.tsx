@@ -60,7 +60,7 @@ export function ReportDateRangeFilter({ from, to }: Props) {
           <button
             key={p.label}
             onClick={() => apply(p.range())}
-            className="text-[11px] px-3 py-1.5 rounded border border-gray-200 text-gray-600 hover:border-[#766A63] hover:text-[#1F1B19] transition-colors"
+            className="text-[11px] px-3 py-1.5 rounded border border-gray-200 text-gray-600 hover:border-[#766A63] hover:text-[#1C1B2E] transition-colors"
           >
             {p.label}
           </button>
@@ -85,7 +85,7 @@ export function ReportDateRangeFilter({ from, to }: Props) {
         />
         <button
           onClick={() => apply()}
-          className="text-[11px] px-3 py-1.5 rounded bg-[#1F1B19] text-[#F7F2EC] hover:bg-[#3A3431] transition-colors"
+          className="text-[11px] px-3 py-1.5 rounded bg-[#1C1B2E] text-[#F7F2EC] hover:bg-[#2D2C44] transition-colors"
         >
           Aplicar
         </button>

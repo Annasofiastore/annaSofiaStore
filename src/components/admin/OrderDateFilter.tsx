@@ -34,7 +34,7 @@ export function OrderDateFilter() {
         value={dateFrom}
         max={dateTo || undefined}
         onChange={(e) => update("date_from", e.target.value)}
-        className="text-xs border border-[#E8DED4] px-2 py-1.5 text-[#1F1B19] focus:outline-none focus:border-[#766A63] bg-white"
+        className="text-xs border border-[#E8DED4] px-2 py-1.5 text-[#1C1B2E] focus:outline-none focus:border-[#766A63] bg-white"
       />
       <span className="text-xs text-[#DCCFC4]">—</span>
       <input
@@ -42,13 +42,13 @@ export function OrderDateFilter() {
         value={dateTo}
         min={dateFrom || undefined}
         onChange={(e) => update("date_to", e.target.value)}
-        className="text-xs border border-[#E8DED4] px-2 py-1.5 text-[#1F1B19] focus:outline-none focus:border-[#766A63] bg-white"
+        className="text-xs border border-[#E8DED4] px-2 py-1.5 text-[#1C1B2E] focus:outline-none focus:border-[#766A63] bg-white"
       />
       {hasDate && (
         <button
           onClick={clear}
           title="Limpiar fechas"
-          className="text-[#766A63] hover:text-[#1F1B19] transition-colors"
+          className="text-[#766A63] hover:text-[#1C1B2E] transition-colors"
         >
           <X size={13} strokeWidth={2} />
         </button>
