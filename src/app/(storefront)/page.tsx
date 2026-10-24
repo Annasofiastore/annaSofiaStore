@@ -9,6 +9,7 @@ import { ScrollReveal } from "@/components/storefront/ScrollReveal";
 import { StaggeredGrid } from "@/components/storefront/StaggeredGrid";
 import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { MarqueeStrip } from "@/components/storefront/MarqueeStrip";
+import { StaticStrip } from "@/components/storefront/StaticStrip";
 import { CategoryRow, type CategoryTile } from "@/components/storefront/CategoryRow";
 import { PaymentsBanner } from "@/components/storefront/PaymentsBanner";
 import { InstagramBlock } from "@/components/storefront/InstagramBlock";
@@ -230,7 +231,7 @@ export default async function HomePage() {
 
         {/* Invitación a bajar */}
         <a
-          href="#valores"
+          href="#categorias"
           aria-label="Ver más"
           className={`hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-float ${
             hasSlides ? "text-white/80" : "text-[#766A63]"
@@ -240,8 +241,8 @@ export default async function HomePage() {
         </a>
       </section>
 
-      {/* ── MARQUEE ────────────────────────────────────────────── */}
-      <MarqueeStrip />
+      {/* ── FRANJA FIJA ────────────────────────────────────────── */}
+      <StaticStrip />
 
       {/* ── CATEGORÍAS ─────────────────────────────────────────── */}
       <CategoryRow categories={categories} />

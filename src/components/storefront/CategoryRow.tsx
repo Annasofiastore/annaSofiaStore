@@ -40,7 +40,7 @@ export function CategoryRow({ categories }: { categories: CategoryTile[] }) {
   const firstSpansOnMobile = categories.length === 3;
 
   return (
-    <section className="px-1.5 pt-1.5">
+    <section id="categorias" className="px-1.5 pt-1.5 scroll-mt-16">
       <StaggeredGrid
         className={`grid ${grid} gap-1.5`}
         itemDelay={80}
