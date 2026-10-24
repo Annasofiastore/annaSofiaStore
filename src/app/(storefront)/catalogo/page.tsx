@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/storefront/ProductCard";
+import { CatalogCategoryBar } from "@/components/storefront/CatalogCategoryBar";
 import { CatalogFilters } from "@/components/storefront/CatalogFilters";
 import { CatalogMobileFilters } from "@/components/storefront/CatalogMobileFilters";
 import { CatalogSortSelect } from "@/components/storefront/CatalogSortSelect";
@@ -148,7 +149,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
   ]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="px-4 sm:px-8 lg:px-12 py-10">
       {/* ENCABEZADO */}
       <div className="text-center mb-10">
         <span className="text-[10px] tracking-[0.3em] uppercase text-[#965C57] font-[500]">
@@ -162,12 +163,14 @@ export default async function CatalogoPage({ searchParams }: Props) {
         </h1>
       </div>
 
-      <div className="flex gap-8">
+      <CatalogCategoryBar categories={filterOptions.categories} current={filters} />
+
+      <div className="flex gap-8 xl:gap-12">
         {/* SIDEBAR FILTROS — solo desktop */}
         <aside className="hidden lg:block w-56 shrink-0">
           <Suspense fallback={<div className="space-y-8 animate-pulse"><div className="h-4 bg-[#E8DED4] rounded w-3/4"/><div className="h-4 bg-[#E8DED4] rounded w-1/2"/></div>}>
             <CatalogFilters
-              categories={filterOptions.categories}
+              categories={[]}
               collections={filterOptions.collections}
               occasions={filterOptions.occasions}
               current={filters}
@@ -184,7 +187,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
               <div className="lg:hidden">
                 <Suspense fallback={null}>
                   <CatalogMobileFilters
-                    categories={filterOptions.categories}
+                    categories={[]}
                     collections={filterOptions.collections}
                     occasions={filterOptions.occasions}
                     current={filters}
@@ -212,7 +215,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 xl:gap-x-6 gap-y-10">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

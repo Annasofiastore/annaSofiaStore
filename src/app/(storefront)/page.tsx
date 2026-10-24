@@ -9,10 +9,19 @@ import { ScrollReveal } from "@/components/storefront/ScrollReveal";
 import { StaggeredGrid } from "@/components/storefront/StaggeredGrid";
 import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { MarqueeStrip } from "@/components/storefront/MarqueeStrip";
+import { CategoryRow, type CategoryTile } from "@/components/storefront/CategoryRow";
+import { PaymentsBanner } from "@/components/storefront/PaymentsBanner";
+import { InstagramBlock } from "@/components/storefront/InstagramBlock";
 import type { Product } from "@/types";
 import { getStoreName } from "@/lib/config/store-name";
-import { getNosotrasContent, getNosotrasImage } from "@/lib/config/nosotras";
+import { getNosotrasContent } from "@/lib/config/nosotras";
+import { whatsappUrl } from "@/lib/config/brand";
 import { getHeroContent } from "@/lib/config/hero";
+
+const HELP_LINKS = [
+  { title: "Escríbenos por WhatsApp", desc: "Resolvemos tus dudas de tallas, envíos y disponibilidad.", href: whatsappUrl, external: true },
+  { title: "Explora el catálogo", desc: "Todas las prendas disponibles, con filtros por categoría, colección y ocasión.", href: "/catalogo", external: false },
+] as const;
 
 type HeroSlide = { id: string; image_url: string; alt_text: string | null };
 
@@ -36,13 +45,6 @@ type NewArrivalsSection = {
   tabs: { slug: string; name: string }[];
 };
 
-const BRAND_VALUES = [
-  { title: "Intencional", desc: "Con propósito detrás de cada costura. Cada prenda nace desde el amor." },
-  { title: "Versátil", desc: "De los días simples a los momentos especiales. Prendas que se adaptan a tu día a día." },
-  { title: "Femenina", desc: "Diseños que resaltan tu esencia. Delicadeza, confianza y estilo en cada detalle." },
-  { title: "Auténtica", desc: "Cada prenda refleja quién quieres ser." },
-];
-
 const PRODUCT_FIELDS = `
   id, name, slug, base_price, compare_price, images, status,
   is_on_sale, effective_price, is_sold_out, is_pre_sale, is_best_seller,
@@ -59,6 +61,17 @@ async function getHeroSlides(): Promise<HeroSlide[]> {
     .eq("is_active", true)
     .order("sort_order");
   return (data ?? []) as HeroSlide[];
+}
+
+/** Categorías para la fila de acceso rápido (Vestidos, Sets, Enterizos…). */
+async function getCategoryTiles(): Promise<CategoryTile[]> {
+  const db = createServiceClient();
+  const { data } = await db
+    .from("categories")
+    .select("id, name, slug, image_url")
+    .order("sort_order")
+    .limit(6);
+  return (data ?? []) as CategoryTile[];
 }
 
 /** Colecciones activas para los recuadros; la destacada en el inicio va primero. */
@@ -129,12 +142,12 @@ async function getNewArrivals(): Promise<NewArrivalsSection> {
 
 export default async function HomePage() {
   const storeName = await getStoreName();
-  const [heroSlides, collections, arrivals, nosotras, nosotrasImage, hero] = await Promise.all([
+  const [heroSlides, categories, collections, arrivals, nosotras, hero] = await Promise.all([
     getHeroSlides(),
+    getCategoryTiles(),
     getCollectionTiles(),
     getNewArrivals(),
     getNosotrasContent(storeName),
-    getNosotrasImage(),
     getHeroContent(storeName),
   ]);
 
@@ -144,8 +157,10 @@ export default async function HomePage() {
   return (
     <>
       {/* ── HERO ───────────────────────────────────────────────── */}
+      {/* -mt-16 sube el hero detrás de la barra de navegación transparente */}
       <section
-        className={`relative min-h-[75vh] flex items-end overflow-hidden ${
+        {...(hasSlides ? { "data-hero-dark": "" } : {})}
+        className={`relative -mt-16 min-h-[75vh] flex items-end overflow-hidden ${
           hasSlides ? "bg-[#1F1B19]" : "bg-[#F7F2EC]"
         }`}
       >
@@ -224,36 +239,11 @@ export default async function HomePage() {
       {/* ── MARQUEE ────────────────────────────────────────────── */}
       <MarqueeStrip />
 
-      {/* ── VALORES DE MARCA ───────────────────────────────────── */}
-      <section id="valores" className="bg-[#F7F2EC] border-b border-[#E8DED4] px-4 sm:px-6 lg:px-8 py-20 sm:py-28 overflow-hidden scroll-mt-16">
-        <div className="max-w-[1376px] mx-auto grid md:grid-cols-[2fr_3fr] gap-12 md:gap-20 items-center">
-          <ScrollReveal variant="fadeUp">
-            <span className="text-xs tracking-[0.3em] uppercase text-[#965C57] font-[500]">
-              Lo que nos define
-            </span>
-            <p
-              className="text-4xl sm:text-5xl lg:text-6xl text-[#1F1B19] leading-[1.1] mt-5"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Prendas que cuentan quién eres.
-            </p>
-          </ScrollReveal>
-          <StaggeredGrid className="grid sm:grid-cols-2 gap-x-14 gap-y-12" itemDelay={120}>
-            {BRAND_VALUES.map((v) => (
-              <div key={v.title}>
-                <div className="w-14 h-px bg-[#965C57] mb-5" />
-                <h3
-                  className="text-2xl sm:text-[28px] text-[#1F1B19] mb-2.5"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {v.title}
-                </h3>
-                <p className="text-sm sm:text-[15px] text-[#766A63] leading-relaxed">{v.desc}</p>
-              </div>
-            ))}
-          </StaggeredGrid>
-        </div>
-      </section>
+      {/* ── CATEGORÍAS ─────────────────────────────────────────── */}
+      <CategoryRow categories={categories} />
+
+      {/* ── MEDIOS DE PAGO ─────────────────────────────────────── */}
+      <PaymentsBanner />
 
       {/* ── COLECCIONES (ancho completo) ───────────────────────── */}
       {tiles.length > 0 && (
@@ -305,7 +295,7 @@ export default async function HomePage() {
       )}
 
       {/* ── NOVEDADES ──────────────────────────────────────────── */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <section className="px-6 sm:px-10 lg:px-16 py-16 sm:py-20">
         <ScrollReveal variant="fadeUp">
           <NewArrivals {...arrivals} />
         </ScrollReveal>
@@ -314,19 +304,9 @@ export default async function HomePage() {
       {/* ── MARQUEE CLARO ──────────────────────────────────────── */}
       <MarqueeStrip inverted />
 
-      {/* ── CONÓCENOS ──────────────────────────────────────────── */}
+      {/* ── CONÓCENOS + AYUDA ──────────────────────────────────── */}
       <section className="bg-[#1F1B19] px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        <div className="max-w-[1376px] mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
-          {/* Foto completa, con su proporción original (sin recortes) */}
-          <Image
-            src={nosotrasImage}
-            alt={`${storeName} — Nuestra historia`}
-            width={0}
-            height={0}
-            sizes="(max-width:768px) 100vw, 50vw"
-            className="w-full h-auto max-h-[720px] object-contain"
-            unoptimized
-          />
+        <div className="max-w-[1376px] mx-auto grid md:grid-cols-[2fr_3fr] gap-12 md:gap-20 items-center">
           <ScrollReveal variant="fadeUp">
             <span className="text-xs tracking-[0.3em] uppercase text-[#E3BDB6] font-[500]">
               Conócenos
@@ -344,8 +324,31 @@ export default async function HomePage() {
               Nuestra historia <ArrowRight size={13} />
             </Link>
           </ScrollReveal>
+
+          <StaggeredGrid className="grid sm:grid-cols-2 gap-3" itemDelay={100}>
+            {HELP_LINKS.map(({ title, desc, href, external }) => (
+              <Link
+                key={title}
+                href={href}
+                {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="group flex flex-col justify-between min-h-[150px] border border-[#F7F2EC]/20 rounded-lg p-6 hover:border-[#E3BDB6] hover:bg-[#F7F2EC]/5 transition-colors"
+              >
+                <div>
+                  <h3 className="text-2xl text-[#F7F2EC]" style={{ fontFamily: "var(--font-display)" }}>
+                    {title}
+                  </h3>
+                  <p className="text-sm text-[#DCCFC4] leading-relaxed mt-2">{desc}</p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.2em] uppercase text-[#E3BDB6] mt-5">
+                  Ver <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </StaggeredGrid>
         </div>
       </section>
+
+      <InstagramBlock />
 
       {/* ── CTA WISHLIST ───────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">

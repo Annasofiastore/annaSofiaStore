@@ -8,6 +8,10 @@ const supabaseHostname = supabaseUrl
   : "*.supabase.co";
 
 const nextConfig: NextConfig = {
+  // Fija la raíz del workspace para que Next no tome lockfiles sueltos de ~/.
+  turbopack: {
+    root: __dirname,
+  },
   images: {
     remotePatterns: [
       {

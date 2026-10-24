@@ -5,7 +5,7 @@ import { Plus, Edit2, Trash2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/utils/format";
 
-type Category = { id: string; name: string; slug: string; description: string | null; sort_order: number };
+type Category = { id: string; name: string; slug: string; description: string | null; image_url?: string | null; sort_order: number };
 type Occasion = { id: string; name: string; slug: string; sort_order: number };
 
 const INPUT = "w-full border border-[#e5e7eb] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-gray-300";
@@ -15,17 +15,21 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
   title,
   table,
   hasDescription,
+  hasImage,
 }: {
   title: string;
   table: string;
   hasDescription?: boolean;
+  hasImage?: boolean;
 }) {
   const [items, setItems] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", slug: "", description: "", sort_order: 0 });
+  const [form, setForm] = useState({ name: "", slug: "", description: "", image_url: "", sort_order: 0 });
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const supabase = createClient();
 
   async function load() {
@@ -37,7 +41,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
   useEffect(() => { load(); }, []);
 
   function openNew() {
-    setForm({ name: "", slug: "", description: "", sort_order: 0 });
+    setForm({ name: "", slug: "", description: "", image_url: "", sort_order: 0 });
     setEditingId(null);
     setShowForm(true);
   }
@@ -47,6 +51,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
       name: item.name,
       slug: item.slug,
       description: (item as any).description ?? "",
+      image_url: (item as any).image_url ?? "",
       sort_order: item.sort_order,
     });
     setEditingId(item.id);
@@ -62,6 +67,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
     setSaving(true);
     const payload: any = { name: form.name, slug: form.slug, sort_order: form.sort_order };
     if (hasDescription) payload.description = form.description;
+    if (hasImage) payload.image_url = form.image_url || null;
     if (editingId) {
       await supabase.from(table).update(payload).eq("id", editingId);
     } else {
@@ -70,6 +76,19 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
     await load();
     setShowForm(false);
     setSaving(false);
+  }
+
+  async function handleImage(file: File | undefined) {
+    if (!file) return;
+    setUploading(true);
+    setUploadError(null);
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+    const data = await res.json();
+    if (res.ok) setForm((f) => ({ ...f, image_url: data.url }));
+    else setUploadError(data.error ?? "Error al subir la imagen");
+    setUploading(false);
   }
 
   async function handleDelete(id: string) {
@@ -124,6 +143,34 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
                 />
               </div>
             )}
+            {hasImage && (
+              <div>
+                <label className={LABEL}>Foto (se muestra en el inicio, formato vertical)</label>
+                <div className="flex items-center gap-3">
+                  {form.image_url && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={form.image_url} alt="" className="w-16 h-24 object-cover border border-gray-200" />
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImage(e.target.files?.[0])}
+                    className="text-xs text-gray-500"
+                  />
+                  {uploading && <span className="text-xs text-gray-400">Subiendo…</span>}
+                  {form.image_url && !uploading && (
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, image_url: "" })}
+                      className="text-xs text-gray-400 hover:text-red-500"
+                    >
+                      Quitar
+                    </button>
+                  )}
+                </div>
+                {uploadError && <p className="text-xs text-red-500 mt-1">{uploadError}</p>}
+              </div>
+            )}
             <div className="w-28">
               <label className={LABEL}>Orden</label>
               <input
@@ -137,7 +184,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
             <div className="flex gap-2">
               <button
                 type="submit"
-                disabled={saving}
+                disabled={saving || uploading}
                 className="px-4 py-1.5 bg-[#1F1B19] text-white text-xs rounded hover:bg-[#3A3431] disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
@@ -211,7 +258,7 @@ export default function AdminCategoriasPage() {
   return (
     <div className="p-6 max-w-4xl space-y-10">
       <h1 className="text-xl font-semibold text-gray-800">Categorías y Ocasiones</h1>
-      <CrudSection title="Categorías" table="categories" hasDescription />
+      <CrudSection title="Categorías" table="categories" hasDescription hasImage />
       <CrudSection title="Ocasiones" table="occasions" />
     </div>
   );

@@ -38,7 +38,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 40px
 .page-hero h1{font-size:clamp(28px,5vw,46px);font-weight:400;letter-spacing:.03em;line-height:1.2;margin-bottom:16px}
 .page-hero .updated{font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;opacity:.5;letter-spacing:.06em}
 .gold-line{width:48px;height:2px;background:var(--gold);margin:24px auto 0}
-.page-wrap{max-width:780px;margin:0 auto;padding:64px 32px 96px}
+.page-wrap{max-width:1040px;margin:0 auto;padding:64px 40px 96px}
 .toc{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);padding:28px 32px;margin-bottom:56px;border-radius:2px}
 .toc-title{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .toc ol{padding-left:20px}

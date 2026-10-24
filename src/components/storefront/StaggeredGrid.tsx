@@ -8,9 +8,11 @@ interface Props {
   itemDelay?: number;
   duration?: number;
   threshold?: number;
+  /** Clase para el envoltorio del primer hijo (p. ej. col-span en una cuadrícula). */
+  firstItemClassName?: string;
 }
 
-export function StaggeredGrid({ children, className = "", itemDelay = 90, duration = 650, threshold = 0.08 }: Props) {
+export function StaggeredGrid({ children, className = "", itemDelay = 90, duration = 650, threshold = 0.08, firstItemClassName }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [reduced, setReduced] = useState(false);
@@ -46,7 +48,7 @@ export function StaggeredGrid({ children, className = "", itemDelay = 90, durati
                   transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${i * itemDelay}ms, transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${i * itemDelay}ms`,
                 };
             return (
-              <div key={i} style={style}>
+              <div key={i} style={style} className={i === 0 ? firstItemClassName : undefined}>
                 {child}
               </div>
             );
