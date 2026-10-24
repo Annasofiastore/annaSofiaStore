@@ -1,66 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
-import { sendOrderConfirmationEmail, sendNewOrderAdminEmail } from "@/lib/email/templates";
-import { sendEmailsSafe } from "@/lib/email/resend";
-
-const WOMPI_BASE =
-  process.env.NEXT_PUBLIC_WOMPI_ENV === "production"
-    ? "https://production.wompi.co/v1"
-    : "https://sandbox.wompi.co/v1";
-
-// Confirma el pago en BD y envía emails — misma lógica que el webhook
-async function processApprovedPayment(
-  supabase: ReturnType<typeof createServiceClient>,
-  order: any,
-  transactionId: string
-) {
-  // Idempotencia: si ya está pagado, no hacer nada
-  if (order.status === "paid") return;
-
-  // 1. Confirmar stock
-  for (const item of order.items ?? []) {
-    await supabase.rpc("confirm_stock_sale", {
-      p_variant_id: item.variant_id,
-      p_session_id: order.cart_session_id ?? order.wompi_reference,
-      p_quantity: item.quantity,
-      p_order_id: order.id,
-    });
-  }
-
-  // 2. Actualizar pedido — sin guard de status para recuperar pedidos cancelados por timeout
-  await supabase
-    .from("orders")
-    .update({
-      status: "paid",
-      wompi_transaction_id: transactionId,
-      paid_at: new Date().toISOString(),
-    })
-    .eq("id", order.id)
-    .in("status", ["pending_payment", "cancelled"]); // recupera tanto pendientes como cancelados por timeout
-
-  // 3. Log
-  await supabase.from("order_status_log").insert({
-    order_id: order.id,
-    from_status: "pending_payment",
-    to_status: "paid",
-    notes: `Pago confirmado via verificación directa Wompi. Transacción: ${transactionId}`,
-  });
-
-  // 4. Emails — refetch para tener datos completos
-  const { data: fullOrder } = await supabase
-    .from("orders")
-    .select("*, items:order_items(*)")
-    .eq("id", order.id)
-    .single();
-
-  if (fullOrder) {
-    await sendEmailsSafe(
-      `status/${order.order_number}`,
-      sendOrderConfirmationEmail(fullOrder),
-      sendNewOrderAdminEmail(fullOrder),
-    );
-  }
-}
+import { WOMPI_BASE, reconcileWompiOrder } from "@/lib/payments/wompi-reconcile";
 
 export async function GET(
   _req: NextRequest,
@@ -77,6 +17,13 @@ export async function GET(
 
   if (!order) {
     return NextResponse.json({ error: "Pedido no encontrado" }, { status: 404 });
+  }
+
+  // Un pedido cancelado por timeout puede haberse pagado después: se verifica igual con Wompi.
+  if (order.status === "cancelled" && order.payment_method === "wompi" && order.wompi_reference) {
+    const recovered = await reconcileWompiOrder(supabase, order);
+    if (recovered) return NextResponse.json({ status: "paid", paid_at: new Date().toISOString() });
+    return NextResponse.json({ status: order.status, paid_at: order.paid_at });
   }
 
   // Si ya no está pendiente, devolver estado actual directamente
@@ -111,7 +58,7 @@ export async function GET(
     );
 
     if (approvedTx) {
-      await processApprovedPayment(supabase, order, approvedTx.id);
+      await reconcileWompiOrder(supabase, order);
       return NextResponse.json({ status: "paid", paid_at: new Date().toISOString() });
     }
 

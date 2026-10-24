@@ -11,7 +11,7 @@ import { MUNICIPIOS_POR_DEPARTAMENTO, DEPARTAMENTOS } from "@/lib/data/colombia-
 import type { CheckoutForm } from "@/types";
 import { useStoreName } from "@/components/StoreNameProvider";
 
-const CONTRAENTREGA_CITIES = new Set(["Cartagena", "Turbaco"]);
+const CONTRAENTREGA_CITIES = new Set(["Montería"]);
 
 function isEligibleCity(city: string): boolean {
   return CONTRAENTREGA_CITIES.has(city);
@@ -422,7 +422,7 @@ export default function CheckoutPage() {
               )}
             </Section>
 
-            {/* Aviso entrega mismo día + método de pago — solo Cartagena / Turbaco */}
+            {/* Aviso entrega mismo día + método de pago — solo Montería */}
             {cityEligible && (
               <div className="space-y-3">
                 {/* Aviso entrega */}
@@ -435,13 +435,13 @@ export default function CheckoutPage() {
                   <div>
                     {sameDayStatus.beforeCutoff ? (
                       <>
-                        <p className="text-xs font-[600] text-[#221A33]">Entrega hoy en Cartagena</p>
+                        <p className="text-xs font-[600] text-[#221A33]">Entrega hoy en Montería</p>
                         <p className="text-[11px] text-[#766A63] mt-0.5">Pedidos antes de las 4:00 PM llegan antes de las 6:00 PM.</p>
                       </>
                     ) : (
                       <>
                         <p className="text-xs font-[600] text-[#766A63]">Pedidos después de las 4:00 PM</p>
-                        <p className="text-[11px] text-[#766A63] mt-0.5">Tu pedido llegará mañana en Cartagena o Turbaco.</p>
+                        <p className="text-[11px] text-[#766A63] mt-0.5">Tu pedido llegará mañana en Montería.</p>
                       </>
                     )}
                   </div>
@@ -460,7 +460,7 @@ export default function CheckoutPage() {
                       className="accent-[#221A33]"
                     />
                     <div>
-                      <p className="text-sm text-[#221A33] font-[500]">Tarjeta / PSE / Nequi</p>
+                      <p className="text-sm text-[#221A33] font-[500]">Pago en línea</p>
                       <p className="text-[11px] text-[#766A63]">Pago en línea seguro via Wompi</p>
                     </div>
                   </label>

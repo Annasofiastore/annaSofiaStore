@@ -66,8 +66,8 @@ export async function POST(req: NextRequest) {
 
     // 2. Crear pedido con número consecutivo desde la secuencia de la DB
     const { data: seqData } = await supabase.rpc("next_order_number");
-    const orderNumber = (seqData as string) ?? `MB-${Date.now().toString(36).toUpperCase()}`;
-    const wompiReference = `MAR-${orderNumber}`;
+    const orderNumber = (seqData as string) ?? `AS-${Date.now().toString(36).toUpperCase()}`;
+    const wompiReference = orderNumber; // único por pedido; el reintento le agrega un sufijo
     const isContraentrega = paymentMethod === "contraentrega";
     const now = new Date().toISOString();
 

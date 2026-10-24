@@ -9,7 +9,6 @@ import { ScrollReveal } from "@/components/storefront/ScrollReveal";
 import { StaggeredGrid } from "@/components/storefront/StaggeredGrid";
 import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { MarqueeStrip } from "@/components/storefront/MarqueeStrip";
-import { StaticStrip } from "@/components/storefront/StaticStrip";
 import { CategoryRow, type CategoryTile } from "@/components/storefront/CategoryRow";
 import { PaymentsBanner } from "@/components/storefront/PaymentsBanner";
 import { InstagramBlock } from "@/components/storefront/InstagramBlock";
@@ -240,9 +239,6 @@ export default async function HomePage() {
           <ChevronDown size={22} strokeWidth={1.5} />
         </a>
       </section>
-
-      {/* ── FRANJA FIJA ────────────────────────────────────────── */}
-      <StaticStrip />
 
       {/* ── CATEGORÍAS ─────────────────────────────────────────── */}
       <CategoryRow categories={categories} />

@@ -6,6 +6,7 @@ import { formatCOP, formatDate } from "@/lib/utils/format";
 import { PaymentPoller } from "@/components/storefront/PaymentPoller";
 import { sendOrderConfirmationEmail, sendNewOrderAdminEmail } from "@/lib/email/templates";
 import { sendEmailsSafe } from "@/lib/email/resend";
+import { reconcileWompiOrder } from "@/lib/payments/wompi-reconcile";
 
 interface Props {
   params: Promise<{ orderId: string }>;
@@ -151,9 +152,24 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
   // Si Wompi redirigió con ?id=TRANSACTION_ID, procesar el pago directamente
   // sin esperar el webhook. Esto soluciona los casos donde el webhook llega tarde o falla.
   if (wompiTransactionId && order.payment_method === "wompi") {
-    const confirmed = await processWompiRedirect(supabase, order, wompiTransactionId);
+    let confirmed = await processWompiRedirect(supabase, order, wompiTransactionId);
+    // Respaldo: si el redirect no lo confirmó, buscar el pago por referencia
+    if (!confirmed) confirmed = await reconcileWompiOrder(supabase, order);
     if (confirmed) {
       // Refetch para mostrar el estado actualizado
+      const { data: updated } = await supabase
+        .from("orders")
+        .select("*, items:order_items(*)")
+        .eq("id", orderId)
+        .single();
+      if (updated) Object.assign(order, updated);
+    }
+  }
+
+  // Sin ?id= (volvió por su cuenta, o el pedido fue cancelado por timeout): verificar con Wompi
+  if (!wompiTransactionId && order.payment_method === "wompi" &&
+      (order.status === "pending_payment" || order.status === "cancelled")) {
+    if (await reconcileWompiOrder(supabase, order)) {
       const { data: updated } = await supabase
         .from("orders")
         .select("*, items:order_items(*)")

@@ -39,7 +39,7 @@ export const brand = {
   /** Dominio sin protocolo. Para mostrar en los correos. */
   domain: "ejemplo.com",
   /** Correo de contacto público. */
-  email: "hola@ejemplo.com",
+  email: "Annasofiastore.08@gmail.com",
   /** WhatsApp en formato internacional sin "+" ni espacios. */
   whatsapp: "573042114253",
 
