@@ -78,7 +78,7 @@ export default async function CuentaDashboard() {
             className="bg-white border border-[#E8DED4] p-4 hover:border-[#A0526C] transition-colors group"
           >
             <Icon size={18} className="text-[#A0526C] mb-2" />
-            <p className="text-[11px] font-[600] text-[#1C1B2E] uppercase tracking-[0.1em]">
+            <p className="text-[11px] font-[600] text-[#221A33] uppercase tracking-[0.1em]">
               {label}
             </p>
             <p className="text-[11px] text-[#766A63] mt-0.5">{sub}</p>
@@ -89,12 +89,12 @@ export default async function CuentaDashboard() {
       {/* Pedidos recientes */}
       <div className="bg-white border border-[#E8DED4]">
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#F7F2EC]">
-          <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E]">
+          <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33]">
             Pedidos recientes
           </p>
           <Link
             href="/cuenta/pedidos"
-            className="inline-flex items-center gap-1 text-[11px] text-[#766A63] hover:text-[#1C1B2E] transition-colors tracking-wide"
+            className="inline-flex items-center gap-1 text-[11px] text-[#766A63] hover:text-[#221A33] transition-colors tracking-wide"
           >
             Ver todos <ArrowRight size={11} />
           </Link>
@@ -106,7 +106,7 @@ export default async function CuentaDashboard() {
             <p className="text-sm text-[#766A63]">Aún no tienes pedidos.</p>
             <Link
               href="/catalogo"
-              className="inline-block mt-3 text-[11px] uppercase tracking-[0.15em] text-[#1C1B2E] border-b border-[#1C1B2E] pb-0.5"
+              className="inline-block mt-3 text-[11px] uppercase tracking-[0.15em] text-[#221A33] border-b border-[#221A33] pb-0.5"
             >
               Ir al catálogo
             </Link>
@@ -122,7 +122,7 @@ export default async function CuentaDashboard() {
                 className="flex items-center justify-between px-5 py-4 border-b border-[#F7F2EC] last:border-0 hover:bg-[#F7F2EC]/50 transition-colors"
               >
                 <div>
-                  <p className="text-sm font-[600] text-[#1C1B2E]">{order.order_number}</p>
+                  <p className="text-sm font-[600] text-[#221A33]">{order.order_number}</p>
                   <p className="text-[11px] text-[#766A63] mt-0.5">{formatDate(order.created_at)}</p>
                 </div>
                 <div className="text-right">
@@ -131,7 +131,7 @@ export default async function CuentaDashboard() {
                   >
                     {s.label}
                   </span>
-                  <p className="text-sm font-[600] text-[#1C1B2E] mt-1">{formatCOP(order.total)}</p>
+                  <p className="text-sm font-[600] text-[#221A33] mt-1">{formatCOP(order.total)}</p>
                 </div>
               </Link>
             );

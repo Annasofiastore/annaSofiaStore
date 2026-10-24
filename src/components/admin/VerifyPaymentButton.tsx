@@ -51,7 +51,7 @@ export function VerifyPaymentButton({ orderId, orderNumber }: Props) {
       <button
         onClick={handleVerify}
         disabled={loading}
-        className="flex items-center gap-2 px-4 py-2.5 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center gap-2 px-4 py-2.5 bg-[#221A33] text-white text-xs rounded hover:bg-[#352A4B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? (
           <Loader2 size={13} className="animate-spin" />

@@ -16,8 +16,8 @@ const wordsFor = (storeName: string) => [
 export async function MarqueeStrip({ inverted = false }: { inverted?: boolean }) {
   const words = wordsFor(await getStoreName());
   const surface = inverted
-    ? "bg-[#F7F2EC] border-y border-[#E8DED4] text-[#1C1B2E]"
-    : "bg-[#1C1B2E] text-[#F7F2EC]";
+    ? "bg-[#F7F2EC] border-y border-[#E8DED4] text-[#221A33]"
+    : "bg-[#221A33] text-[#F7F2EC]";
 
   // Seis copias para que el loop (que avanza la mitad del ancho) no muestre cortes
   const items = Array.from({ length: 6 }, () => words).flat();

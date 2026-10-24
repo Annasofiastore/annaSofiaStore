@@ -72,7 +72,7 @@ export function CategoryRow({ categories }: { categories: CategoryTile[] }) {
               >
                 {c.name}
               </span>
-              <span className="border border-white/70 px-5 py-1.5 text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white group-hover:bg-white group-hover:text-[#1C1B2E] transition-colors">
+              <span className="border border-white/70 px-5 py-1.5 text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white group-hover:bg-white group-hover:text-[#221A33] transition-colors">
                 Comprar
               </span>
             </div>

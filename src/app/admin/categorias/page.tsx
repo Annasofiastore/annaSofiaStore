@@ -103,7 +103,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
         <h2 className="text-base font-semibold text-gray-800">{title}</h2>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#221A33] text-white text-xs rounded hover:bg-[#352A4B] transition-colors"
         >
           <Plus size={12} /> Nuevo
         </button>
@@ -185,7 +185,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
               <button
                 type="submit"
                 disabled={saving || uploading}
-                className="px-4 py-1.5 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] disabled:opacity-50"
+                className="px-4 py-1.5 bg-[#221A33] text-white text-xs rounded hover:bg-[#352A4B] disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>

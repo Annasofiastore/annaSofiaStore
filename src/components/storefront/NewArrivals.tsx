@@ -56,7 +56,7 @@ export function NewArrivals({
     <div>
       {/* Encabezado centrado: título y pestañas */}
       <div className="flex flex-col items-center text-center mb-8 sm:mb-10">
-        <h2 className="text-4xl sm:text-5xl text-[#1C1B2E]" style={{ fontFamily: "var(--font-display)" }}>
+        <h2 className="text-4xl sm:text-5xl text-[#221A33]" style={{ fontFamily: "var(--font-display)" }}>
           {title}
         </h2>
         {tabs.length > 0 && (
@@ -70,7 +70,7 @@ export function NewArrivals({
                     "px-3 py-1.5 border sm:px-0 sm:py-1 sm:border-0 sm:border-b",
                     active === t.slug
                       ? "text-[#A0526C] border-[#A0526C]"
-                      : "text-[#1C1B2E] border-[#E8DED4] sm:border-transparent hover:text-[#A0526C]"
+                      : "text-[#221A33] border-[#E8DED4] sm:border-transparent hover:text-[#A0526C]"
                   )}
                 >
                   {t.name}
@@ -109,7 +109,7 @@ export function NewArrivals({
                 key={dir}
                 onClick={() => scroll(dir)}
                 aria-label={dir === 1 ? "Siguientes" : "Anteriores"}
-                className="w-9 h-9 rounded-full border border-[#E8DED4] text-[#1C1B2E] flex items-center justify-center hover:border-[#A0526C] hover:text-[#A0526C] transition-colors"
+                className="w-9 h-9 rounded-full border border-[#E8DED4] text-[#221A33] flex items-center justify-center hover:border-[#A0526C] hover:text-[#A0526C] transition-colors"
               >
                 {dir === 1 ? <ArrowRight size={14} /> : <ArrowLeft size={14} />}
               </button>
@@ -118,7 +118,7 @@ export function NewArrivals({
         )}
         <Link
           href={href}
-          className="inline-flex items-center gap-1.5 text-xs tracking-[0.15em] uppercase text-[#766A63] hover:text-[#1C1B2E] transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs tracking-[0.15em] uppercase text-[#766A63] hover:text-[#221A33] transition-colors"
         >
           Ver todo <ArrowRight size={12} />
         </Link>

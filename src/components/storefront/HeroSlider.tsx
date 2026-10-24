@@ -59,10 +59,10 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
 
       {/* Overlay: oscurece abajo a la izquierda, donde va el texto del banner */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "linear-gradient(to top, rgba(28,27,46,0.65) 0%, rgba(28,27,46,0.25) 45%, rgba(28,27,46,0) 75%)"
+        background: "linear-gradient(to top, rgba(34,26,51,0.65) 0%, rgba(34,26,51,0.25) 45%, rgba(34,26,51,0) 75%)"
       }} />
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "linear-gradient(to right, rgba(28,27,46,0.35) 0%, rgba(28,27,46,0) 60%)"
+        background: "linear-gradient(to right, rgba(34,26,51,0.35) 0%, rgba(34,26,51,0) 60%)"
       }} />
 
       {/* Dots de navegación */}

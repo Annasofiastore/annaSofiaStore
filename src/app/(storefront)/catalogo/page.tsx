@@ -156,7 +156,7 @@ export default async function CatalogoPage({ searchParams }: Props) {
           {filters.coleccion ?? "Todas las prendas"}
         </span>
         <h1
-          className="text-5xl text-[#1C1B2E] mt-1"
+          className="text-5xl text-[#221A33] mt-1"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Catálogo

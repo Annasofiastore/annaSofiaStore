@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
-:root{--brown:#1C1B2E;--cream:#F7F2EC;--gold:#A0526C;--text:#1C1B2E;--muted:#766A63;--white:#FFFFFF;--border:#E8DED4;--light-gold:#F5DDE5}
+:root{--brown:#221A33;--cream:#F7F2EC;--gold:#A0526C;--text:#221A33;--muted:#766A63;--white:#FFFFFF;--border:#E8DED4;--light-gold:#F5DDE5}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Cormorant Garamond','Georgia',serif;background:var(--cream);color:var(--text);font-size:17px;line-height:1.75}
 a{color:var(--brown);text-decoration:none}

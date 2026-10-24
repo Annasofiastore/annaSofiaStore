@@ -77,8 +77,8 @@ export function Navbar() {
   // Transparente arriba; sólida al bajar
   const solid = scrolled;
   const light = heroDark && !solid;
-  const ink = light ? "text-white" : "text-[#1C1B2E]";
-  const muted = light ? "text-white/85 hover:text-white" : "text-[#766A63] hover:text-[#1C1B2E]";
+  const ink = light ? "text-white" : "text-[#221A33]";
+  const muted = light ? "text-white/85 hover:text-white" : "text-[#766A63] hover:text-[#221A33]";
 
   return (
     <>
@@ -86,7 +86,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         solid
-          ? "bg-[#F7F2EC]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(28,27,46,0.12)]"
+          ? "bg-[#F7F2EC]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(34,26,51,0.12)]"
           : light
           ? "bg-gradient-to-b from-black/40 to-transparent" // degradado suave para que se lea sobre la foto
           : "bg-transparent"
@@ -190,7 +190,7 @@ export function Navbar() {
       {searchOpen && (
         <div className="fixed inset-0 z-50 flex flex-col">
           <div
-            className="absolute inset-0 bg-[#1C1B2E]/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#221A33]/40 backdrop-blur-sm"
             onClick={() => setSearchOpen(false)}
           />
           <div className="relative bg-[#F7F2EC] border-b border-[#E8DED4] px-4 sm:px-8 py-5">
@@ -202,7 +202,7 @@ export function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar prendas..."
-                className="flex-1 bg-transparent text-lg text-[#1C1B2E] placeholder:text-[#DCCFC4] focus:outline-none"
+                className="flex-1 bg-transparent text-lg text-[#221A33] placeholder:text-[#DCCFC4] focus:outline-none"
               />
               <button
                 type="button"
@@ -227,19 +227,19 @@ export function Navbar() {
       <div
         onClick={() => setMenuOpen(false)}
         className={cn(
-          "absolute inset-0 bg-[#1C1B2E]/50 backdrop-blur-sm transition-opacity duration-300",
+          "absolute inset-0 bg-[#221A33]/50 backdrop-blur-sm transition-opacity duration-300",
           menuOpen ? "opacity-100" : "opacity-0"
         )}
       />
       <aside
         className={cn(
-          "absolute inset-y-0 left-0 w-[85%] max-w-sm bg-[#F7F2EC] shadow-[0_8px_40px_rgba(28,27,46,0.14)] flex flex-col transition-transform duration-300 ease-out",
+          "absolute inset-y-0 left-0 w-[85%] max-w-sm bg-[#F7F2EC] shadow-[0_8px_40px_rgba(34,26,51,0.14)] flex flex-col transition-transform duration-300 ease-out",
           menuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-[#E8DED4]">
           <span
-            className="text-[26px] text-[#1C1B2E] leading-none"
+            className="text-[26px] text-[#221A33] leading-none"
             style={{ fontFamily: "var(--font-script)" }}
           >
             {storeName}
@@ -248,7 +248,7 @@ export function Navbar() {
             onClick={() => setMenuOpen(false)}
             aria-label="Cerrar menú"
             tabIndex={menuOpen ? 0 : -1}
-            className="text-[#1C1B2E]"
+            className="text-[#221A33]"
           >
             <X size={22} />
           </button>
@@ -266,8 +266,8 @@ export function Navbar() {
                 pathname === link.href
                   ? "text-[#A0526C]"
                   : link.hot
-                  ? "text-[#A0526C] hover:text-[#1C1B2E]"
-                  : "text-[#1C1B2E] hover:text-[#A0526C]"
+                  ? "text-[#A0526C] hover:text-[#221A33]"
+                  : "text-[#221A33] hover:text-[#A0526C]"
               )}
               style={{ fontFamily: "var(--font-display)" }}
             >
@@ -282,7 +282,7 @@ export function Navbar() {
             onClick={() => setMenuOpen(false)}
             tabIndex={menuOpen ? 0 : -1}
             aria-label="Favoritos"
-            className="text-[#766A63] hover:text-[#1C1B2E]"
+            className="text-[#766A63] hover:text-[#221A33]"
           >
             <Heart size={20} strokeWidth={1.5} />
           </Link>
@@ -291,7 +291,7 @@ export function Navbar() {
             onClick={() => setMenuOpen(false)}
             tabIndex={menuOpen ? 0 : -1}
             aria-label="Mi cuenta"
-            className="text-[#766A63] hover:text-[#1C1B2E]"
+            className="text-[#766A63] hover:text-[#221A33]"
           >
             <User size={20} strokeWidth={1.5} />
           </Link>

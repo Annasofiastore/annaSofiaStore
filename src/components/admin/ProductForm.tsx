@@ -130,7 +130,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
   }
 
   const inputCls =
-    "w-full border border-[#E8DED4] bg-white px-3 py-2 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
+    "w-full border border-[#E8DED4] bg-white px-3 py-2 text-sm text-[#221A33] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
   const labelCls =
     "block text-[10px] tracking-[0.18em] uppercase text-[#766A63] font-[600] mb-1.5";
   const sectionCls = "bg-white border border-[#E8DED4] p-5 space-y-4";
@@ -140,7 +140,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Información básica */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Información básica</h2>
+        <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Información básica</h2>
 
         <div className="grid grid-cols-1 gap-4">
           <div>
@@ -193,7 +193,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Precios */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Precios</h2>
+        <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Precios</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className={labelCls}>Precio base (COP) *</label>
@@ -244,7 +244,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Estado */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Estado</h2>
+        <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Estado</h2>
         <div className="flex gap-3 flex-wrap">
           {(["draft", "active", "archived"] as const).map((s) => (
             <label
@@ -252,7 +252,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
               className={cn(
                 "flex items-center gap-2 px-3 py-2 border text-xs cursor-pointer transition-colors",
                 form.status === s
-                  ? "border-[#1C1B2E] bg-[#1C1B2E] text-[#F7F2EC]"
+                  ? "border-[#221A33] bg-[#221A33] text-[#F7F2EC]"
                   : "border-[#E8DED4] text-[#766A63] hover:border-[#766A63]"
               )}
             >
@@ -286,7 +286,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             />
           </div>
           <div>
-            <p className="text-xs font-[600] text-[#1C1B2E]">✦ Marcar como Best Seller</p>
+            <p className="text-xs font-[600] text-[#221A33]">✦ Marcar como Best Seller</p>
             <p className="text-[10px] text-[#766A63]">Aparece en la sección Best Sellers del storefront</p>
           </div>
         </label>
@@ -297,7 +297,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             onClick={() => set("is_pre_sale", !form.is_pre_sale)}
             className={cn(
               "relative w-10 h-5 rounded-full transition-colors duration-200",
-              form.is_pre_sale ? "bg-[#1C1B2E]" : "bg-[#E8DED4]"
+              form.is_pre_sale ? "bg-[#221A33]" : "bg-[#E8DED4]"
             )}
           >
             <span
@@ -308,7 +308,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             />
           </div>
           <div>
-            <p className="text-xs font-[600] text-[#1C1B2E]">◈ Marcar como Pre Orden</p>
+            <p className="text-xs font-[600] text-[#221A33]">◈ Marcar como Pre Orden</p>
             <p className="text-[10px] text-[#766A63]">Muestra la etiqueta "PRE ORDEN" en la tarjeta del producto</p>
           </div>
         </label>
@@ -316,13 +316,13 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Imágenes */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Imágenes</h2>
+        <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Imágenes</h2>
         <ImageUploader images={form.images} onChange={(imgs) => set("images", imgs)} />
       </div>
 
       {/* Taxonomía */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Categorías y colecciones</h2>
+        <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Categorías y colecciones</h2>
         <div className="grid grid-cols-1 gap-5">
 
           {categories.length > 0 && (
@@ -337,7 +337,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
                     className={cn(
                       "px-3 py-1 text-xs border transition-colors",
                       form.category_ids.includes(cat.id)
-                        ? "bg-[#1C1B2E] text-[#F7F2EC] border-[#1C1B2E]"
+                        ? "bg-[#221A33] text-[#F7F2EC] border-[#221A33]"
                         : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
                     )}
                   >
@@ -404,7 +404,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
 
       {/* Variantes */}
       <div className={sectionCls}>
-        <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Variantes (talla × color)</h2>
+        <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Variantes (talla × color)</h2>
         <VariantManager
           variants={form.variants}
           onChange={(v) => set("variants", v)}
@@ -425,7 +425,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
         <button
           type="button"
           onClick={() => router.back()}
-          className="text-xs text-[#766A63] hover:text-[#1C1B2E] transition-colors"
+          className="text-xs text-[#766A63] hover:text-[#221A33] transition-colors"
         >
           Cancelar
         </button>
@@ -436,7 +436,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             "text-[11px] tracking-[0.18em] uppercase font-[600] px-8 py-3 transition-colors",
             saving
               ? "bg-[#DCCFC4] text-white cursor-not-allowed"
-              : "bg-[#1C1B2E] text-[#F7F2EC] hover:bg-[#A0526C]"
+              : "bg-[#221A33] text-[#F7F2EC] hover:bg-[#A0526C]"
           )}
         >
           {saving ? "Guardando…" : isEdit ? "Guardar cambios" : "Crear producto"}

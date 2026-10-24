@@ -115,7 +115,7 @@ export function HeroSlideManager() {
                   : dragTargetIdx === idx && draggingIdx !== idx
                   ? "border-[#A0526C] scale-105"
                   : idx === 0
-                  ? "border-[#1C1B2E]"
+                  ? "border-[#221A33]"
                   : "border-gray-200"
               }`}
             >
@@ -140,7 +140,7 @@ export function HeroSlideManager() {
                 </button>
               </div>
               {idx === 0 && (
-                <span className="absolute bottom-0 left-0 right-0 bg-[#1C1B2E]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
+                <span className="absolute bottom-0 left-0 right-0 bg-[#221A33]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
                   Primera
                 </span>
               )}

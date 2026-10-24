@@ -41,7 +41,7 @@ export async function PaymentsBanner() {
         <span className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
           Medios de pago disponibles
         </span>
-        <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-base sm:text-lg text-[#1C1B2E]">
+        <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-base sm:text-lg text-[#221A33]">
           {METHODS.map((m) => (
             <li key={m}>{m}</li>
           ))}

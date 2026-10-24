@@ -6,7 +6,7 @@ import { ProductThumb } from "@/components/admin/ProductThumb";
 import { getStoreName } from "@/lib/config/store-name";
 
 const STATUS_BADGE: Record<string, string> = {
-  active: "bg-[#F7F2EC] text-[#1C1B2E]",
+  active: "bg-[#F7F2EC] text-[#221A33]",
   draft: "bg-[#F5DDE5]/40 text-[#766A63]",
   archived: "bg-gray-100 text-gray-400",
 };
@@ -29,7 +29,7 @@ export default async function AdminProductosPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1
-          className="text-3xl text-[#1C1B2E]"
+          className="text-3xl text-[#221A33]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Productos
@@ -37,13 +37,13 @@ export default async function AdminProductosPage() {
         <div className="flex gap-3">
           <Link
             href="/admin/productos/importar"
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#E8DED4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] hover:border-[#766A63] hover:text-[#1C1B2E] transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#E8DED4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] hover:border-[#766A63] hover:text-[#221A33] transition-colors"
           >
             Carga masiva
           </Link>
           <Link
             href="/admin/productos/nuevo"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#352A4B] transition-colors"
           >
             <Plus size={14} /> Nuevo producto
           </Link>
@@ -82,12 +82,12 @@ export default async function AdminProductosPage() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    <p className="font-[500] text-[#1C1B2E]">{product.name}</p>
+                    <p className="font-[500] text-[#221A33]">{product.name}</p>
                     <p className="text-xs text-[#766A63]">{product.slug}</p>
                   </td>
-                  <td className="px-4 py-3 text-[#1C1B2E]">{formatCOP(product.base_price)}</td>
+                  <td className="px-4 py-3 text-[#221A33]">{formatCOP(product.base_price)}</td>
                   <td className="px-4 py-3">
-                    <span className={totalStock === 0 ? "text-[#A0526C] font-[500]" : "text-[#1C1B2E]"}>
+                    <span className={totalStock === 0 ? "text-[#A0526C] font-[500]" : "text-[#221A33]"}>
                       {totalStock === 0 ? "Agotado" : `${totalStock} uds`}
                     </span>
                   </td>
@@ -99,7 +99,7 @@ export default async function AdminProductosPage() {
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/productos/${product.id}`}
-                      className="text-xs text-[#A0526C] hover:text-[#1C1B2E] font-[500]"
+                      className="text-xs text-[#A0526C] hover:text-[#221A33] font-[500]"
                     >
                       Editar →
                     </Link>

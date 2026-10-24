@@ -136,7 +136,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
               onDragEnd={() => { setDraggingIdx(null); setDragTargetIdx(null); }}
               className={cn(
                 "relative group aspect-[3/4] overflow-hidden border transition-all",
-                idx === 0 ? "border-[#1C1B2E]" : "border-[#E8DED4]",
+                idx === 0 ? "border-[#221A33]" : "border-[#E8DED4]",
                 draggingIdx === idx && "opacity-40",
                 dragTargetIdx === idx && draggingIdx !== idx && "border-[#A0526C] scale-105"
               )}
@@ -166,7 +166,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
 
               {/* Badge principal */}
               {idx === 0 && (
-                <span className="absolute bottom-0 left-0 right-0 bg-[#1C1B2E]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
+                <span className="absolute bottom-0 left-0 right-0 bg-[#221A33]/80 text-[#F7F2EC] text-[8px] tracking-wide uppercase text-center py-0.5 font-[500]">
                   Principal
                 </span>
               )}

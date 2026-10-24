@@ -57,7 +57,7 @@ export default async function NosotrasPage() {
             Nuestra historia
           </span>
           <h1
-            className="text-5xl text-[#1C1B2E] mt-3 mb-5 leading-tight"
+            className="text-5xl text-[#221A33] mt-3 mb-5 leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Conócenos
@@ -87,7 +87,7 @@ export default async function NosotrasPage() {
               El origen
             </span>
             <h2
-              className="text-3xl text-[#1C1B2E] mt-2 mb-5"
+              className="text-3xl text-[#221A33] mt-2 mb-5"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {content.title}
@@ -109,7 +109,7 @@ export default async function NosotrasPage() {
               Lo que nos define
             </span>
             <h2
-              className="text-4xl text-[#1C1B2E] mt-2"
+              className="text-4xl text-[#221A33] mt-2"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Nuestros valores
@@ -120,7 +120,7 @@ export default async function NosotrasPage() {
               <div key={v.title} className="text-center">
                 <div className="w-10 h-px bg-[#A0526C] mx-auto mb-4" />
                 <h3
-                  className="text-lg text-[#1C1B2E] mb-2"
+                  className="text-lg text-[#221A33] mb-2"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {v.title}
@@ -133,7 +133,7 @@ export default async function NosotrasPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#1C1B2E] py-20 px-4 text-center">
+      <section className="bg-[#221A33] py-20 px-4 text-center">
         <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
           Únete a nuestra comunidad
         </span>
@@ -148,7 +148,7 @@ export default async function NosotrasPage() {
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#F5DDE5] text-[#1C1B2E] text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#F7F2EC] transition-colors rounded-full"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-[#F5DDE5] text-[#221A33] text-[11px] tracking-[0.2em] uppercase font-[600] hover:bg-[#F7F2EC] transition-colors rounded-full"
         >
           Ver catálogo <ArrowRight size={13} />
         </Link>

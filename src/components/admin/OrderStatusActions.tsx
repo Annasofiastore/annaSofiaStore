@@ -69,7 +69,7 @@ export function OrderStatusActions({ order }: Props) {
     <div className="space-y-4">
       <div className="flex items-center gap-3">
         <span className="text-sm text-[#766A63]">Estado actual:</span>
-        <span className="text-sm font-[600] text-[#1C1B2E]">
+        <span className="text-sm font-[600] text-[#221A33]">
           {STATUS_LABEL[order.status] ?? order.status}
         </span>
       </div>
@@ -86,7 +86,7 @@ export function OrderStatusActions({ order }: Props) {
               value={trackingNumber}
               onChange={(e) => setTrackingNumber(e.target.value)}
               placeholder="123456789"
-              className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2 text-sm text-[#1C1B2E] outline-none focus:border-[#766A63]"
+              className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2 text-sm text-[#221A33] outline-none focus:border-[#766A63]"
             />
           </div>
           <div>
@@ -98,7 +98,7 @@ export function OrderStatusActions({ order }: Props) {
               value={courier}
               onChange={(e) => setCourier(e.target.value)}
               placeholder="Coordinadora, Servientrega…"
-              className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2 text-sm text-[#1C1B2E] outline-none focus:border-[#766A63]"
+              className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2 text-sm text-[#221A33] outline-none focus:border-[#766A63]"
             />
           </div>
         </div>
@@ -115,7 +115,7 @@ export function OrderStatusActions({ order }: Props) {
               "px-5 py-2.5 text-[11px] tracking-[0.15em] uppercase font-[500] transition-colors disabled:opacity-50",
               next === "cancelled"
                 ? "border border-red-300 text-red-600 hover:bg-red-50"
-                : "bg-[#1C1B2E] text-[#F7F2EC] hover:bg-[#2D2C44]"
+                : "bg-[#221A33] text-[#F7F2EC] hover:bg-[#352A4B]"
             )}
           >
             {loading ? "Actualizando…" : label}

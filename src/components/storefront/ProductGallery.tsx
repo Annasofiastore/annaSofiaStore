@@ -71,7 +71,7 @@ export function ProductGallery({ images, name }: Props) {
                 aria-label={`Ver foto ${i + 1}`}
                 className={cn(
                   "h-[3px] rounded-full transition-all duration-300",
-                  active === i ? "w-8 bg-[#1C1B2E]" : "w-3 bg-[#DCCFC4]"
+                  active === i ? "w-8 bg-[#221A33]" : "w-3 bg-[#DCCFC4]"
                 )}
               />
             ))}

@@ -64,7 +64,7 @@ export default async function EditarProductoPage({ params }: Props) {
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1
-            className="text-3xl text-[#1C1B2E]"
+            className="text-3xl text-[#221A33]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Editar producto

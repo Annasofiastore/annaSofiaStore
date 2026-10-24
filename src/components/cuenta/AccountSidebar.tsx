@@ -42,8 +42,8 @@ export default function AccountSidebar() {
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 text-[13px] border-b border-[#F7F2EC] last:border-0 transition-colors ${
                   active
-                    ? "bg-[#F7F2EC] text-[#1C1B2E] font-[600]"
-                    : "text-[#766A63] hover:bg-[#F7F2EC]/60 hover:text-[#1C1B2E]"
+                    ? "bg-[#F7F2EC] text-[#221A33] font-[600]"
+                    : "text-[#766A63] hover:bg-[#F7F2EC]/60 hover:text-[#221A33]"
                 }`}
               >
                 <item.icon size={14} />
@@ -71,7 +71,7 @@ export default function AccountSidebar() {
               href={item.href}
               className={`flex items-center gap-1.5 px-3 py-2 text-[11px] uppercase tracking-[0.1em] font-[500] whitespace-nowrap border rounded-full transition-colors ${
                 active
-                  ? "bg-[#1C1B2E] text-[#F7F2EC] border-[#1C1B2E]"
+                  ? "bg-[#221A33] text-[#F7F2EC] border-[#221A33]"
                   : "bg-white text-[#766A63] border-[#E8DED4] hover:border-[#766A63]"
               }`}
             >

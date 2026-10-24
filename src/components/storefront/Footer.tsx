@@ -44,7 +44,7 @@ const SOCIAL: { label: string; href: string | null; icon: React.ReactNode }[] = 
 export async function Footer() {
   const storeName = await getStoreName();
   return (
-    <footer className="bg-[#1C1B2E] text-[#DCCFC4] mt-auto">
+    <footer className="bg-[#221A33] text-[#DCCFC4] mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
@@ -124,7 +124,7 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#2D2C44] mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="border-t border-[#352A4B] mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#A39890]">
             © {new Date().getFullYear()} {storeName}. Todos los derechos reservados.
           </p>

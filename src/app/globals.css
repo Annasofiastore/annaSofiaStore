@@ -6,15 +6,15 @@
   --color-ivory:       #F7F2EC;
   --color-sand:        #DCCFC4;
   --color-taupe:       #766A63;
-  --color-espresso:    #1C1B2E;
+  --color-espresso:    #221A33;
   --color-dusty-rose:  #A0526C;
   --color-blush:       #F5DDE5;
 
   /* Alias semánticos */
   --color-background:  #F7F2EC;
-  --color-foreground:  #1C1B2E;
+  --color-foreground:  #221A33;
   --color-primary:     #F5DDE5;
-  --color-primary-fg:  #1C1B2E;
+  --color-primary-fg:  #221A33;
   --color-accent:      #A0526C;
   --color-muted:       #DCCFC4;
   --color-muted-fg:    #766A63;
@@ -32,8 +32,8 @@
   --radius-full: 9999px;
 
   /* Sombras suaves */
-  --shadow-card: 0 2px 16px rgba(28,27,46,0.07);
-  --shadow-modal: 0 8px 40px rgba(28,27,46,0.14);
+  --shadow-card: 0 2px 16px rgba(34,26,51,0.07);
+  --shadow-modal: 0 8px 40px rgba(34,26,51,0.14);
 }
 
 /* ── RESET Y BASE ────────────────────────────────────────── */

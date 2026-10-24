@@ -47,7 +47,7 @@ export default async function CuentaLayout({ children }: { children: React.React
             Mi cuenta
           </p>
           <h1
-            className="text-2xl text-[#1C1B2E] mt-1"
+            className="text-2xl text-[#221A33] mt-1"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {displayName}

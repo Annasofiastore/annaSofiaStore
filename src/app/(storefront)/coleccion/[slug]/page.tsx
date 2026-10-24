@@ -60,7 +60,7 @@ export default async function ColeccionPage({ params }: Props) {
         className="relative min-h-[40vh] flex items-end justify-start overflow-hidden"
         style={{
           background: collection.hero_url
-            ? `linear-gradient(to top, #1C1B2ECC, transparent), url(${collection.hero_url}) center/cover`
+            ? `linear-gradient(to top, #221A33CC, transparent), url(${collection.hero_url}) center/cover`
             : "linear-gradient(135deg, #F5DDE5 0%, #F7F2EC 50%, #DCCFC4 100%)",
         }}
       >
@@ -74,7 +74,7 @@ export default async function ColeccionPage({ params }: Props) {
           </span>
           <h1
             className={`text-5xl mt-1 ${
-              collection.hero_url ? "text-white" : "text-[#1C1B2E]"
+              collection.hero_url ? "text-white" : "text-[#221A33]"
             }`}
             style={{ fontFamily: "var(--font-display)" }}
           >

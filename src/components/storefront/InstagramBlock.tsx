@@ -18,7 +18,7 @@ export function InstagramBlock() {
         href={brand.social.instagram}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-3xl sm:text-4xl text-[#1C1B2E] hover:text-[#A0526C] transition-colors"
+        className="text-3xl sm:text-4xl text-[#221A33] hover:text-[#A0526C] transition-colors"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {instagramHandle}
@@ -52,7 +52,7 @@ export function InstagramBlock() {
           href={brand.social.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-3 border border-[#1C1B2E]/70 text-[#1C1B2E] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors rounded-full"
+          className="inline-flex items-center gap-2 px-8 py-3 border border-[#221A33]/70 text-[#221A33] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#221A33] hover:text-[#F7F2EC] transition-colors rounded-full"
         >
           Ver perfil <ArrowRight size={13} />
         </a>

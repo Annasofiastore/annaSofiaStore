@@ -60,7 +60,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
             Estado de tu compra
           </span>
           <h1
-            className="text-4xl text-[#1C1B2E] mt-2"
+            className="text-4xl text-[#221A33] mt-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Seguimiento de pedido
@@ -69,7 +69,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
 
         {/* Formulario de búsqueda */}
         <form method="GET" className="bg-white border border-[#E8DED4] p-6 mb-8">
-          <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E] mb-4">
+          <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33] mb-4">
             Consultar pedido
           </p>
           <div className="space-y-3">
@@ -81,7 +81,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                 name="orden"
                 defaultValue={orden ?? ""}
                 placeholder="MB-WEB001"
-                className="w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4] uppercase"
+                className="w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#221A33] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4] uppercase"
                 required
               />
             </div>
@@ -94,13 +94,13 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                 type="email"
                 defaultValue={email ?? ""}
                 placeholder="tu@correo.com"
-                className="w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]"
+                className="w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#221A33] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]"
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 py-3 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
             >
               <Search size={14} /> Buscar pedido
             </button>
@@ -126,20 +126,20 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                     Pedido
                   </p>
                   <p
-                    className="text-2xl text-[#1C1B2E] mt-0.5"
+                    className="text-2xl text-[#221A33] mt-0.5"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {order.order_number}
                   </p>
                   <p className="text-xs text-[#766A63] mt-1">{formatDate(order.created_at)}</p>
                 </div>
-                <p className="text-xl font-[600] text-[#1C1B2E]">{formatCOP(order.total)}</p>
+                <p className="text-xl font-[600] text-[#221A33]">{formatCOP(order.total)}</p>
               </div>
             </div>
 
             {/* Timeline de estado */}
             <div className="bg-white border border-[#E8DED4] p-5">
-              <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E] mb-5">
+              <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33] mb-5">
                 Estado del pedido
               </p>
 
@@ -164,27 +164,27 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                           <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                               done
-                                ? "bg-[#1C1B2E] text-[#F7F2EC]"
+                                ? "bg-[#221A33] text-[#F7F2EC]"
                                 : "bg-[#F7F2EC] text-[#DCCFC4] border border-[#E8DED4]"
                             }`}
                           >
                             <step.icon size={14} />
                           </div>
                           {idx < STATUS_STEPS.length - 1 && (
-                            <div className={`w-px h-6 ${done ? "bg-[#1C1B2E]" : "bg-[#E8DED4]"}`} />
+                            <div className={`w-px h-6 ${done ? "bg-[#221A33]" : "bg-[#E8DED4]"}`} />
                           )}
                         </div>
                         <div className="pb-4">
                           <p
                             className={`text-sm ${active ? "font-[600]" : "font-[400]"} ${
-                              done ? "text-[#1C1B2E]" : "text-[#DCCFC4]"
+                              done ? "text-[#221A33]" : "text-[#DCCFC4]"
                             }`}
                           >
                             {step.label}
                           </p>
                           {active && step.key === "shipped" && order.tracking_number && (
                             <p className="text-xs text-[#766A63] mt-0.5">
-                              Guía: <span className="font-[600] text-[#1C1B2E]">{order.tracking_number}</span>
+                              Guía: <span className="font-[600] text-[#221A33]">{order.tracking_number}</span>
                               {order.courier && ` · ${order.courier}`}
                             </p>
                           )}
@@ -200,7 +200,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
             <div className="bg-white border border-[#E8DED4]">
               <div className="flex items-center gap-2 px-5 py-3 border-b border-[#F7F2EC]">
                 <Package size={13} className="text-[#A0526C]" />
-                <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E]">
+                <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33]">
                   Prendas
                 </p>
               </div>
@@ -212,11 +212,11 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                     className="flex items-center justify-between px-5 py-3.5 border-b border-[#F7F2EC] last:border-0"
                   >
                     <div>
-                      <p className="text-sm text-[#1C1B2E] font-[500]">{item.product_name}</p>
+                      <p className="text-sm text-[#221A33] font-[500]">{item.product_name}</p>
                       {attrs && <p className="text-[11px] text-[#766A63]">{attrs}</p>}
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-[600] text-[#1C1B2E]">{formatCOP(item.total_price)}</p>
+                      <p className="text-sm font-[600] text-[#221A33]">{formatCOP(item.total_price)}</p>
                       <p className="text-[11px] text-[#766A63]">× {item.quantity}</p>
                     </div>
                   </div>
@@ -228,12 +228,12 @@ export default async function SeguimientoPage({ searchParams }: Props) {
             <div className="bg-white border border-[#E8DED4]">
               <div className="flex items-center gap-2 px-5 py-3 border-b border-[#F7F2EC]">
                 <MapPin size={13} className="text-[#A0526C]" />
-                <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E]">
+                <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33]">
                   Dirección de envío
                 </p>
               </div>
               <div className="px-5 py-4 text-sm text-[#766A63] space-y-0.5">
-                <p className="text-[#1C1B2E] font-[500]">{order.shipping_name}</p>
+                <p className="text-[#221A33] font-[500]">{order.shipping_name}</p>
                 <p>{order.shipping_address}</p>
                 <p>{order.shipping_city}, {order.shipping_department}</p>
               </div>
@@ -241,7 +241,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
 
             <p className="text-center text-xs text-[#766A63]">
               ¿Tienes dudas?{" "}
-              <Link href={`mailto:${brand.email}`} className="text-[#1C1B2E] underline underline-offset-2">
+              <Link href={`mailto:${brand.email}`} className="text-[#221A33] underline underline-offset-2">
                 {brand.email}
               </Link>
             </p>

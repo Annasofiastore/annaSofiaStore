@@ -161,7 +161,7 @@ export default async function HomePage() {
       <section
         {...(hasSlides ? { "data-hero-dark": "" } : {})}
         className={`relative -mt-16 min-h-[75vh] flex items-end overflow-hidden ${
-          hasSlides ? "bg-[#1C1B2E]" : "bg-[#F7F2EC]"
+          hasSlides ? "bg-[#221A33]" : "bg-[#F7F2EC]"
         }`}
       >
         {hasSlides ? (
@@ -174,7 +174,7 @@ export default async function HomePage() {
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pb-20">
           <div
             className="max-w-2xl animate-hero-in"
-            style={hasSlides ? { textShadow: "0 2px 18px rgba(28,27,46,0.45)" } : undefined}
+            style={hasSlides ? { textShadow: "0 2px 18px rgba(34,26,51,0.45)" } : undefined}
           >
             {hero.eyebrow && (
               <span
@@ -187,7 +187,7 @@ export default async function HomePage() {
             )}
             <h1
               className={`text-5xl sm:text-6xl lg:text-7xl leading-[1.05] ${hero.subtitle ? "mb-5" : "mb-9"} ${
-                hasSlides ? "text-white" : "text-[#1C1B2E]"
+                hasSlides ? "text-white" : "text-[#221A33]"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
             >
@@ -207,8 +207,8 @@ export default async function HomePage() {
                 href="/catalogo"
                 className={`inline-flex items-center gap-2 px-9 py-3.5 text-xs tracking-[0.2em] uppercase font-[600] transition-colors rounded-full ${
                   hasSlides
-                    ? "bg-white text-[#1C1B2E] hover:bg-[#F5DDE5]"
-                    : "bg-[#1C1B2E] text-[#F7F2EC] hover:bg-[#2D2C44]"
+                    ? "bg-white text-[#221A33] hover:bg-[#F5DDE5]"
+                    : "bg-[#221A33] text-[#F7F2EC] hover:bg-[#352A4B]"
                 }`}
                 style={{ textShadow: "none" }}
               >
@@ -219,7 +219,7 @@ export default async function HomePage() {
                 className={`inline-flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase font-[500] border-b pb-1 transition-colors ${
                   hasSlides
                     ? "text-white border-white/60 hover:border-white"
-                    : "text-[#1C1B2E] border-[#1C1B2E]/40 hover:border-[#1C1B2E]"
+                    : "text-[#221A33] border-[#221A33]/40 hover:border-[#221A33]"
                 }`}
               >
                 Ver colecciones <ArrowRight size={12} />
@@ -260,7 +260,7 @@ export default async function HomePage() {
               <Link
                 key={c.id}
                 href={`/coleccion/${c.slug}`}
-                className="group relative block aspect-[4/3] overflow-hidden bg-[#1C1B2E]"
+                className="group relative block aspect-[4/3] overflow-hidden bg-[#221A33]"
               >
                 {c.hero_url && (
                   <Image
@@ -271,7 +271,7 @@ export default async function HomePage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 )}
-                <div className="absolute inset-0 bg-[#1C1B2E]/20 group-hover:bg-[#1C1B2E]/30 transition-colors" />
+                <div className="absolute inset-0 bg-[#221A33]/20 group-hover:bg-[#221A33]/30 transition-colors" />
                 {/* Marco interior */}
                 <div className="absolute inset-5 sm:inset-6 border border-white/80 flex items-center justify-center">
                   <span
@@ -288,7 +288,7 @@ export default async function HomePage() {
             <div className="text-center mt-6">
               <Link
                 href="/colecciones"
-                className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#766A63] hover:text-[#1C1B2E] transition-colors"
+                className="inline-flex items-center gap-1.5 text-[11px] tracking-[0.15em] uppercase text-[#766A63] hover:text-[#221A33] transition-colors"
               >
                 Ver todas las colecciones <ArrowRight size={12} />
               </Link>
@@ -308,7 +308,7 @@ export default async function HomePage() {
       <MarqueeStrip inverted />
 
       {/* ── CONÓCENOS + AYUDA ──────────────────────────────────── */}
-      <section className="bg-[#1C1B2E] px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="bg-[#221A33] px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="max-w-[1376px] mx-auto grid md:grid-cols-[2fr_3fr] gap-12 md:gap-20 items-center">
           <ScrollReveal variant="fadeUp">
             <span className="text-xs tracking-[0.3em] uppercase text-[#E8B9C7] font-[500]">
@@ -322,7 +322,7 @@ export default async function HomePage() {
             </p>
             <Link
               href="/nosotras"
-              className="inline-flex items-center gap-2 px-8 py-3 border border-[#F7F2EC]/70 text-[#F7F2EC] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#F7F2EC] hover:text-[#1C1B2E] transition-colors rounded-full"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-[#F7F2EC]/70 text-[#F7F2EC] text-xs tracking-[0.2em] uppercase font-[500] hover:bg-[#F7F2EC] hover:text-[#221A33] transition-colors rounded-full"
             >
               Nuestra historia <ArrowRight size={13} />
             </Link>
@@ -360,7 +360,7 @@ export default async function HomePage() {
             Tu lista de deseos
           </span>
           <h2
-            className="text-4xl sm:text-5xl text-[#1C1B2E] mb-4"
+            className="text-4xl sm:text-5xl text-[#221A33] mb-4"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Guarda tus favoritos
@@ -370,7 +370,7 @@ export default async function HomePage() {
           </p>
           <Link
             href="/cuenta/wishlist"
-            className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors rounded-full"
+            className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#352A4B] transition-colors rounded-full"
           >
             Ver wishlist <ArrowRight size={12} />
           </Link>

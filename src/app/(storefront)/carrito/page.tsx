@@ -18,7 +18,7 @@ export default function CarritoPage() {
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-5 text-center px-4">
         <ShoppingBag size={48} strokeWidth={1} className="text-[#DCCFC4]" />
         <h1
-          className="text-3xl text-[#1C1B2E]"
+          className="text-3xl text-[#221A33]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Tu carrito está vacío
@@ -28,7 +28,7 @@ export default function CarritoPage() {
         </p>
         <Link
           href="/catalogo"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors rounded-full"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#352A4B] transition-colors rounded-full"
         >
           Ver catálogo <ArrowRight size={14} />
         </Link>
@@ -39,7 +39,7 @@ export default function CarritoPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <h1
-        className="text-4xl text-[#1C1B2E] mb-8"
+        className="text-4xl text-[#221A33] mb-8"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Tu carrito
@@ -81,7 +81,7 @@ export default function CarritoPage() {
                   <div>
                     <Link
                       href={`/producto/${item.productSlug}`}
-                      className="text-sm text-[#1C1B2E] font-[400] hover:text-[#A0526C] transition-colors"
+                      className="text-sm text-[#221A33] font-[400] hover:text-[#A0526C] transition-colors"
                     >
                       {item.productName}
                     </Link>
@@ -108,23 +108,23 @@ export default function CarritoPage() {
                   <div className="flex items-center border border-[#E8DED4]">
                     <button
                       onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                      className="w-8 h-8 flex items-center justify-center text-[#766A63] hover:text-[#1C1B2E]"
+                      className="w-8 h-8 flex items-center justify-center text-[#766A63] hover:text-[#221A33]"
                     >
                       −
                     </button>
-                    <span className="w-8 text-center text-xs text-[#1C1B2E] font-[500]">
+                    <span className="w-8 text-center text-xs text-[#221A33] font-[500]">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                      className="w-8 h-8 flex items-center justify-center text-[#766A63] hover:text-[#1C1B2E]"
+                      className="w-8 h-8 flex items-center justify-center text-[#766A63] hover:text-[#221A33]"
                     >
                       +
                     </button>
                   </div>
 
                   {/* Precio */}
-                  <span className="text-sm text-[#1C1B2E] font-[500]">
+                  <span className="text-sm text-[#221A33] font-[500]">
                     {formatCOP(item.unitPrice * item.quantity)}
                   </span>
                 </div>
@@ -140,7 +140,7 @@ export default function CarritoPage() {
           </h2>
 
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between text-[#1C1B2E]">
+            <div className="flex justify-between text-[#221A33]">
               <span>Subtotal</span>
               <span>{formatCOP(subtotal)}</span>
             </div>
@@ -156,7 +156,7 @@ export default function CarritoPage() {
                 {shippingCost > 0 ? formatCOP(shippingCost) : "Se calcula en checkout"}
               </span>
             </div>
-            <div className="border-t border-[#E8DED4] pt-3 flex justify-between font-[500] text-[#1C1B2E]">
+            <div className="border-t border-[#E8DED4] pt-3 flex justify-between font-[500] text-[#221A33]">
               <span>Total</span>
               <span>{formatCOP(total)}</span>
             </div>
@@ -164,14 +164,14 @@ export default function CarritoPage() {
 
           <Link
             href="/checkout"
-            className="mt-6 w-full flex items-center justify-center gap-2 py-4 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#2D2C44] transition-colors rounded-full"
+            className="mt-6 w-full flex items-center justify-center gap-2 py-4 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#352A4B] transition-colors rounded-full"
           >
             Proceder al pago <ArrowRight size={14} />
           </Link>
 
           <Link
             href="/catalogo"
-            className="mt-3 w-full flex items-center justify-center text-[10px] tracking-[0.15em] uppercase text-[#766A63] hover:text-[#1C1B2E] transition-colors py-2"
+            className="mt-3 w-full flex items-center justify-center text-[10px] tracking-[0.15em] uppercase text-[#766A63] hover:text-[#221A33] transition-colors py-2"
           >
             Seguir comprando
           </Link>

@@ -22,7 +22,7 @@ export function ArchiveProductButton({ id }: { id: string }) {
         <button
           onClick={archive}
           disabled={loading}
-          className="text-xs text-[#A0526C] hover:text-[#1C1B2E] font-[500]"
+          className="text-xs text-[#A0526C] hover:text-[#221A33] font-[500]"
         >
           {loading ? "Archivando…" : "Sí, archivar"}
         </button>

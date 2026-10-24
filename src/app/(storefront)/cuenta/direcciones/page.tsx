@@ -34,7 +34,7 @@ const EMPTY: Omit<Address, "id"> = {
   is_default: false,
 };
 
-const INPUT = "w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
+const INPUT = "w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#221A33] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
 const LABEL = "block text-[10px] uppercase tracking-[0.15em] text-[#766A63] font-[600] mb-1";
 
 export default function DireccionesPage() {
@@ -144,14 +144,14 @@ export default function DireccionesPage() {
     <div>
       <div className="flex items-center justify-between mb-5">
         <h2
-          className="text-xl text-[#1C1B2E]"
+          className="text-xl text-[#221A33]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Direcciones
         </h2>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
         >
           <Plus size={13} /> Nueva
         </button>
@@ -160,7 +160,7 @@ export default function DireccionesPage() {
       {/* Formulario */}
       {showForm && (
         <div className="bg-white border border-[#E8DED4] p-5 mb-5">
-          <p className="text-sm font-[600] text-[#1C1B2E] mb-4">
+          <p className="text-sm font-[600] text-[#221A33] mb-4">
             {editingId ? "Editar dirección" : "Nueva dirección"}
           </p>
           <form onSubmit={handleSave} className="space-y-3">
@@ -235,7 +235,7 @@ export default function DireccionesPage() {
                 type="checkbox"
                 checked={form.is_default}
                 onChange={(e) => field("is_default", e.target.checked)}
-                className="accent-[#1C1B2E] w-3.5 h-3.5"
+                className="accent-[#221A33] w-3.5 h-3.5"
               />
               <span className="text-xs text-[#766A63]">Usar como dirección predeterminada</span>
             </label>
@@ -243,7 +243,7 @@ export default function DireccionesPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] uppercase tracking-[0.15em] font-[500] hover:bg-[#A0526C] transition-colors disabled:opacity-50 rounded-full"
+                className="px-5 py-2.5 bg-[#221A33] text-[#F7F2EC] text-[11px] uppercase tracking-[0.15em] font-[500] hover:bg-[#A0526C] transition-colors disabled:opacity-50 rounded-full"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>
@@ -278,7 +278,7 @@ export default function DireccionesPage() {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[11px] uppercase tracking-[0.12em] font-[600] text-[#1C1B2E]">
+                    <span className="text-[11px] uppercase tracking-[0.12em] font-[600] text-[#221A33]">
                       {addr.label}
                     </span>
                     {addr.is_default && (
@@ -287,7 +287,7 @@ export default function DireccionesPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-[#1C1B2E]">{addr.full_name}</p>
+                  <p className="text-sm text-[#221A33]">{addr.full_name}</p>
                   <p className="text-xs text-[#766A63] mt-0.5">{addr.address}</p>
                   <p className="text-xs text-[#766A63]">
                     {addr.city}, {addr.department}

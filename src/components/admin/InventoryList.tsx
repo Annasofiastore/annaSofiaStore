@@ -139,7 +139,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
       {/* Inventario valorizado */}
       <section className="bg-white border border-[#E8DED4] p-4 mb-5">
         <div className="flex items-baseline justify-between gap-3 mb-3">
-          <h2 className="text-sm font-[600] text-[#1C1B2E] tracking-wide">Inventario valorizado</h2>
+          <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Inventario valorizado</h2>
           <span className="text-[10px] tracking-[0.15em] uppercase text-[#766A63]">
             {filtered ? `Filtrado · ${visible.length} variantes` : "Todo el inventario"}
           </span>
@@ -155,7 +155,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
           ].map((k) => (
             <div key={k.label}>
               <dt className="text-[9px] tracking-[0.2em] uppercase text-[#766A63]">{k.label}</dt>
-              <dd className="text-lg font-[600] text-[#1C1B2E]">{k.value}</dd>
+              <dd className="text-lg font-[600] text-[#221A33]">{k.value}</dd>
             </div>
           ))}
         </dl>
@@ -167,7 +167,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
             <button
               type="button"
               onClick={() => setSoloSinCosto((x) => !x)}
-              className="underline text-[#1C1B2E]"
+              className="underline text-[#221A33]"
             >
               {soloSinCosto ? "Ver todas" : "Ver solo sin costo"}
             </button>
@@ -189,7 +189,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
           placeholder="Buscar por producto, SKU, talla o color"
           autoComplete="off"
           aria-label="Buscar en el inventario"
-          className="h-11 w-full border border-[#E8DED4] bg-white pl-9 pr-11 text-sm text-[#1C1B2E] placeholder:text-[#766A63]"
+          className="h-11 w-full border border-[#E8DED4] bg-white pl-9 pr-11 text-sm text-[#221A33] placeholder:text-[#766A63]"
         />
         {query && (
           <button
@@ -212,7 +212,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
             className={cn(
               "shrink-0 h-9 px-3 flex items-center border text-[10px] tracking-[0.15em] uppercase",
               estado === e.value
-                ? "bg-[#1C1B2E] border-[#1C1B2E] text-[#F7F2EC]"
+                ? "bg-[#221A33] border-[#221A33] text-[#F7F2EC]"
                 : "bg-white border-[#E8DED4] text-[#766A63]"
             )}
           >
@@ -241,7 +241,7 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
                 <div className="flex gap-3">
                   <ProductThumb src={v.image} alt={v.productName} size="md" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-[#1C1B2E] leading-tight">{v.productName}</p>
+                    <p className="text-[#221A33] leading-tight">{v.productName}</p>
                     <p className="text-xs text-[#766A63] mt-0.5">{attrsText(v.attributes)}</p>
                     <p className="font-mono text-[10px] text-[#766A63] mt-0.5 truncate">{v.sku}</p>
                     <p className="mt-1.5">
@@ -293,13 +293,13 @@ export function InventoryList({ rows, truncated }: { rows: InventoryRow[]; trunc
                     <td className="pl-4 py-3">
                       <ProductThumb src={v.image} alt={v.productName} />
                     </td>
-                    <td className="px-4 py-3 text-[#1C1B2E]">{v.productName}</td>
+                    <td className="px-4 py-3 text-[#221A33]">{v.productName}</td>
                     <td className="px-4 py-3 text-xs text-[#766A63]">{attrsText(v.attributes)}</td>
                     <td className="px-4 py-3 font-mono text-xs text-[#766A63]">{v.sku}</td>
-                    <td className="px-4 py-3 whitespace-nowrap text-[#1C1B2E]">
+                    <td className="px-4 py-3 whitespace-nowrap text-[#221A33]">
                       {v.cost === null ? <MissingCost productId={v.productId} /> : formatCOP(v.cost)}
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-[#1C1B2E]">{formatCOP(v.price)}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-[#221A33]">{formatCOP(v.price)}</td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       {v.cost === null ? "—" : <Margin price={v.price} cost={v.cost} />}
                     </td>

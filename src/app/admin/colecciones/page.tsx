@@ -122,7 +122,7 @@ export default function AdminColeccionesPage() {
         <h1 className="text-xl font-semibold text-gray-800">Colecciones</h1>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#221A33] text-white text-xs rounded hover:bg-[#352A4B] transition-colors"
         >
           <Plus size={14} /> Nueva colección
         </button>
@@ -193,7 +193,7 @@ export default function AdminColeccionesPage() {
                   type="checkbox"
                   checked={form.is_active}
                   onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-                  className="accent-[#1C1B2E]"
+                  className="accent-[#221A33]"
                 />
                 <span className="text-xs text-gray-600">Colección activa (visible en el storefront)</span>
               </label>
@@ -221,7 +221,7 @@ export default function AdminColeccionesPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2 bg-[#1C1B2E] text-white text-xs rounded hover:bg-[#2D2C44] transition-colors disabled:opacity-50"
+                className="px-5 py-2 bg-[#221A33] text-white text-xs rounded hover:bg-[#352A4B] transition-colors disabled:opacity-50"
               >
                 {saving ? "Guardando…" : "Guardar"}
               </button>

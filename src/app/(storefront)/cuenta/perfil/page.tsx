@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-const INPUT = "w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#1C1B2E] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
+const INPUT = "w-full border border-[#E8DED4] bg-white px-3 py-2.5 text-sm text-[#221A33] focus:outline-none focus:border-[#766A63] transition-colors placeholder:text-[#DCCFC4]";
 const INPUT_DISABLED = "w-full border border-[#E8DED4] bg-[#F7F2EC] px-3 py-2.5 text-sm text-[#766A63] cursor-not-allowed";
 const LABEL = "block text-[10px] uppercase tracking-[0.15em] text-[#766A63] font-[600] mb-1";
-const BTN = "px-6 py-2.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] uppercase tracking-[0.15em] font-[500] hover:bg-[#A0526C] transition-colors disabled:opacity-50";
+const BTN = "px-6 py-2.5 bg-[#221A33] text-[#F7F2EC] text-[11px] uppercase tracking-[0.15em] font-[500] hover:bg-[#A0526C] transition-colors disabled:opacity-50";
 
 export default function PerfilPage() {
   const [email, setEmail] = useState("");
@@ -122,7 +122,7 @@ export default function PerfilPage() {
   return (
     <div className="space-y-6">
       <h2
-        className="text-xl text-[#1C1B2E]"
+        className="text-xl text-[#221A33]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Mis datos
@@ -130,7 +130,7 @@ export default function PerfilPage() {
 
       {/* Información personal */}
       <div className="bg-white border border-[#E8DED4] p-5">
-        <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E] mb-4">
+        <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33] mb-4">
           Información personal
         </p>
         <form onSubmit={handleSaveProfile} className="space-y-4">
@@ -168,7 +168,7 @@ export default function PerfilPage() {
                   type="checkbox"
                   checked={form.marketing_email}
                   onChange={(e) => setForm({ ...form, marketing_email: e.target.checked })}
-                  className="accent-[#1C1B2E] w-3.5 h-3.5"
+                  className="accent-[#221A33] w-3.5 h-3.5"
                 />
                 <span className="text-xs text-[#766A63]">
                   Recibir novedades y promociones por email
@@ -179,7 +179,7 @@ export default function PerfilPage() {
                   type="checkbox"
                   checked={form.marketing_whatsapp}
                   onChange={(e) => setForm({ ...form, marketing_whatsapp: e.target.checked })}
-                  className="accent-[#1C1B2E] w-3.5 h-3.5"
+                  className="accent-[#221A33] w-3.5 h-3.5"
                 />
                 <span className="text-xs text-[#766A63]">
                   Recibir novedades por WhatsApp
@@ -202,7 +202,7 @@ export default function PerfilPage() {
 
       {/* Cambiar contraseña */}
       <div className="bg-white border border-[#E8DED4] p-5">
-        <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#1C1B2E] mb-4">
+        <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33] mb-4">
           Cambiar contraseña
         </p>
         <form onSubmit={handleChangePassword} className="space-y-4">

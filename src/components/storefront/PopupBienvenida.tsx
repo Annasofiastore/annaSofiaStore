@@ -59,7 +59,7 @@ export function PopupBienvenida() {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(28,27,46,0.55)", backdropFilter: "blur(3px)" }}
+      style={{ background: "rgba(34,26,51,0.55)", backdropFilter: "blur(3px)" }}
     >
       <div
         className="relative w-full max-w-md bg-white"
@@ -74,7 +74,7 @@ export function PopupBienvenida() {
         {/* Botón cerrar */}
         <button
           onClick={dismiss}
-          className="absolute top-4 right-4 text-[#DCCFC4] hover:text-[#1C1B2E] transition-colors"
+          className="absolute top-4 right-4 text-[#DCCFC4] hover:text-[#221A33] transition-colors"
           aria-label="Cerrar"
         >
           <X size={18} strokeWidth={1.5} />
@@ -86,20 +86,20 @@ export function PopupBienvenida() {
             <>
               <CheckCircle size={44} className="mx-auto mb-4 text-[#A0526C]" strokeWidth={1} />
               <h2
-                className="text-3xl text-[#1C1B2E] mb-2"
+                className="text-3xl text-[#221A33] mb-2"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 ¡Ya casi!
               </h2>
               <p className="text-sm text-[#766A63] leading-relaxed mb-6">
                 Te enviamos el código de descuento a{" "}
-                <strong className="text-[#1C1B2E]">{email}</strong>.
+                <strong className="text-[#221A33]">{email}</strong>.
                 <br />
                 Revisa tu correo y úsalo al hacer checkout.
               </p>
               <button
                 onClick={dismiss}
-                className="w-full py-3.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
+                className="w-full py-3.5 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0526C] transition-colors rounded-full"
               >
                 Explorar colección
               </button>
@@ -112,13 +112,13 @@ export function PopupBienvenida() {
               </span>
 
               <h2
-                className="text-4xl text-[#1C1B2E] mb-1 leading-tight"
+                className="text-4xl text-[#221A33] mb-1 leading-tight"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 10% de descuento
               </h2>
               <p
-                className="text-xl text-[#1C1B2E] mb-4"
+                className="text-xl text-[#221A33] mb-4"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 en tu primer pedido
@@ -136,7 +136,7 @@ export function PopupBienvenida() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Tu nombre (opcional)"
-                  className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-4 py-2.5 text-sm text-[#1C1B2E] placeholder:text-[#DCCFC4] outline-none focus:border-[#766A63] transition-colors"
+                  className="w-full border border-[#E8DED4] bg-[#F7F2EC] px-4 py-2.5 text-sm text-[#221A33] placeholder:text-[#DCCFC4] outline-none focus:border-[#766A63] transition-colors"
                 />
                 <div className="relative">
                   <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#DCCFC4]" strokeWidth={1.5} />
@@ -146,7 +146,7 @@ export function PopupBienvenida() {
                     onChange={(e) => { setEmail(e.target.value); setError(null); }}
                     placeholder="Tu correo electrónico *"
                     required
-                    className="w-full border border-[#E8DED4] bg-[#F7F2EC] pl-9 pr-4 py-2.5 text-sm text-[#1C1B2E] placeholder:text-[#DCCFC4] outline-none focus:border-[#766A63] transition-colors"
+                    className="w-full border border-[#E8DED4] bg-[#F7F2EC] pl-9 pr-4 py-2.5 text-sm text-[#221A33] placeholder:text-[#DCCFC4] outline-none focus:border-[#766A63] transition-colors"
                   />
                 </div>
 
@@ -157,7 +157,7 @@ export function PopupBienvenida() {
                 <button
                   type="submit"
                   disabled={state === "submitting"}
-                  className="w-full py-3.5 bg-[#1C1B2E] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0526C] disabled:bg-[#DCCFC4] disabled:cursor-not-allowed transition-colors rounded-full"
+                  className="w-full py-3.5 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#A0526C] disabled:bg-[#DCCFC4] disabled:cursor-not-allowed transition-colors rounded-full"
                 >
                   {state === "submitting" ? "Enviando…" : "Enviarme mi código"}
                 </button>

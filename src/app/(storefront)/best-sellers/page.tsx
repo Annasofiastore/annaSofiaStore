@@ -50,7 +50,7 @@ export default async function BestSellersPage() {
               </span>
             </div>
             <h1
-              className="text-5xl sm:text-6xl text-[#1C1B2E] mb-4 leading-[1.08]"
+              className="text-5xl sm:text-6xl text-[#221A33] mb-4 leading-[1.08]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Best Sellers
@@ -89,7 +89,7 @@ export default async function BestSellersPage() {
             </p>
             <Link
               href="/catalogo"
-              className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-[#1C1B2E] border-b border-[#1C1B2E] pb-0.5 hover:border-[#A0526C] hover:text-[#A0526C] transition-colors font-[500]"
+              className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-[#221A33] border-b border-[#221A33] pb-0.5 hover:border-[#A0526C] hover:text-[#A0526C] transition-colors font-[500]"
             >
               Ver catálogo completo <ArrowRight size={12} />
             </Link>
@@ -104,14 +104,14 @@ export default async function BestSellersPage() {
             Hay más donde elegir
           </span>
           <p
-            className="text-2xl text-[#1C1B2E] mt-2 mb-6"
+            className="text-2xl text-[#221A33] mt-2 mb-6"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Explora todo el catálogo
           </p>
           <Link
             href="/catalogo"
-            className="inline-flex items-center gap-2 px-8 py-3 border border-[#1C1B2E] text-[#1C1B2E] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#1C1B2E] hover:text-[#F7F2EC] transition-colors rounded-full"
+            className="inline-flex items-center gap-2 px-8 py-3 border border-[#221A33] text-[#221A33] text-[11px] tracking-[0.2em] uppercase font-[500] hover:bg-[#221A33] hover:text-[#F7F2EC] transition-colors rounded-full"
           >
             Ver todo <ArrowRight size={13} />
           </Link>

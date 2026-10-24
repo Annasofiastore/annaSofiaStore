@@ -43,8 +43,8 @@ export function CatalogCategoryBar({
                 className={cn(
                   "block rounded-full border px-6 sm:px-8 py-2.5 sm:py-3 text-xs sm:text-[13px] tracking-[0.2em] uppercase font-[500] transition-colors",
                   active
-                    ? "bg-[#1C1B2E] border-[#1C1B2E] text-[#F7F2EC]"
-                    : "border-[#1C1B2E]/30 text-[#1C1B2E] hover:bg-[#F5DDE5] hover:border-[#F5DDE5]"
+                    ? "bg-[#221A33] border-[#221A33] text-[#F7F2EC]"
+                    : "border-[#221A33]/30 text-[#221A33] hover:bg-[#F5DDE5] hover:border-[#F5DDE5]"
                 )}
               >
                 {c.name}
