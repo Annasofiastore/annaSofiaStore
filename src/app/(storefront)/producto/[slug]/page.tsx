@@ -2,6 +2,8 @@
 // página nunca debe servirse desde caché o mostraría disponibilidad vieja.
 export const dynamic = "force-dynamic";
 
+import { brand } from "@/lib/config/brand";
+import { getStoreName } from "@/lib/config/store-name";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronDown, ChevronRight, Truck, ShieldCheck, RotateCcw } from "lucide-react";
@@ -136,9 +138,14 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const product = await getProduct(slug);
   if (!product) return {};
+  const storeName = await getStoreName();
+  // Descripción del producto (máx. 160 caracteres, lo que muestra Google); si no tiene, una por defecto
+  const description =
+    (product.description ?? "").replace(/\s+/g, " ").trim().slice(0, 160) ||
+    `${product.name} en ${storeName}. ${brand.tagline}.`;
   return {
     title: product.name,
-    description: product.description ?? undefined,
+    description,
     openGraph: {
       images: product.images[0] ? [product.images[0]] : [],
     },

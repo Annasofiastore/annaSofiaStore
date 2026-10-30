@@ -1,5 +1,5 @@
 import { getResend, fromAddress, ADMIN_EMAILS } from "./resend";
-import { formatCOP, escapeHtml } from "@/lib/utils/format";
+import { formatCOP, escapeHtml, formatPhone } from "@/lib/utils/format";
 import { getStoreName } from "@/lib/config/store-name";
 import { brand, siteUrl, location, whatsappUrl } from "@/lib/config/brand";
 
@@ -181,7 +181,7 @@ function shippingBlock(order: any): string {
           <strong>${order.shipping_name}</strong><br>
           ${order.shipping_address}<br>
           ${order.shipping_city}, ${order.shipping_department}<br>
-          <span style="color:#766A63;">${order.shipping_phone}</span>
+          <span style="color:#766A63;">${formatPhone(order.shipping_phone)}</span>
         </p>
       </td>
     </tr>
@@ -196,7 +196,7 @@ function shippingBlock(order: any): string {
 export async function sendOrderConfirmationEmail(order: any) {
   const storeName = await getStoreName();
   const items = order.items ?? [];
-  const trackUrl = `${SITE_URL}/seguimiento?orden=${order.order_number}&email=${encodeURIComponent(order.shipping_email)}`;
+  const trackUrl = `${SITE_URL}/seguimiento?orden=${order.order_number}`; // el correo se pide en el formulario, no va en el enlace
 
   const content = `
     ${subheading("Confirmación de pedido")}
@@ -207,6 +207,9 @@ export async function sendOrderConfirmationEmail(order: any) {
     ${label("Tus prendas")}
     ${itemsTable(items)}
     ${totalsTable(order)}
+    ${order.payment_method === "contraentrega"
+      ? bodyText(`<strong style="color:#221A33;">Pago contraentrega:</strong> pagas <strong style="color:#221A33;">${formatCOP(order.total)}</strong> cuando recibas tu pedido. Ten el dinero listo.`, "font-size:13px;")
+      : ""}
     ${divider()}
     ${shippingBlock(order)}
     ${cta("Seguir mi pedido", trackUrl)}
@@ -239,7 +242,7 @@ export async function sendNewOrderAdminEmail(order: any) {
       <tr>
         <td style="font-family:Arial,sans-serif;font-size:13px;color:#766A63;">
           <a href="mailto:${order.shipping_email}" style="color:#A0526C;">${order.shipping_email}</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-          <a href="tel:${order.shipping_phone}" style="color:#766A63;text-decoration:none;">${order.shipping_phone}</a>
+          <a href="tel:${order.shipping_phone}" style="color:#766A63;text-decoration:none;">${formatPhone(order.shipping_phone)}</a>
         </td>
       </tr>
     </table>
@@ -297,7 +300,7 @@ export async function sendPaymentFailedEmail(order: any) {
 // 4. Cambios de estado del pedido — RB-PED-03
 export async function sendOrderStatusEmail(order: any, newStatus: string) {
   const storeName = await getStoreName();
-  const trackUrl = `${SITE_URL}/seguimiento?orden=${order.order_number}&email=${encodeURIComponent(order.shipping_email)}`;
+  const trackUrl = `${SITE_URL}/seguimiento?orden=${order.order_number}`; // el correo se pide en el formulario, no va en el enlace
 
   const configs: Record<string, { preheader: string; badge: string; badgeColor: string; title: string; body: string; extra?: string }> = {
     preparing: {
@@ -354,7 +357,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
   const content = `
     ${subheading(`Bienvenida a ${escapeHtml(storeName)}`)}
     ${heading(`Hola, ${name || "bienvenida"} ✨`)}
-    ${bodyText(`Nos alegra que formes parte de nuestra comunidad. En ${escapeHtml(storeName)} encontrarás moda femenina con alma costera, pensada para mujeres que viven con estilo e intención.`)}
+    ${bodyText(`Nos alegra que formes parte de nuestra comunidad. En ${escapeHtml(storeName)} encontrarás moda femenina con alma y carácter, pensada para mujeres que viven con estilo e intención.`)}
     ${divider()}
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F2EC;">
       <tr>

@@ -63,3 +63,12 @@ export function escapeHtml(text: string): string {
 export function monogramOf(name: string): string {
   return name.match(/[A-ZÁÉÍÓÚÑ]/g)?.slice(0, 2).join("") || name.charAt(0);
 }
+
+/** Teléfono colombiano legible: "+57 300 123 4567". Acepta "3001234567", "+573001234567", "57 300…". Si no tiene 10 dígitos, lo devuelve tal cual. */
+export function formatPhone(raw: string | null | undefined): string {
+  if (!raw) return "";
+  const digits = raw.replace(/\D/g, "");
+  const national = digits.length === 12 && digits.startsWith("57") ? digits.slice(2) : digits;
+  if (national.length !== 10) return raw.trim();
+  return `+57 ${national.slice(0, 3)} ${national.slice(3, 6)} ${national.slice(6)}`;
+}

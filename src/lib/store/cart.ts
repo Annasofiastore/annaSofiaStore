@@ -26,10 +26,12 @@ function computeTotals(
 
   let discountAmount = 0;
   if (promotion) {
-    discountAmount =
+    // Pesos enteros, igual que en el servidor (lib/checkout/promotions.ts), para que los totales coincidan
+    const raw =
       promotion.discount_type === "percentage"
         ? subtotal * (promotion.discount_value / 100)
         : Math.min(promotion.discount_value, subtotal);
+    discountAmount = Math.min(subtotal, Math.round(raw));
   }
 
   const total = Math.max(0, subtotal - discountAmount + shippingCost);

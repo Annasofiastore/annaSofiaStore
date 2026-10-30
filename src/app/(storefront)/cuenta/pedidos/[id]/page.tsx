@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Package, MapPin, Truck } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/server";
-import { formatCOP, formatDate } from "@/lib/utils/format";
+import { formatCOP, formatDate, formatPhone } from "@/lib/utils/format";
 import { RetryPaymentBanner } from "@/components/storefront/RetryPaymentBanner";
 
 const STATUS_MAP: Record<string, { label: string; cls: string }> = {
@@ -175,7 +175,7 @@ export default async function PedidoDetallePage({
             <p>
               {order.shipping_city}, {order.shipping_department}
             </p>
-            <p>{order.shipping_phone}</p>
+            <p>{formatPhone(order.shipping_phone)}</p>
           </div>
         </div>
 

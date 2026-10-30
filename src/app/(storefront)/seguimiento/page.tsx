@@ -4,8 +4,10 @@ import { Search, Package, MapPin, Truck, CheckCircle, XCircle, Clock } from "luc
 import { createServiceClient } from "@/lib/supabase/server";
 import { formatCOP, formatDate } from "@/lib/utils/format";
 import { brand } from "@/lib/config/brand";
+import { cookies } from "next/headers";
+import { lookupOrder } from "./actions";
 
-export const metadata: Metadata = { title: "Seguimiento de pedido" };
+export const metadata: Metadata = { title: "Seguimiento de pedido", robots: { index: false, follow: false } };
 
 const STATUS_STEPS = [
   { key: "pending_payment", label: "Pendiente de pago", icon: Clock },
@@ -15,18 +17,45 @@ const STATUS_STEPS = [
   { key: "delivered", label: "Entregado", icon: CheckCircle },
 ];
 
-const STATUS_ORDER = ["pending_payment", "paid", "preparing", "shipped", "delivered"];
+// Contraentrega: no hay "pago confirmado" antes de enviar; el pago se recibe al entregar
+const CONTRAENTREGA_STEPS = [
+  { key: "pending_payment", label: "Pedido recibido", icon: CheckCircle },
+  { key: "preparing", label: "En preparación", icon: Package },
+  { key: "shipped", label: "En camino", icon: Truck },
+  { key: "delivered", label: "Entregado y pagado", icon: CheckCircle },
+];
 
-function getStepIndex(status: string) {
-  return STATUS_ORDER.indexOf(status);
+function getStepIndex(steps: { key: string }[], status: string) {
+  // Un pedido contraentrega antiguo puede estar en "paid": equivale a "pedido recibido"
+  const key = status === "paid" && steps === CONTRAENTREGA_STEPS ? "pending_payment" : status;
+  return steps.findIndex((step) => step.key === key);
 }
 
 interface Props {
   searchParams: Promise<{ orden?: string; email?: string }>;
 }
 
+// Consulta guardada por la acción del formulario (ver actions.ts)
+function readSavedLookup(raw: string | undefined): { orden?: string; email?: string } {
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(Buffer.from(raw, "base64url").toString());
+    return {
+      orden: typeof parsed.orden === "string" ? parsed.orden : undefined,
+      email: typeof parsed.email === "string" ? parsed.email : undefined,
+    };
+  } catch {
+    return {};
+  }
+}
+
 export default async function SeguimientoPage({ searchParams }: Props) {
-  const { orden, email } = await searchParams;
+  const query = await searchParams;
+  const saved = readSavedLookup((await cookies()).get("seguimiento")?.value);
+  // El número puede venir en el enlace de los correos; el correo solo por el formulario (cookie).
+  // ?email= se sigue aceptando únicamente para enlaces antiguos ya enviados.
+  const orden = query.orden ?? saved.orden;
+  const email = query.email ?? saved.email;
 
   let order: any = null;
   let error: string | null = null;
@@ -34,14 +63,17 @@ export default async function SeguimientoPage({ searchParams }: Props) {
   if (orden && email) {
     // Service client para que guests y clientes registrados puedan consultar
     const db = createServiceClient();
-    const { data, error: err } = await db
+    const { data } = await db
       .from("orders")
       .select(`*, order_items (id, product_name, variant_attrs, quantity, total_price)`)
-      .eq("order_number", orden.toUpperCase())
-      .ilike("shipping_email", email.trim())
-      .single();
+      .eq("order_number", orden.trim().toUpperCase())
+      .maybeSingle();
 
-    if (err || !data) {
+    // Comparación exacta del correo (sin comodines): con ilike, "%" coincidía con cualquier correo
+    const emailMatches =
+      !!data && (data.shipping_email ?? "").trim().toLowerCase() === email.trim().toLowerCase();
+
+    if (!data || !emailMatches) {
       error = "No encontramos un pedido con ese número y correo. Verifica los datos.";
     } else {
       order = data;
@@ -49,7 +81,8 @@ export default async function SeguimientoPage({ searchParams }: Props) {
   }
 
   const isCancelled = order?.status === "cancelled";
-  const currentStep = order ? getStepIndex(order.status) : -1;
+  const steps = order?.payment_method === "contraentrega" ? CONTRAENTREGA_STEPS : STATUS_STEPS;
+  const currentStep = order ? getStepIndex(steps, order.status) : -1;
 
   return (
     <div className="min-h-screen bg-[#F7F2EC]">
@@ -68,7 +101,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
         </div>
 
         {/* Formulario de búsqueda */}
-        <form method="GET" className="bg-white border border-[#E8DED4] p-6 mb-8">
+        <form action={lookupOrder} className="bg-white border border-[#E8DED4] p-6 mb-8">
           <p className="text-[11px] uppercase tracking-[0.15em] font-[600] text-[#221A33] mb-4">
             Consultar pedido
           </p>
@@ -155,7 +188,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                 </div>
               ) : (
                 <div className="space-y-0">
-                  {STATUS_STEPS.map((step, idx) => {
+                  {steps.map((step, idx) => {
                     const done = currentStep >= idx;
                     const active = currentStep === idx;
                     return (
@@ -170,7 +203,7 @@ export default async function SeguimientoPage({ searchParams }: Props) {
                           >
                             <step.icon size={14} />
                           </div>
-                          {idx < STATUS_STEPS.length - 1 && (
+                          {idx < steps.length - 1 && (
                             <div className={`w-px h-6 ${done ? "bg-[#221A33]" : "bg-[#E8DED4]"}`} />
                           )}
                         </div>

@@ -12,7 +12,7 @@ import { escapeHtml } from "@/lib/utils/format";
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
-    title: `Términos y Condiciones | ${storeName}`,
+    title: "Términos y Condiciones", // el layout agrega el nombre de la tienda
     description: `Términos y condiciones de uso — ${storeName}, ${location}.`,
   };
 }

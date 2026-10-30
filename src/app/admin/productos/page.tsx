@@ -4,6 +4,8 @@ import { createServiceClient } from "@/lib/supabase/server";
 import { formatCOP, monogramOf } from "@/lib/utils/format";
 import { ProductThumb } from "@/components/admin/ProductThumb";
 import { getStoreName } from "@/lib/config/store-name";
+import { AdminSearchBox } from "@/components/admin/AdminSearchBox";
+import { cleanSearchTerm } from "@/lib/utils/search";
 
 const STATUS_BADGE: Record<string, string> = {
   active: "bg-[#F7F2EC] text-[#221A33]",
@@ -16,14 +18,36 @@ const STATUS_LABEL: Record<string, string> = {
   archived: "Archivado",
 };
 
-export default async function AdminProductosPage() {
+export default async function AdminProductosPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
   const monogram = monogramOf(await getStoreName());
   const supabase = createServiceClient();
-  const { data: products } = await supabase
+
+  let query = supabase
     .from("products")
     .select(`*, variants:product_variants(id, stock, reserved)`)
     .order("created_at", { ascending: false })
     .limit(200);
+
+  // Búsqueda por nombre, slug o SKU de cualquiera de sus variantes
+  const term = cleanSearchTerm(q);
+  if (term) {
+    const { data: skuMatches } = await supabase
+      .from("product_variants")
+      .select("product_id")
+      .ilike("sku", `%${term}%`)
+      .limit(200);
+    const productIds = [...new Set((skuMatches ?? []).map((v) => v.product_id))];
+    const filters = [`name.ilike.*${term}*`, `slug.ilike.*${term}*`];
+    if (productIds.length) filters.push(`id.in.(${productIds.join(",")})`);
+    query = query.or(filters.join(","));
+  }
+
+  const { data: products } = await query;
 
   return (
     <div>
@@ -48,6 +72,10 @@ export default async function AdminProductosPage() {
             <Plus size={14} /> Nuevo producto
           </Link>
         </div>
+      </div>
+
+      <div className="mb-5">
+        <AdminSearchBox basePath="/admin/productos" placeholder="Buscar por nombre o SKU" />
       </div>
 
       <div className="bg-white border border-[#E8DED4] overflow-x-auto">
@@ -111,10 +139,16 @@ export default async function AdminProductosPage() {
         </table>
         {!products?.length && (
           <div className="py-16 text-center text-[#766A63] text-sm">
-            Aún no hay productos.{" "}
-            <Link href="/admin/productos/nuevo" className="text-[#A0526C] underline">
-              Crea el primero
-            </Link>
+            {term ? (
+              <>No hay productos que coincidan con “{term}”.</>
+            ) : (
+              <>
+                Aún no hay productos.{" "}
+                <Link href="/admin/productos/nuevo" className="text-[#A0526C] underline">
+                  Crea el primero
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>

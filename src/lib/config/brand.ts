@@ -23,7 +23,7 @@ export const brand = {
   /** Identificador en kebab-case. Llaves de localStorage y nombres de archivos exportados. */
   slug: "boutique",
   /** Frase de marca. Aparece en el <title> y en el footer. */
-  tagline: "Tu frase de marca aquí",
+  tagline: "Moda femenina que brilla contigo",
   /** Meta description para SEO. 150–160 caracteres. */
   description:
     "Ropa femenina con estilo propio. Prendas versátiles, atemporales y auténticas.",

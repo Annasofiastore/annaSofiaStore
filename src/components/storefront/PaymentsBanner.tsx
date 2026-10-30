@@ -7,7 +7,7 @@ import { getStoreName } from "@/lib/config/store-name";
  */
 const PAYMENTS_IMAGE: string | null = null;
 
-const METHODS = ["Pago en línea con Wompi", "Contraentrega"];
+const METHODS = ["Pago en línea con Wompi"];
 
 export async function PaymentsBanner() {
   if (PAYMENTS_IMAGE) {

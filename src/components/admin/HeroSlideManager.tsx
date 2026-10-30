@@ -151,7 +151,7 @@ export function HeroSlideManager() {
 
       {slides.length > 1 && (
         <p className="text-[10px] text-[#766A63]">
-          Arrastra para reordenar. Las imágenes rotan cada 3 segundos.
+          Arrastra para reordenar las imágenes.
         </p>
       )}
 

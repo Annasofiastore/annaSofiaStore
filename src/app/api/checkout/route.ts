@@ -3,16 +3,22 @@ import { createHash } from "crypto";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendOrderConfirmationEmail, sendNewOrderAdminEmail } from "@/lib/email/templates";
 import { sendEmailsSafe } from "@/lib/email/resend";
-import type { CartItem, CheckoutForm } from "@/types";
+import { validateCustomerFields, normalizePhone } from "@/lib/validation/checkout";
+import { priceCart } from "@/lib/checkout/pricing";
+import { getShippingZone } from "@/lib/checkout/shipping";
+import { validatePromotion } from "@/lib/checkout/promotions";
+import { isContraentregaCity } from "@/lib/checkout/config";
+import type { CheckoutForm } from "@/types";
 
+// El navegador solo manda QUÉ compra (variante y cantidad), el cupón y el total que le mostró a la clienta.
+// Precios, descuento, envío y total se recalculan aquí; el total del navegador solo sirve para detectar
+// que algo cambió entre lo que ella vio y lo que realmente se cobraría.
 interface CheckoutPayload {
   form: CheckoutForm;
-  items: CartItem[];
+  items: { variantId: string; quantity: number }[];
   sessionId: string;
   total: number;
-  subtotal: number;
-  discountAmount: number;
-  shippingCost: number;
+  couponCode?: string | null;
   paymentMethod?: "wompi" | "contraentrega";
 }
 
@@ -29,13 +35,69 @@ function buildWompiSignature(
 export async function POST(req: NextRequest) {
   try {
     const payload: CheckoutPayload = await req.json();
-    const { form, items, sessionId, total, subtotal, discountAmount, shippingCost, paymentMethod = "wompi" } = payload;
+    const { form, items: requestedItems, sessionId, total: clientTotal, couponCode } = payload;
+    const paymentMethod = payload.paymentMethod === "contraentrega" ? "contraentrega" : "wompi";
 
-    if (!items.length) {
-      return NextResponse.json({ error: "Carrito vacío" }, { status: 400 });
+    // El navegador ya valida, pero el servidor no puede fiarse de lo que le lleguen
+    const fieldError = validateCustomerFields(form);
+    if (fieldError) {
+      return NextResponse.json({ error: fieldError }, { status: 400 });
     }
+    form.full_name = form.full_name.trim().replace(/\s+/g, " ");
+    form.phone = normalizePhone(form.phone);
 
     const supabase = createServiceClient();
+
+    // Contraentrega solo en las ciudades habilitadas
+    if (paymentMethod === "contraentrega" && !isContraentregaCity(form.city)) {
+      return NextResponse.json(
+        { error: "El pago contra entrega no está disponible en tu ciudad." },
+        { status: 400 }
+      );
+    }
+
+    // Precios reales desde la base, con stock asegurado — lo que mande el navegador se ignora
+    const priced = await priceCart(supabase, requestedItems, sessionId);
+    if (!priced.ok) {
+      return NextResponse.json({ error: priced.error }, { status: priced.status });
+    }
+    const { items, subtotal } = priced;
+
+    // Envío según la zona de la ciudad en la base
+    const zone = await getShippingZone(supabase, form.city);
+    if (!zone) {
+      return NextResponse.json(
+        { error: "No se pudo calcular el envío. Contáctanos para completar tu pedido." },
+        { status: 500 }
+      );
+    }
+    const shippingCost = zone.price;
+
+    // Cupón validado en el servidor (el uso se registra cuando el pago queda confirmado)
+    let discountAmount = 0;
+    let promotionId: string | null = null;
+    if (couponCode) {
+      const check = await validatePromotion(supabase, couponCode, subtotal, form.email);
+      if (!check.valid) {
+        return NextResponse.json({ error: check.message, code: "COUPON_INVALID" }, { status: 409 });
+      }
+      discountAmount = check.discountAmount;
+      promotionId = check.promotion.id;
+    }
+
+    const total = Math.max(0, subtotal - discountAmount + shippingCost);
+
+    // Si el total no coincide con lo que vio la clienta, no se cobra: pudo cambiar un precio o el envío
+    if (typeof clientTotal !== "number" || Math.abs(clientTotal - total) > 1) {
+      return NextResponse.json(
+        {
+          error: "Los precios de tu pedido cambiaron. Revisa el resumen y vuelve a intentarlo.",
+          code: "PRICE_CHANGED",
+          total,
+        },
+        { status: 409 }
+      );
+    }
 
     // 1. Obtener o crear cliente — RB-CHK-07
     let customerId: string | null = null;
@@ -76,7 +138,8 @@ export async function POST(req: NextRequest) {
       .insert({
         order_number: orderNumber,
         customer_id: customerId,
-        status: isContraentrega ? "paid" : "pending_payment",
+        // Contraentrega no nace pagada: el pago se cobra al entregar (ver admin/orders/[id]/status)
+        status: "pending_payment",
         payment_method: paymentMethod,
         shipping_name: form.full_name,
         shipping_email: form.email.toLowerCase(),
@@ -88,10 +151,11 @@ export async function POST(req: NextRequest) {
         shipping_department: form.department,
         subtotal,
         discount_amount: discountAmount,
+        promotion_id: promotionId, // el trigger registra el uso cuando el pedido queda pagado
         shipping_cost: shippingCost,
         total,
         wompi_reference: isContraentrega ? null : wompiReference,
-        paid_at: isContraentrega ? now : null,
+        paid_at: null,
         cart_session_id: sessionId,
         terms_accepted: form.terms_accepted,
         terms_accepted_at: now,
@@ -132,8 +196,8 @@ export async function POST(req: NextRequest) {
       await supabase.from("order_status_log").insert({
         order_id: order.id,
         from_status: null,
-        to_status: "paid",
-        notes: "Pedido contraentrega — pago al recibir, confirmación inmediata",
+        to_status: "pending_payment",
+        notes: "Pedido contraentrega recibido — el pago se cobra al entregar",
       });
 
       // Obtener pedido completo con items para emails

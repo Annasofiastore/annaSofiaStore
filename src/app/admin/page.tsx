@@ -9,7 +9,7 @@ async function getDashboardStats() {
   const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString();
   const startOfToday = new Date(today.setHours(0, 0, 0, 0)).toISOString();
 
-  const [todayOrders, monthOrders, totalCustomers, lowStock] = await Promise.all([
+  const [todayOrders, monthOrders, totalCustomers, lowStock, toDispatch] = await Promise.all([
     supabase
       .from("orders")
       .select("id, total, status")
@@ -26,13 +26,16 @@ async function getDashboardStats() {
       .select("id, sku, stock, reserved, product_id, products(name)")
       .lte("stock", 3)
       .gt("stock", 0),
+    // Por despachar, de cualquier fecha: pagados o en preparación, y contraentrega aún sin preparar
+    supabase
+      .from("orders")
+      .select("id", { count: "exact", head: true })
+      .or("status.in.(paid,preparing),and(status.eq.pending_payment,payment_method.eq.contraentrega)"),
   ]);
 
   const todaySales = (todayOrders.data ?? []).reduce((s, o) => s + o.total, 0);
   const monthSales = (monthOrders.data ?? []).reduce((s, o) => s + o.total, 0);
-  const pendingOrders = (todayOrders.data ?? []).filter(
-    (o) => o.status === "paid" || o.status === "preparing"
-  ).length;
+  const pendingOrders = toDispatch.count ?? 0;
 
   return {
     todaySales,
@@ -170,7 +173,7 @@ export default async function AdminDashboard() {
                       {v.products?.name ?? v.sku}
                     </p>
                     <p className="text-[10px] text-[#766A63]">
-                      {v.sku} · {v.stock} disponibles
+                      {v.sku} · {v.stock} {v.stock === 1 ? "disponible" : "disponibles"}
                     </p>
                   </div>
                 </div>

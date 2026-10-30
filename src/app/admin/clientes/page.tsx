@@ -1,5 +1,5 @@
 import { createServiceClient } from "@/lib/supabase/server";
-import { formatDateShort } from "@/lib/utils/format";
+import { formatDateShort, formatPhone } from "@/lib/utils/format";
 
 export default async function AdminClientesPage() {
   const supabase = createServiceClient();
@@ -48,7 +48,7 @@ export default async function AdminClientesPage() {
               <tr key={c.id} className="border-b border-[#F7F2EC] hover:bg-[#F7F2EC]/50 transition-colors">
                 <td className="px-4 py-3 font-[400] text-[#221A33]">{c.full_name}</td>
                 <td className="px-4 py-3 text-[#766A63]">{c.email}</td>
-                <td className="px-4 py-3 text-[#766A63]">{c.phone ?? "—"}</td>
+                <td className="px-4 py-3 text-[#766A63]">{c.phone ? formatPhone(c.phone) : "—"}</td>
                 <td className="px-4 py-3">
                   <span className={`text-[9px] px-2 py-0.5 rounded-full font-[600] tracking-wide uppercase ${c.is_guest ? "bg-[#F7F2EC] text-[#766A63]" : "bg-[#F5DDE5] text-[#221A33]"}`}>
                     {c.is_guest ? "Invitada" : "Registrada"}

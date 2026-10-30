@@ -12,7 +12,7 @@ import { escapeHtml } from "@/lib/utils/format";
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
-    title: `Política de Devoluciones y Cambios | ${storeName}`,
+    title: "Política de Devoluciones y Cambios", // el layout agrega el nombre de la tienda
     description: `Política de Devoluciones y Cambios — ${storeName}, ${location}.`,
   };
 }

@@ -4,18 +4,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Lock, AlertCircle, UserCheck, Clock, Truck } from "lucide-react";
+import { validateCustomerFields } from "@/lib/validation/checkout";
 import { useCartStore } from "@/lib/store/cart";
 import { createClient } from "@/lib/supabase/client";
 import { formatCOP } from "@/lib/utils/format";
 import { MUNICIPIOS_POR_DEPARTAMENTO, DEPARTAMENTOS } from "@/lib/data/colombia-municipios";
 import type { CheckoutForm } from "@/types";
 import { useStoreName } from "@/components/StoreNameProvider";
-
-const CONTRAENTREGA_CITIES = new Set(["Montería"]);
-
-function isEligibleCity(city: string): boolean {
-  return CONTRAENTREGA_CITIES.has(city);
-}
+import { isContraentregaCity as isEligibleCity } from "@/lib/checkout/config";
 
 function getSameDayStatus(): { beforeCutoff: boolean } {
   const now = new Date();
@@ -204,12 +200,8 @@ export default function CheckoutPage() {
   }
 
   function validate(): string | null {
-    if (!form.full_name.trim()) return "Ingresa tu nombre completo.";
-    if (!form.email.includes("@")) return "El correo no es válido.";
-    if (form.phone.replace(/\D/g, "").length < 7) return "El teléfono no es válido.";
-    if (!form.id_type) return "Selecciona el tipo de documento.";
-    if (form.id_number.replace(/\D/g, "").length < 4) return "Ingresa un número de documento válido.";
-    if (!form.address.trim()) return "Ingresa tu dirección.";
+    const fieldError = validateCustomerFields(form);
+    if (fieldError) return fieldError;
     if (!form.department) return "Selecciona tu departamento.";
     if (!form.city) return "Selecciona tu ciudad o municipio.";
     if (!form.terms_accepted) return "Debes aceptar los términos y condiciones.";
@@ -228,7 +220,15 @@ export default function CheckoutPage() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ form, items, sessionId, total, subtotal, discountAmount, shippingCost, paymentMethod }),
+        // Solo se envía qué se compra y el total que ve la clienta; el servidor recalcula precios, descuento y envío
+        body: JSON.stringify({
+          form,
+          items: items.map((i) => ({ variantId: i.variantId, quantity: i.quantity })),
+          sessionId,
+          total,
+          couponCode: appliedPromotion?.code ?? null,
+          paymentMethod,
+        }),
       });
 
       const data = await res.json();
@@ -404,7 +404,7 @@ export default function CheckoutPage() {
                   id="coupon" type="text"
                   value={form.coupon_code ?? ""}
                   onChange={(v) => { set("coupon_code", v); setCouponMsg(null); }}
-                  placeholder="Ej: BIENVENIDA10"
+                  placeholder="Ingresa tu código"
                 />
                 <button
                   type="button"

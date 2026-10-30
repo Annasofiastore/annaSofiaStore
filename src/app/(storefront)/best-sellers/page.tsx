@@ -11,7 +11,7 @@ import { getStoreName } from "@/lib/config/store-name";
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
-    title: `Best Sellers — ${storeName}`,
+    title: "Best Sellers",
     description: `Las prendas más amadas por nuestra comunidad. Selección curada por el equipo de ${storeName}.`,
   };
 }

@@ -7,7 +7,7 @@ import { monogramOf } from "@/lib/utils/format";
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
-    title: `Colecciones — ${storeName}`,
+    title: "Colecciones",
     description: `Explora todas las colecciones de ${storeName}.`,
   };
 }
@@ -38,7 +38,7 @@ export default async function ColeccionesPage() {
           Colecciones
         </h1>
         <p className="text-sm text-[#766A63] mt-4 max-w-md mx-auto">
-          Cada colección es un universo de estilo pensado para la mujer que vive el mar con elegancia.
+          Cada colección es un universo de estilo pensado para la mujer que brilla a su manera.
         </p>
       </div>
 

@@ -14,6 +14,21 @@ const TRANSITIONS: Record<string, { next: OrderStatus; label: string }[]> = {
   shipped: [{ next: "delivered", label: "Marcar como entregado" }],
 };
 
+// Contraentrega nace "Pendiente de pago" (se cobra al entregar) y se prepara igual que los demás
+function transitionsFor(status: string, paymentMethod: string) {
+  const contraentrega = paymentMethod === "contraentrega";
+  if (contraentrega && status === "pending_payment") {
+    return [
+      { next: "preparing" as OrderStatus, label: "Marcar en preparación" },
+      { next: "cancelled" as OrderStatus, label: "Cancelar pedido" },
+    ];
+  }
+  if (contraentrega && status === "shipped") {
+    return [{ next: "delivered" as OrderStatus, label: "Marcar entregado y pago recibido" }];
+  }
+  return TRANSITIONS[status] ?? [];
+}
+
 const STATUS_LABEL: Record<string, string> = {
   pending_payment: "Pendiente de pago",
   paid: "Pagado",
@@ -27,6 +42,7 @@ interface Props {
   order: {
     id: string;
     status: string;
+    payment_method?: string;
     tracking_number: string | null;
     courier: string | null;
   };
@@ -39,9 +55,17 @@ export function OrderStatusActions({ order }: Props) {
   const [courier, setCourier] = useState(order.courier ?? "");
   const [error, setError] = useState<string | null>(null);
 
-  const transitions = TRANSITIONS[order.status] ?? [];
+  const contraentrega = order.payment_method === "contraentrega";
+  const transitions = transitionsFor(order.status, order.payment_method ?? "");
+  const statusLabel =
+    contraentrega && order.status === "pending_payment"
+      ? "Pendiente — el pago se cobra al entregar"
+      : STATUS_LABEL[order.status] ?? order.status;
 
   async function changeStatus(nextStatus: OrderStatus) {
+    if (nextStatus === "cancelled" && !confirm("¿Cancelar este pedido? Las unidades volverán al inventario.")) return;
+    if (nextStatus === "delivered" && contraentrega && !confirm("¿Confirmas que el pedido fue entregado y el pago recibido?")) return;
+
     if (nextStatus === "shipped" && !trackingNumber.trim()) {
       setError("Ingresa el número de guía antes de marcar como enviado.");
       return;
@@ -70,7 +94,7 @@ export function OrderStatusActions({ order }: Props) {
       <div className="flex items-center gap-3">
         <span className="text-sm text-[#766A63]">Estado actual:</span>
         <span className="text-sm font-[600] text-[#221A33]">
-          {STATUS_LABEL[order.status] ?? order.status}
+          {statusLabel}
         </span>
       </div>
 

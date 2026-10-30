@@ -3,6 +3,9 @@ import { createServiceClient } from "@/lib/supabase/server";
 import { formatCOP, formatDateShort } from "@/lib/utils/format";
 import { ExportPedidosButton } from "@/components/admin/ExportPedidosButton";
 import { OrderDateFilter } from "@/components/admin/OrderDateFilter";
+import { ReconcileOrdersButton } from "@/components/admin/ReconcileOrdersButton";
+import { AdminSearchBox } from "@/components/admin/AdminSearchBox";
+import { cleanSearchTerm } from "@/lib/utils/search";
 
 const STATUS_OPTIONS = [
   { value: "", label: "Todos los estados" },
@@ -56,7 +59,19 @@ export default async function AdminPedidosPage({ searchParams }: Props) {
     .limit(200);
 
   if (status) query = query.eq("status", status);
-  if (q) query = query.ilike("order_number", `%${q}%`);
+  // Búsqueda: número de pedido, nombre, correo o teléfono (el teléfono también por sus dígitos)
+  const term = cleanSearchTerm(q);
+  if (term) {
+    const digits = term.replace(/\D/g, "");
+    const filters = [
+      `order_number.ilike.*${term}*`,
+      `shipping_name.ilike.*${term}*`,
+      `shipping_email.ilike.*${term}*`,
+      `shipping_phone.ilike.*${term}*`,
+    ];
+    if (digits.length >= 4 && digits !== term) filters.push(`shipping_phone.ilike.*${digits}*`);
+    query = query.or(filters.join(","));
+  }
 
   // Colombia = UTC-5: filtrar el día completo en hora local
   if (date_from) query = query.gte("created_at", `${date_from}T00:00:00-05:00`);
@@ -75,7 +90,14 @@ export default async function AdminPedidosPage({ searchParams }: Props) {
         >
           Pedidos
         </h1>
-        <ExportPedidosButton currentStatus={status} />
+        <div className="flex items-center gap-4 flex-wrap">
+          <ReconcileOrdersButton />
+          <ExportPedidosButton currentStatus={status} />
+        </div>
+      </div>
+
+      <div className="mb-5">
+        <AdminSearchBox basePath="/admin/pedidos" placeholder="Buscar por n.º de pedido, nombre, correo o teléfono" />
       </div>
 
       {/* Filtros de estado */}
@@ -160,7 +182,7 @@ export default async function AdminPedidosPage({ searchParams }: Props) {
         </table>
         {!orders?.length && (
           <div className="py-16 text-center text-[#766A63] text-sm">
-            No hay pedidos con estos filtros.
+            {term ? `No hay pedidos que coincidan con “${term}”.` : "No hay pedidos con estos filtros."}
           </div>
         )}
       </div>

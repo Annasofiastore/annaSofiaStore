@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Lora, Montserrat, Parisienne } from "next/font/google";
-import { brand } from "@/lib/config/brand";
+import { brand, siteUrl } from "@/lib/config/brand";
 import { getStoreName } from "@/lib/config/store-name";
 import { StoreNameProvider } from "@/components/StoreNameProvider";
 import "./globals.css";
@@ -31,6 +31,8 @@ const parisienne = Parisienne({
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
+    // Base para convertir en absolutas las URLs de las imágenes al compartir
+    metadataBase: new URL(siteUrl),
     title: {
       default: `${storeName} — ${brand.tagline}`,
       template: `%s | ${storeName}`,
@@ -46,6 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: brand.locale,
       siteName: storeName,
     },
+    twitter: { card: "summary_large_image" },
   };
 }
 

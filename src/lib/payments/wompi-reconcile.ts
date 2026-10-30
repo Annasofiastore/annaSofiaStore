@@ -117,3 +117,52 @@ export async function reconcileWompiOrder(
   if (confirmed) console.log("[wompi-reconcile] Pedido recuperado:", order.order_number, "estado previo:", order.status);
   return confirmed;
 }
+
+export type WompiCheckResult =
+  | "recovered" // Wompi tenía el pago aprobado y el pedido quedó como pagado
+  | "already_paid" // Wompi lo aprobó, pero otro proceso ya lo había confirmado
+  | "pending" // Wompi aún está procesando un pago: no tocar el pedido
+  | "unpaid" // Wompi no tiene pago aprobado ni en proceso para este pedido
+  | "unknown"; // no se pudo consultar a Wompi
+
+/**
+ * Revisa un pedido pendiente o cancelado contra Wompi con una sola consulta y dice qué pasó.
+ * Solo confirma pedidos con pago aprobado; nunca cancela ni modifica los demás.
+ */
+export async function checkWompiOrder(
+  db: Db,
+  order: { id: string; order_number: string; status: string; payment_method: string; cart_session_id?: string | null; wompi_reference: string | null; items?: { variant_id: string; quantity: number }[] }
+): Promise<WompiCheckResult> {
+  if (order.payment_method !== "wompi" || !order.wompi_reference || !RECOVERABLE.includes(order.status)) {
+    return "unknown";
+  }
+
+  const privateKey = process.env.WOMPI_PRIVATE_KEY;
+  if (!privateKey) return "unknown";
+
+  let transactions: { id: string; status: string }[];
+  try {
+    const res = await fetch(`${WOMPI_BASE}/transactions?reference=${encodeURIComponent(order.wompi_reference)}`, {
+      headers: { Authorization: `Bearer ${privateKey}` },
+      cache: "no-store",
+    });
+    if (!res.ok) return "unknown";
+    transactions = (await res.json()).data ?? [];
+  } catch {
+    return "unknown";
+  }
+
+  const approved = transactions.find((tx) => tx.status === "APPROVED");
+  if (approved) {
+    const confirmed = await confirmPaidOrder(
+      db,
+      { ...order, wompi_reference: order.wompi_reference },
+      approved.id,
+      "Pago confirmado por verificación masiva desde el panel de pedidos."
+    );
+    return confirmed ? "recovered" : "already_paid";
+  }
+
+  if (transactions.some((tx) => tx.status === "PENDING")) return "pending";
+  return "unpaid";
+}

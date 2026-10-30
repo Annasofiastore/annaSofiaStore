@@ -7,6 +7,9 @@ import { PaymentPoller } from "@/components/storefront/PaymentPoller";
 import { sendOrderConfirmationEmail, sendNewOrderAdminEmail } from "@/lib/email/templates";
 import { sendEmailsSafe } from "@/lib/email/resend";
 import { reconcileWompiOrder } from "@/lib/payments/wompi-reconcile";
+import { openTracking } from "@/app/(storefront)/seguimiento/actions";
+
+export const metadata = { title: "Tu pedido", robots: { index: false, follow: false } };
 
 interface Props {
   params: Promise<{ orderId: string }>;
@@ -29,6 +32,8 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_STEPS = ["paid", "preparing", "shipped", "delivered"];
+// Contraentrega: el pedido queda "recibido" y el pago se cobra al entregar
+const CONTRAENTREGA_STEPS = ["pending_payment", "preparing", "shipped", "delivered"];
 
 /**
  * Procesa el pago directamente usando el ID de transacción que Wompi envía
@@ -179,13 +184,19 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
     }
   }
 
-  const currentStep = STATUS_STEPS.indexOf(order.status);
   const isContraentrega = order.payment_method === "contraentrega";
+  const steps = isContraentrega ? CONTRAENTREGA_STEPS : STATUS_STEPS;
+  // Un pedido contraentrega antiguo puede estar en "paid": equivale a "recibido"
+  const currentStep = steps.indexOf(isContraentrega && order.status === "paid" ? "pending_payment" : order.status);
+  const stepLabel = (step: string) =>
+    isContraentrega && step === "pending_payment" ? "Pedido recibido" : STATUS_LABELS[step];
+  const orderConfirmed =
+    order.status === "paid" || (isContraentrega && order.status === "pending_payment");
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
       {/* Icono de estado */}
-      {order.status === "paid" || order.status === "preparing" || order.status === "shipped" || order.status === "delivered" ? (
+      {orderConfirmed || order.status === "preparing" || order.status === "shipped" || order.status === "delivered" ? (
         <CheckCircle className="mx-auto mb-6 text-[#A0526C]" size={56} strokeWidth={1} />
       ) : (
         <Package className="mx-auto mb-6 text-[#DCCFC4]" size={56} strokeWidth={1} />
@@ -195,7 +206,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
         className="text-4xl text-[#221A33] mb-2"
         style={{ fontFamily: "var(--font-display)" }}
       >
-        {order.status === "paid" ? "¡Pedido confirmado!" : "Tu pedido"}
+        {orderConfirmed ? "¡Pedido confirmado!" : "Tu pedido"}
       </h1>
       <p className="text-[#766A63] text-sm mb-2">
         Pedido <span className="font-[600] text-[#221A33]">{order.order_number}</span>
@@ -206,7 +217,7 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
 
       {/* Timeline de estado */}
       <div className="flex justify-center gap-0 mb-10">
-        {STATUS_STEPS.map((step, i) => {
+        {steps.map((step, i) => {
           const done = currentStep >= i;
           const active = currentStep === i;
           return (
@@ -220,10 +231,10 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
                   }`}
                 />
                 <span className={`text-[9px] tracking-wide uppercase whitespace-nowrap ${active ? "text-[#221A33] font-[600]" : done ? "text-[#766A63]" : "text-[#DCCFC4]"}`}>
-                  {STATUS_LABELS[step]}
+                  {stepLabel(step)}
                 </span>
               </div>
-              {i < STATUS_STEPS.length - 1 && (
+              {i < steps.length - 1 && (
                 <div className={`w-12 sm:w-20 h-px mb-5 ${done && currentStep > i ? "bg-[#221A33]" : "bg-[#E8DED4]"}`} />
               )}
             </div>
@@ -299,12 +310,15 @@ export default async function ConfirmacionPage({ params, searchParams }: Props) 
       )}
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <Link
-          href={`/seguimiento?orden=${order.order_number}&email=${encodeURIComponent(order.shipping_email)}`}
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#221A33] text-[#221A33] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#221A33] hover:text-[#F7F2EC] transition-colors rounded-full"
-        >
-          Seguir pedido
-        </Link>
+        {/* POST (acción del servidor): el correo no viaja en la URL */}
+        <form action={openTracking.bind(null, order.order_number, order.shipping_email)} className="contents">
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#221A33] text-[#221A33] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#221A33] hover:text-[#F7F2EC] transition-colors rounded-full"
+          >
+            Seguir pedido
+          </button>
+        </form>
         <Link
           href="/catalogo"
           className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#221A33] text-[#F7F2EC] text-[11px] tracking-[0.15em] uppercase font-[500] hover:bg-[#352A4B] transition-colors rounded-full"

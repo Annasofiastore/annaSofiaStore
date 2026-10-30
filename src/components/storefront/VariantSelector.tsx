@@ -71,6 +71,18 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
     return () => io.disconnect();
   }, []);
 
+  // Guía de tallas: se cierra con Esc, y el foco va al botón de cerrar mientras está abierta
+  const sizeGuideCloseRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!showSizeGuide) return;
+    sizeGuideCloseRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowSizeGuide(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showSizeGuide]);
+
   // Encontrar variante que coincide con selección
   const selectedVariant: ProductVariant | undefined = variants.find((v) => {
     const sizeMatch = !sizes.length || v.attributes.talla === selectedSize;
@@ -160,21 +172,26 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
             {sizes.map((size) => {
               const hasStock = sizeHasStock(size);
               return (
-                <button
-                  key={size}
-                  onClick={() => hasStock && setSelectedSize(size === selectedSize ? null : size)}
-                  disabled={!hasStock}
-                  className={cn(
-                    "min-w-11 h-11 px-3 rounded-full text-sm font-[500] border transition-colors",
-                    selectedSize === size
-                      ? "border-[#221A33] bg-[#221A33] text-white"
-                      : hasStock
-                      ? "border-[#E8DED4] text-[#221A33] hover:border-[#766A63]"
-                      : "border-[#E8DED4] text-[#DCCFC4] cursor-not-allowed line-through"
+                <div key={size} className="flex flex-col items-center gap-1">
+                  <button
+                    onClick={() => hasStock && setSelectedSize(size === selectedSize ? null : size)}
+                    disabled={!hasStock}
+                    aria-label={hasStock ? `Talla ${size}` : `Talla ${size}, agotada`}
+                    className={cn(
+                      "min-w-11 h-11 px-3 rounded-full text-sm font-[500] border transition-colors",
+                      selectedSize === size
+                        ? "border-[#221A33] bg-[#221A33] text-white"
+                        : hasStock
+                        ? "border-[#E8DED4] text-[#221A33] hover:border-[#766A63]"
+                        : "border-[#E8DED4] text-[#DCCFC4] cursor-not-allowed line-through"
+                    )}
+                  >
+                    {size}
+                  </button>
+                  {!hasStock && (
+                    <span className="text-[9px] tracking-[0.1em] uppercase text-[#766A63]">Agotada</span>
                   )}
-                >
-                  {size}
-                </button>
+                </div>
               );
             })}
           </div>
@@ -257,7 +274,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
           </div>
           {available <= 5 && (
             <p className="text-xs text-[#A0526C] mt-1.5">
-              Solo {available} disponibles
+              Solo {available} {available === 1 ? "disponible" : "disponibles"}
             </p>
           )}
         </div>
@@ -342,6 +359,9 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       {/* MODAL GUÍA DE TALLAS */}
       {showSizeGuide && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Guía de tallas"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onClick={() => setShowSizeGuide(false)}
         >
@@ -350,6 +370,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              ref={sizeGuideCloseRef}
               onClick={() => setShowSizeGuide(false)}
               className="absolute top-3 right-3 text-[#766A63] hover:text-[#221A33] transition-colors z-10"
               aria-label="Cerrar"

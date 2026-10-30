@@ -41,7 +41,9 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
   useEffect(() => { load(); }, []);
 
   function openNew() {
-    setForm({ name: "", slug: "", description: "", image_url: "", sort_order: 0 });
+    // El nuevo elemento va al final: el siguiente número, empezando en 1
+    const next = Math.max(0, ...items.map((i) => i.sort_order ?? 0)) + 1;
+    setForm({ name: "", slug: "", description: "", image_url: "", sort_order: next });
     setEditingId(null);
     setShowForm(true);
   }

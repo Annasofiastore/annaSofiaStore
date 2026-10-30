@@ -9,7 +9,13 @@ import { CatalogCategoryBar } from "@/components/storefront/CatalogCategoryBar";
 import { CatalogFilters } from "@/components/storefront/CatalogFilters";
 import { CatalogMobileFilters } from "@/components/storefront/CatalogMobileFilters";
 import { CatalogSortSelect } from "@/components/storefront/CatalogSortSelect";
+import type { Metadata } from "next";
 import type { Product } from "@/types";
+
+export const metadata: Metadata = {
+  title: "Catálogo",
+  description: "Explora todas las prendas y filtra por categoría, colección, ocasión, talla y precio.",
+};
 
 interface SearchParams {
   categoria?: string;
@@ -148,12 +154,24 @@ export default async function CatalogoPage({ searchParams }: Props) {
     getFilterOptions(),
   ]);
 
+  // Qué está viendo la clienta: búsqueda y filtros aplicados, con nombres legibles (no los slugs)
+  const nameOf = (list: { slug: string; name: string }[], slug?: string) =>
+    slug ? list.find((item) => item.slug === slug)?.name ?? slug : null;
+  const contextParts = [
+    filters.q ? `Resultados para “${filters.q}”` : null,
+    nameOf(filterOptions.categories, filters.categoria),
+    nameOf(filterOptions.collections, filters.coleccion),
+    nameOf(filterOptions.occasions, filters.ocasion),
+    filters.talla ? `Talla ${filters.talla}` : null,
+  ].filter(Boolean);
+  const contextLabel = contextParts.length ? contextParts.join(" · ") : "Todas las prendas";
+
   return (
     <div className="px-4 sm:px-8 lg:px-12 py-10">
       {/* ENCABEZADO */}
       <div className="text-center mb-10">
         <span className="text-[10px] tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
-          {filters.coleccion ?? "Todas las prendas"}
+          {contextLabel}
         </span>
         <h1
           className="text-5xl text-[#221A33] mt-1"
@@ -179,9 +197,10 @@ export default async function CatalogoPage({ searchParams }: Props) {
         </aside>
 
         {/* GRID DE PRODUCTOS */}
-        <div className="flex-1">
+        {/* min-w-0: sin esto, un elemento ancho de la barra superior ensancha toda la página en celular */}
+        <div className="flex-1 min-w-0">
           {/* Barra superior: resultados + orden + filtros móvil */}
-          <div className="flex items-center justify-between mb-6 gap-2">
+          <div className="flex flex-wrap items-center justify-between mb-6 gap-x-2 gap-y-3">
             <div className="flex items-center gap-3">
               {/* Botón filtros solo en móvil */}
               <div className="lg:hidden">

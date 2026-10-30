@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPhone } from "@/lib/utils/format";
 import { useEffect, useState } from "react";
 import { Plus, Edit2, Trash2, MapPin, Star } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -292,7 +293,7 @@ export default function DireccionesPage() {
                   <p className="text-xs text-[#766A63]">
                     {addr.city}, {addr.department}
                   </p>
-                  <p className="text-xs text-[#766A63]">{addr.phone}</p>
+                  <p className="text-xs text-[#766A63]">{formatPhone(addr.phone)}</p>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   {!addr.is_default && (

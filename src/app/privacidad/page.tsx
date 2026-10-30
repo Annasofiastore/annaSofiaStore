@@ -12,7 +12,7 @@ import { escapeHtml } from "@/lib/utils/format";
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
   return {
-    title: `Política de Privacidad y Tratamiento de Datos | ${storeName}`,
+    title: "Política de Privacidad y Tratamiento de Datos", // el layout agrega el nombre de la tienda
     description: `Política de Privacidad y Tratamiento de Datos — ${storeName}, ${location}.`,
   };
 }

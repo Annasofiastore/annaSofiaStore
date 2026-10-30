@@ -30,14 +30,19 @@ async function getReportData(from: string, to: string) {
   const fromDate = new Date(`${from}T00:00:00`).toISOString();
   const toDate = new Date(`${to}T23:59:59.999`).toISOString();
 
-  const [rangeOrders, totalCustomers, recentOrders] = await Promise.all([
+  const [rangeOrders, registeredCustomers, guestCustomers, recentOrders] = await Promise.all([
     supabase
       .from("orders")
-      .select("id, total, status, created_at")
+      .select("id, total, shipping_cost, status, created_at")
       .gte("created_at", fromDate)
       .lte("created_at", toDate)
       .in("status", REVENUE_STATUSES),
-    supabase.from("customers").select("id", { count: "exact", head: true }),
+    // Registradas: cuenta creada (is_guest false o sin marcar). Invitadas: compraron sin registrarse.
+    supabase
+      .from("customers")
+      .select("id", { count: "exact", head: true })
+      .or("is_guest.is.null,is_guest.eq.false"),
+    supabase.from("customers").select("id", { count: "exact", head: true }).eq("is_guest", true),
     supabase
       .from("orders")
       .select("id, order_number, shipping_name, total, status, created_at")
@@ -48,7 +53,11 @@ async function getReportData(from: string, to: string) {
   ]);
 
   const orders = rangeOrders.data ?? [];
-  const totalRevenue = orders.reduce((s, o) => s + Number(o.total), 0);
+  // Ingresos = ventas de productos (con el descuento ya aplicado), SIN el envío: el envío se muestra aparte
+  const productRevenue = (o: { total: number | string; shipping_cost: number | string | null }) =>
+    Number(o.total) - Number(o.shipping_cost ?? 0);
+  const totalRevenue = orders.reduce((s, o) => s + productRevenue(o), 0);
+  const totalShipping = orders.reduce((s, o) => s + Number(o.shipping_cost ?? 0), 0);
   const totalOrders = orders.length;
   const avgTicket = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
@@ -57,7 +66,7 @@ async function getReportData(from: string, to: string) {
   for (const o of orders) {
     const key = (o.created_at as string).slice(0, 7); // YYYY-MM
     if (!monthMap[key]) monthMap[key] = { revenue: 0, orders: 0 };
-    monthMap[key].revenue += Number(o.total);
+    monthMap[key].revenue += productRevenue(o);
     monthMap[key].orders += 1;
   }
   const monthlySales = Object.entries(monthMap)
@@ -99,7 +108,9 @@ async function getReportData(from: string, to: string) {
     totalOrders,
     avgTicket,
     growth,
-    totalCustomers: totalCustomers.count ?? 0,
+    totalShipping,
+    registeredCustomers: registeredCustomers.count ?? 0,
+    guestCustomers: guestCustomers.count ?? 0,
     monthlySales,
     maxMonthlyRevenue,
     topProductsList,
@@ -147,12 +158,13 @@ export default async function AdminReportesPage({ searchParams }: Props) {
         {[
           {
             icon: TrendingUp,
-            label: "Ingresos del periodo",
+            label: "Ingresos del periodo (sin envío)",
             value: formatCOP(data.totalRevenue),
             sub:
               data.growth !== null
                 ? `${data.growth >= 0 ? "+" : ""}${data.growth.toFixed(1)}% vs mes anterior`
                 : null,
+            note: `Envíos cobrados: ${formatCOP(data.totalShipping)}`,
             color: data.growth !== null && data.growth < 0 ? "text-red-500" : "text-green-600",
           },
           {
@@ -160,23 +172,26 @@ export default async function AdminReportesPage({ searchParams }: Props) {
             label: "Pedidos en el periodo",
             value: data.totalOrders.toLocaleString("es-CO"),
             sub: null,
+            note: null,
             color: "text-blue-600",
           },
           {
             icon: Receipt,
-            label: "Ticket promedio",
+            label: "Ticket promedio (sin envío)",
             value: formatCOP(data.avgTicket),
             sub: null,
+            note: null,
             color: "text-[#A0526C]",
           },
           {
             icon: Users,
             label: "Clientes registrados",
-            value: data.totalCustomers.toLocaleString("es-CO"),
+            value: data.registeredCustomers.toLocaleString("es-CO"),
             sub: null,
+            note: `${data.guestCustomers.toLocaleString("es-CO")} ${data.guestCustomers === 1 ? "compró" : "compraron"} como ${data.guestCustomers === 1 ? "invitada" : "invitadas"}`,
             color: "text-purple-600",
           },
-        ].map(({ icon: Icon, label, value, sub, color }) => (
+        ].map(({ icon: Icon, label, value, sub, note, color }) => (
           <div key={label} className="bg-white border border-gray-200 rounded p-5">
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs text-gray-500">{label}</p>
@@ -184,6 +199,7 @@ export default async function AdminReportesPage({ searchParams }: Props) {
             </div>
             <p className="text-2xl font-semibold text-gray-800">{value}</p>
             {sub && <p className={`text-xs mt-1 ${color}`}>{sub}</p>}
+            {note && <p className="text-xs mt-1 text-gray-400">{note}</p>}
           </div>
         ))}
       </div>

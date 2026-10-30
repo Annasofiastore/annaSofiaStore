@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createServiceClient } from "@/lib/supabase/server";
-import { formatCOP, formatDate } from "@/lib/utils/format";
+import { formatCOP, formatDate, formatPhone } from "@/lib/utils/format";
 import { OrderStatusActions } from "@/components/admin/OrderStatusActions";
 import { VerifyPaymentButton } from "@/components/admin/VerifyPaymentButton";
 
@@ -49,7 +49,7 @@ export default async function AdminPedidoDetailPage({ params }: Props) {
             </p>
           )}
           <p className="text-xs text-[#766A63]">{order.shipping_email}</p>
-          <p className="text-xs text-[#766A63]">{order.shipping_phone}</p>
+          <p className="text-xs text-[#766A63]">{formatPhone(order.shipping_phone)}</p>
           <p className="text-xs text-[#766A63] mt-2">
             {order.shipping_address}, {order.shipping_city}, {order.shipping_department}
           </p>
