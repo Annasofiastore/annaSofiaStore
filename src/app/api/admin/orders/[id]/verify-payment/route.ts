@@ -1,3 +1,4 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { sendOrderConfirmationEmail, sendNewOrderAdminEmail } from "@/lib/email/templates";
@@ -16,7 +17,7 @@ export async function POST(
 
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const supabase = createServiceClient();
 

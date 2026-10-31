@@ -1,3 +1,4 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/utils/format";
@@ -8,7 +9,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
   const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const body = await req.json();
   const service = await createServiceClient();
@@ -105,7 +106,7 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const service = await createServiceClient();
   await service.from("products").update({ status: "archived" }).eq("id", id);

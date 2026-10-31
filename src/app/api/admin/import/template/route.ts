@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
 import * as XLSX from "xlsx";
+import { createClient } from "@/lib/supabase/server";
+import { isAdminUser } from "@/lib/auth/admin";
 import { brand } from "@/lib/config/brand";
 import { getStoreName } from "@/lib/config/store-name";
 
 export async function GET() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+
   const storeName = await getStoreName();
   const headers = [
     "nombre",

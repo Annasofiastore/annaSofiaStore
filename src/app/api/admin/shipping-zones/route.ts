@@ -1,3 +1,4 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 
@@ -18,14 +19,14 @@ function slugify(text: string): string {
 async function requireAdmin() {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return null;
+  if (!isAdminUser(user)) return null;
   return user;
 }
 
 // GET — todas las zonas con sus ciudades
 export async function GET() {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const db = createServiceClient();
   const { data: zones } = await db
@@ -39,7 +40,7 @@ export async function GET() {
 // PUT — actualizar precio de una zona
 export async function PUT(req: NextRequest) {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id, price } = await req.json();
   if (!id || price == null) return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
@@ -57,7 +58,7 @@ export async function PUT(req: NextRequest) {
 // POST — crear una zona nueva, o agregar ciudad a una zona existente
 export async function POST(req: NextRequest) {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const body = await req.json();
   const db = createServiceClient();
@@ -128,7 +129,7 @@ export async function POST(req: NextRequest) {
 // DELETE — quitar ciudad de una zona
 export async function DELETE(req: NextRequest) {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "Falta el ID" }, { status: 400 });

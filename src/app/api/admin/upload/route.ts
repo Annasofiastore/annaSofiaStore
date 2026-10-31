@@ -1,3 +1,4 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
@@ -13,7 +14,7 @@ const WEBP_QUALITY = 82;
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const formData = await req.formData();
   const file = formData.get("file") as File | null;

@@ -1,3 +1,4 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 
@@ -5,7 +6,7 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 export async function GET() {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const db = createServiceClient();
   const { data, error } = await db
@@ -21,7 +22,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const body = await req.json();
   const db = createServiceClient();
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id, ...body } = await req.json();
   if (!id) return NextResponse.json({ error: "Falta el ID" }, { status: 400 });
@@ -61,7 +62,7 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id } = await req.json();
   const db = createServiceClient();
@@ -74,7 +75,7 @@ export async function DELETE(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id, is_active } = await req.json();
   const db = createServiceClient();

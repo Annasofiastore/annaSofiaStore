@@ -1,16 +1,17 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 
 async function requireAdmin() {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
-  if (!user) return null;
+  if (!isAdminUser(user)) return null;
   return user;
 }
 
 export async function GET() {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const db = createServiceClient();
   const { data } = await db
@@ -24,7 +25,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { image_url, alt_text } = await req.json();
   if (!image_url) return NextResponse.json({ error: "Falta image_url" }, { status: 400 });
@@ -53,7 +54,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id, sort_order } = await req.json();
   if (!id || sort_order == null) return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
@@ -66,7 +67,7 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const user = await requireAdmin();
-  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "Falta el ID" }, { status: 400 });
