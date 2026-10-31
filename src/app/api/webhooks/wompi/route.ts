@@ -1,45 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createHash } from "crypto";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendOrderConfirmationEmail, sendNewOrderAdminEmail } from "@/lib/email/templates";
 import { sendEmailsSafe } from "@/lib/email/resend";
+import { verifyWompiSignature } from "@/lib/payments/wompi-signature";
 import type { WompiWebhookEvent } from "@/types";
-
-// Verificar firma del webhook — seguridad
-// Wompi envía properties como "data.transaction.id" — rutas desde la RAÍZ del evento
-function verifySignature(event: WompiWebhookEvent, secret: string): boolean {
-  if (!secret) {
-    console.error("[wompi_webhook] WOMPI_EVENTS_SECRET no está configurado");
-    return false;
-  }
-
-  const { properties, checksum } = event.signature;
-
-  const values = properties.map((prop) => {
-    const parts = prop.split(".");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let value: any = event; // ← raíz del evento, no event.data
-    for (const part of parts) {
-      value = value?.[part];
-    }
-    return value ?? "";
-  });
-
-  const str = [...values, event.timestamp, secret].join("");
-  const expected = createHash("sha256").update(str).digest("hex");
-
-  if (expected !== checksum) {
-    console.error("[wompi_webhook] Firma inválida", {
-      properties,
-      values,
-      timestamp: event.timestamp,
-      expected,
-      received: checksum,
-    });
-  }
-
-  return expected === checksum;
-}
 
 export async function POST(req: NextRequest) {
   let rawRef = "(sin referencia)";
@@ -59,7 +23,7 @@ export async function POST(req: NextRequest) {
     rawRef = body.data?.transaction?.reference ?? "(sin referencia)";
 
     // Validar firma — RB-CHK-04
-    if (!verifySignature(body, secret)) {
+    if (!verifyWompiSignature(body, secret)) {
       console.error("[wompi_webhook] FIRMA INVÁLIDA para ref:", rawRef,
         "Verificar WOMPI_EVENTS_SECRET en Vercel → Project Settings → Environment Variables"
       );
