@@ -31,13 +31,13 @@ export const brand = {
   keywords: ["ropa femenina", "boutique", "moda", "vestidos", "ropa mujer"],
 
   /** Ciudad y país. Se muestran en el footer y los correos. */
-  city: "Ciudad",
+  city: "",
   country: "Colombia",
   /** Código de locale para Open Graph. */
   locale: "es_CO",
 
   /** Dominio sin protocolo. Para mostrar en los correos. */
-  domain: "ejemplo.com",
+  domain: "annasofiastore.com",
   /** Correo de contacto público. */
   email: "Annasofiastore.08@gmail.com",
   /** WhatsApp en formato internacional sin "+" ni espacios. */
@@ -46,7 +46,9 @@ export const brand = {
   /** Redes sociales. Dejar en null las que la tienda no tenga. */
   social: {
     instagram: "https://www.instagram.com/annasofiastore1" as string | null,
-    facebook: "https://www.facebook.com/profile.php?id=100067127897048" as string | null,
+    facebook: "https://www.facebook.com/profile.php?id=100067127897048" as
+      | string
+      | null,
     tiktok: "https://vt.tiktok.com/ZSgDMW1Aj/" as string | null,
   },
 
