@@ -42,11 +42,31 @@ export async function POST(req: NextRequest) {
     const supabase = createServiceClient();
 
     // Buscar pedido por referencia
-    const { data: order } = await supabase
+    const ORDER_FIELDS = `*, cart_session_id, items:order_items(*)`;
+    let { data: order } = await supabase
       .from("orders")
-      .select(`*, cart_session_id, items:order_items(*)`)
+      .select(ORDER_FIELDS)
       .eq("wompi_reference", tx.reference)
-      .single();
+      .maybeSingle();
+
+    // Si la clienta pagó con una referencia anterior a un reintento ("AS-WEB021-R1A2B"), el pedido ya guarda
+    // la nueva. La firma del evento ya se verificó, así que se puede buscar por el número de pedido
+    // (la referencia sin el sufijo "-R…"), comprobando además que el monto coincida.
+    if (!order) {
+      const baseNumber = String(tx.reference ?? "").replace(/-R[0-9A-Z]+$/, "");
+      if (baseNumber && baseNumber !== tx.reference) {
+        const { data: byNumber } = await supabase
+          .from("orders")
+          .select(ORDER_FIELDS)
+          .eq("order_number", baseNumber)
+          .eq("payment_method", "wompi")
+          .maybeSingle();
+        if (byNumber && Math.round(Number(byNumber.total) * 100) === Number(tx.amount_in_cents)) {
+          order = byNumber;
+          console.log("[wompi_webhook] Pedido encontrado por número (referencia anterior a un reintento):", baseNumber);
+        }
+      }
+    }
 
     if (!order) {
       console.error("[wompi_webhook] Pedido no encontrado para ref:", tx.reference);
@@ -54,6 +74,12 @@ export async function POST(req: NextRequest) {
     }
 
     console.log("[wompi_webhook] Pedido encontrado:", order.order_number, "estado actual:", order.status);
+
+    // Un pedido cancelado que ya estuvo pagado lo canceló una persona a propósito: no se reactiva
+    if (order.status === "cancelled" && order.paid_at) {
+      console.log("[wompi_webhook] Pedido cancelado a propósito después de pagarse; se ignora:", order.order_number);
+      return NextResponse.json({ ok: true });
+    }
 
     // Idempotencia: si ya está pagado, no hacer nada
     if (order.status === "paid" && tx.status === "APPROVED") {
@@ -86,6 +112,7 @@ export async function POST(req: NextRequest) {
         })
         .eq("id", order.id)
         .in("status", ["pending_payment", "cancelled"])
+        .is("paid_at", null)
         .select("id");
 
       if (!updateResult?.length) {

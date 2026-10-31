@@ -46,7 +46,8 @@ async function processWompiRedirect(
   transactionId: string
 ): Promise<boolean> {
   // Solo actuar si el pedido todavía no está confirmado
-  if (order.status !== "pending_payment" && order.status !== "cancelled") return false;
+  // Un pedido cancelado que ya tenía fecha de pago lo canceló una persona a propósito: no se reactiva
+  if (order.status !== "pending_payment" && !(order.status === "cancelled" && !order.paid_at)) return false;
 
   const privateKey = process.env.WOMPI_PRIVATE_KEY;
   if (!privateKey) {
@@ -98,6 +99,7 @@ async function processWompiRedirect(
       })
       .eq("id", order.id)
       .in("status", ["pending_payment", "cancelled"])
+      .is("paid_at", null)
       .select("id");
 
     if (updateErr) {

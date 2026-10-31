@@ -41,6 +41,14 @@ export async function POST(
     return NextResponse.json({ ok: true, message: "El pedido ya estaba pagado", status: "paid" });
   }
 
+  // Cancelado después de haberse pagado = cancelado a propósito (por ejemplo, devolución): no se reactiva
+  if (order.status === "cancelled" && order.paid_at) {
+    return NextResponse.json({
+      ok: false,
+      message: "Este pedido ya estuvo pagado y fue cancelado a propósito, así que no se vuelve a marcar como pagado.",
+    });
+  }
+
   const privateKey = process.env.WOMPI_PRIVATE_KEY;
   if (!privateKey) {
     return NextResponse.json(
@@ -101,7 +109,8 @@ export async function POST(
       wompi_transaction_id: approvedTx.id,
       paid_at: new Date().toISOString(),
     })
-    .eq("id", order.id);
+    .eq("id", order.id)
+    .is("paid_at", null);
 
   // 3. Log auditable
   await supabase.from("order_status_log").insert({

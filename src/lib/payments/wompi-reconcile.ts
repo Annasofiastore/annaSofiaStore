@@ -14,6 +14,15 @@ type Db = ReturnType<typeof createServiceClient>;
 // cuyo pago se aprueba después (o cuyo aviso nunca llegó).
 const RECOVERABLE = ["pending_payment", "cancelled"];
 
+/**
+ * Un pedido se puede recuperar si está pendiente, o si fue cancelado SIN haberse pagado nunca (la limpieza
+ * automática de las 4 horas). Un pedido cancelado que ya tenía `paid_at` lo canceló una persona a propósito
+ * (por ejemplo para devolver el dinero): Wompi lo sigue mostrando aprobado, y no debe volver a "Pagado".
+ */
+export function isRecoverable(order: { status: string; paid_at?: string | null }): boolean {
+  return order.status === "pending_payment" || (order.status === "cancelled" && !order.paid_at);
+}
+
 /** Id de la transacción APPROVED de Wompi para esa referencia, o null si no hay. */
 export async function findApprovedTransactionId(reference: string): Promise<string | null> {
   const privateKey = process.env.WOMPI_PRIVATE_KEY;
@@ -64,6 +73,7 @@ export async function confirmPaidOrder(
     .update({ status: "paid", wompi_transaction_id: transactionId, paid_at: new Date().toISOString() })
     .eq("id", order.id)
     .in("status", RECOVERABLE)
+    .is("paid_at", null)
     .select("id");
 
   if (updateErr) {
@@ -100,10 +110,10 @@ export async function confirmPaidOrder(
  */
 export async function reconcileWompiOrder(
   db: Db,
-  order: { id: string; order_number: string; status: string; payment_method: string; cart_session_id?: string | null; wompi_reference: string | null; items?: { variant_id: string; quantity: number }[] }
+  order: { id: string; order_number: string; status: string; paid_at?: string | null; payment_method: string; cart_session_id?: string | null; wompi_reference: string | null; items?: { variant_id: string; quantity: number }[] }
 ): Promise<boolean> {
   if (order.payment_method !== "wompi" || !order.wompi_reference) return false;
-  if (!RECOVERABLE.includes(order.status)) return false;
+  if (!isRecoverable(order)) return false;
 
   const txId = await findApprovedTransactionId(order.wompi_reference);
   if (!txId) return false;
@@ -131,9 +141,9 @@ export type WompiCheckResult =
  */
 export async function checkWompiOrder(
   db: Db,
-  order: { id: string; order_number: string; status: string; payment_method: string; cart_session_id?: string | null; wompi_reference: string | null; items?: { variant_id: string; quantity: number }[] }
+  order: { id: string; order_number: string; status: string; paid_at?: string | null; payment_method: string; cart_session_id?: string | null; wompi_reference: string | null; items?: { variant_id: string; quantity: number }[] }
 ): Promise<WompiCheckResult> {
-  if (order.payment_method !== "wompi" || !order.wompi_reference || !RECOVERABLE.includes(order.status)) {
+  if (order.payment_method !== "wompi" || !order.wompi_reference || !isRecoverable(order)) {
     return "unknown";
   }
 

@@ -25,6 +25,7 @@ export async function POST() {
     .select("*, items:order_items(*)")
     .eq("payment_method", "wompi")
     .in("status", ["pending_payment", "cancelled"])
+    .is("paid_at", null)
     .not("wompi_reference", "is", null)
     .gte("created_at", since)
     .order("created_at", { ascending: false })

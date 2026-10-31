@@ -37,6 +37,7 @@ export async function GET(req: NextRequest) {
       .from("orders")
       .select("*, items:order_items(*)")
       .in("status", ["cancelled", "pending_payment"])
+      .is("paid_at", null)
       .eq("payment_method", "wompi")
       .not("wompi_reference", "is", null)
       .gte("created_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()); // últimos 7 días
