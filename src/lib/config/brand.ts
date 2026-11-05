@@ -31,7 +31,7 @@ export const brand = {
   keywords: ["ropa femenina", "boutique", "moda", "vestidos", "ropa mujer"],
 
   /** Ciudad y país. Se muestran en el footer y los correos. */
-  city: "",
+  city: "Lorica",
   country: "Colombia",
   /** Código de locale para Open Graph. */
   locale: "es_CO",
@@ -54,10 +54,10 @@ export const brand = {
 
   /** Datos legales para términos, privacidad y facturación. */
   legal: {
-    /** Razón social registrada. */
-    businessName: "Razón Social S.A.S.",
-    nit: "000.000.000-0",
-    address: "Dirección registrada",
+    /** Razón social, o nombre completo si es persona natural. */
+    businessName: "Sindy Daniela Mangones Ballesteros",
+    nit: "1063148418-1",
+    address: "CR 26 A BIS 18 82, Barrio San Pedro, Lorica, Córdoba",
   },
 } as const;
 
