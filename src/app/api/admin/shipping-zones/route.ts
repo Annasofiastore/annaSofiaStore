@@ -37,19 +37,31 @@ export async function GET() {
   return NextResponse.json(zones ?? []);
 }
 
-// PUT — actualizar precio de una zona
+// PUT — actualizar nombre, descripción y/o precio de una zona
 export async function PUT(req: NextRequest) {
   const user = await requireAdmin();
   if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
-  const { id, price } = await req.json();
-  if (!id || price == null) return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
+  const { id, price, name, description } = await req.json();
+  if (!id) return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
+
+  const update: Record<string, unknown> = { updated_at: new Date().toISOString() };
+  if (price != null) {
+    if (Number.isNaN(Number(price)) || Number(price) < 0) {
+      return NextResponse.json({ error: "Precio inválido" }, { status: 400 });
+    }
+    update.price = Number(price);
+  }
+  if (name !== undefined) {
+    const trimmed = String(name).trim();
+    if (!trimmed) return NextResponse.json({ error: "El nombre no puede estar vacío" }, { status: 400 });
+    update.name = trimmed;
+  }
+  if (description !== undefined) update.description = String(description).trim() || null;
+  if (Object.keys(update).length === 1) return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
 
   const db = createServiceClient();
-  const { error } = await db
-    .from("shipping_zones")
-    .update({ price: Number(price), updated_at: new Date().toISOString() })
-    .eq("id", id);
+  const { error } = await db.from("shipping_zones").update(update).eq("id", id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
@@ -126,15 +138,28 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true });
 }
 
-// DELETE — quitar ciudad de una zona
+// DELETE — quitar una ciudad de su zona (body.id) o borrar una zona completa (body.zone_id)
 export async function DELETE(req: NextRequest) {
   const user = await requireAdmin();
   if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
-  const { id } = await req.json();
-  if (!id) return NextResponse.json({ error: "Falta el ID" }, { status: 400 });
-
+  const { id, zone_id } = await req.json();
   const db = createServiceClient();
+
+  if (zone_id) {
+    // La zona "Municipios" es el respaldo de las ciudades sin zona: no se puede borrar
+    const { data: zone } = await db.from("shipping_zones").select("code").eq("id", zone_id).maybeSingle();
+    if (!zone) return NextResponse.json({ error: "Zona no encontrada" }, { status: 404 });
+    if (zone.code === "municipalities") {
+      return NextResponse.json({ error: "La zona de respaldo (Municipios) no se puede eliminar" }, { status: 400 });
+    }
+    // Sus ciudades se borran con ella (on delete cascade) y pasan a la zona de respaldo
+    const { error } = await db.from("shipping_zones").delete().eq("id", zone_id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true });
+  }
+
+  if (!id) return NextResponse.json({ error: "Falta el ID" }, { status: 400 });
   const { error } = await db.from("shipping_zone_cities").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });

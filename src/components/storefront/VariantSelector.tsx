@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Heart, ShoppingBag, AlertCircle, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Heart, ShoppingBag, Zap, AlertCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlistStore } from "@/lib/store/wishlist";
@@ -27,6 +28,7 @@ interface Props {
 
 export function VariantSelector({ product, colorHex = {} }: Props) {
   const storeName = useStoreName();
+  const router = useRouter();
   const { variants = [] } = product;
 
   // Extraer valores únicos de talla y color
@@ -131,8 +133,8 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
     ? "Sin stock en esta combinación"
     : "Añadir al carrito";
 
-  async function handleAddToCart() {
-    if (!canAddToCart || !selectedVariant) return;
+  async function addToCart(): Promise<boolean> {
+    if (!canAddToCart || !selectedVariant) return false;
     setAdding(true);
     setFeedback(null);
 
@@ -150,6 +152,16 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
 
     setFeedback(ok ? "ok" : "error");
     setAdding(false);
+    return ok;
+  }
+
+  async function handleAddToCart() {
+    await addToCart();
+  }
+
+  // Comprar ahora: agrega la selección al carrito y va directo al checkout
+  async function handleBuyNow() {
+    if (await addToCart()) router.push("/checkout");
   }
 
   return (
@@ -302,6 +314,22 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
           >
             <ShoppingBag size={15} strokeWidth={1.5} />
             {ctaLabel}
+          </button>
+        )}
+
+        {!isSoldOut && (
+          <button
+            onClick={handleBuyNow}
+            disabled={!canAddToCart || adding}
+            className={cn(
+              "w-full py-4 flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-[500] transition-colors rounded-full border",
+              canAddToCart && !adding
+                ? "border-[#221A33] text-[#221A33] hover:bg-[#221A33] hover:text-[#F7F2EC]"
+                : "border-[#DCCFC4] text-[#766A63] cursor-not-allowed"
+            )}
+          >
+            <Zap size={15} strokeWidth={1.5} />
+            Comprar ahora
           </button>
         )}
 

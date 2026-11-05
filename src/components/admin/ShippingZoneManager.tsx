@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, X, Pencil, Check } from "lucide-react";
+import { Plus, X, Pencil, Check, Trash2 } from "lucide-react";
 import { formatCOP } from "@/lib/utils/format";
 
 type City = { id: string; city_name: string };
@@ -26,6 +26,8 @@ export function ShippingZoneManager() {
   const [loading, setLoading] = useState(true);
   const [editingZone, setEditingZone] = useState<string | null>(null);
   const [editPrice, setEditPrice] = useState<string>("");
+  const [editName, setEditName] = useState("");
+  const [editDesc, setEditDesc] = useState("");
   const [saving, setSaving] = useState<string | null>(null);
   const [newCity, setNewCity] = useState<Record<string, string>>({});
   const [addingCity, setAddingCity] = useState<string | null>(null);
@@ -44,22 +46,46 @@ export function ShippingZoneManager() {
 
   useEffect(() => { load(); }, []);
 
-  async function savePrice(zoneId: string) {
+  async function saveZone(zoneId: string) {
+    const price = parseFloat(editPrice);
+    if (!editName.trim() || Number.isNaN(price) || price < 0) {
+      setError("Completa el nombre y un precio válido");
+      return;
+    }
     setSaving(zoneId);
     setError(null);
     const res = await fetch("/api/admin/shipping-zones", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: zoneId, price: parseFloat(editPrice) }),
+      body: JSON.stringify({ id: zoneId, price, name: editName, description: editDesc }),
     });
     if (res.ok) {
-      setZones((prev) => prev.map((z) => z.id === zoneId ? { ...z, price: parseFloat(editPrice) } : z));
+      setZones((prev) =>
+        prev.map((z) =>
+          z.id === zoneId ? { ...z, price, name: editName.trim(), description: editDesc.trim() || null } : z
+        )
+      );
       setEditingZone(null);
     } else {
       const d = await res.json();
       setError(d.error ?? "Error al guardar");
     }
     setSaving(null);
+  }
+
+  async function deleteZone(zone: Zone) {
+    if (!window.confirm(`¿Eliminar la zona "${zone.name}"? Sus ciudades pasarán a cobrar el precio de Municipios.`)) return;
+    setError(null);
+    const res = await fetch("/api/admin/shipping-zones", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ zone_id: zone.id }),
+    });
+    if (res.ok) setZones((prev) => prev.filter((z) => z.id !== zone.id));
+    else {
+      const d = await res.json();
+      setError(d.error ?? "Error al eliminar la zona");
+    }
   }
 
   async function addCity(zoneId: string) {
@@ -134,61 +160,87 @@ export function ShippingZoneManager() {
       {zones.map((zone) => (
         <div key={zone.id} className="bg-white border border-gray-200 rounded overflow-hidden">
           {/* Encabezado de zona */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-            <div className="flex items-center gap-3 min-w-0">
-              <span className={`text-[10px] px-2 py-0.5 rounded font-[600] uppercase tracking-wide shrink-0 ${ZONE_COLORS[zone.code] ?? "bg-gray-100 text-gray-500"}`}>
-                Zona {zone.sort_order}
-              </span>
-              <div className="min-w-0">
-                <p className="text-sm font-[600] text-gray-800">{zone.name}</p>
-                {zone.description && <p className="text-xs text-gray-400 truncate">{zone.description}</p>}
+          {editingZone === zone.id ? (
+            <div className="px-5 py-4 border-b border-gray-100 space-y-2">
+              <input
+                type="text"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                placeholder="Nombre de la zona"
+                className="w-full border border-gray-200 px-3 py-1.5 text-sm text-gray-800 focus:outline-none focus:border-[#766A63]"
+                autoFocus
+              />
+              <input
+                type="text"
+                value={editDesc}
+                onChange={(e) => setEditDesc(e.target.value)}
+                placeholder="Descripción (opcional)"
+                className="w-full border border-gray-200 px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:border-[#766A63]"
+              />
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-400">$</span>
+                <input
+                  type="number"
+                  value={editPrice}
+                  onChange={(e) => setEditPrice(e.target.value)}
+                  className="w-28 border border-gray-200 px-2 py-1 text-sm text-gray-800 focus:outline-none focus:border-[#766A63]"
+                  min={0}
+                  step={1000}
+                />
+                <button
+                  onClick={() => saveZone(zone.id)}
+                  disabled={saving === zone.id}
+                  className="p-1.5 text-green-600 hover:text-green-800 transition-colors disabled:opacity-50"
+                  title="Guardar"
+                >
+                  <Check size={15} />
+                </button>
+                <button
+                  onClick={() => setEditingZone(null)}
+                  className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
+                  title="Cancelar"
+                >
+                  <X size={15} />
+                </button>
               </div>
             </div>
-
-            {/* Precio editable */}
-            <div className="flex items-center gap-2 shrink-0">
-              {editingZone === zone.id ? (
-                <>
-                  <span className="text-xs text-gray-400">$</span>
-                  <input
-                    type="number"
-                    value={editPrice}
-                    onChange={(e) => setEditPrice(e.target.value)}
-                    className="w-28 border border-gray-200 px-2 py-1 text-sm text-gray-800 focus:outline-none focus:border-[#766A63]"
-                    min={0}
-                    step={1000}
-                    autoFocus
-                  />
+          ) : (
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className={`text-[10px] px-2 py-0.5 rounded font-[600] uppercase tracking-wide shrink-0 ${ZONE_COLORS[zone.code] ?? "bg-gray-100 text-gray-500"}`}>
+                  Zona {zone.sort_order}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm font-[600] text-gray-800">{zone.name}</p>
+                  {zone.description && <p className="text-xs text-gray-400 truncate">{zone.description}</p>}
+                </div>
+              </div>
+              <div className="flex items-center gap-1 shrink-0">
+                <span className="text-sm font-[600] text-[#221A33] mr-1">{formatCOP(zone.price)}</span>
+                <button
+                  onClick={() => {
+                    setEditingZone(zone.id);
+                    setEditPrice(String(zone.price));
+                    setEditName(zone.name);
+                    setEditDesc(zone.description ?? "");
+                  }}
+                  className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
+                  title="Editar zona"
+                >
+                  <Pencil size={13} />
+                </button>
+                {zone.code !== "municipalities" && (
                   <button
-                    onClick={() => savePrice(zone.id)}
-                    disabled={saving === zone.id}
-                    className="p-1.5 text-green-600 hover:text-green-800 transition-colors disabled:opacity-50"
-                    title="Guardar"
+                    onClick={() => deleteZone(zone)}
+                    className="p-1.5 text-gray-300 hover:text-red-500 transition-colors"
+                    title="Eliminar zona"
                   >
-                    <Check size={15} />
+                    <Trash2 size={13} />
                   </button>
-                  <button
-                    onClick={() => setEditingZone(null)}
-                    className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
-                    title="Cancelar"
-                  >
-                    <X size={15} />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <span className="text-sm font-[600] text-[#221A33]">{formatCOP(zone.price)}</span>
-                  <button
-                    onClick={() => { setEditingZone(zone.id); setEditPrice(String(zone.price)); }}
-                    className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"
-                    title="Editar precio"
-                  >
-                    <Pencil size={13} />
-                  </button>
-                </>
-              )}
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Ciudades (no mostrar para municipios — es el fallback) */}
           {zone.code !== "municipalities" && (
