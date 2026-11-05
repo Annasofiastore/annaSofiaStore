@@ -57,7 +57,7 @@ export const brand = {
     /** Razón social, o nombre completo si es persona natural. */
     businessName: "Sindy Daniela Mangones Ballesteros",
     nit: "1063148418-1",
-    address: "CR 26 A BIS 18 82, Barrio San Pedro, Lorica, Córdoba",
+    address: "Lorica, Córdoba",
   },
 } as const;
 

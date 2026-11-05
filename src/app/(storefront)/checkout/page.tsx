@@ -422,32 +422,35 @@ export default function CheckoutPage() {
               )}
             </Section>
 
-            {/* Aviso entrega mismo día + método de pago — solo Montería */}
-            {cityEligible && (
-              <div className="space-y-3">
-                {/* Aviso entrega */}
-                <div className={`flex items-start gap-3 px-4 py-3 border ${sameDayStatus.beforeCutoff ? "bg-[#F7F2EC] border-[#DCCFC4]" : "bg-white border-[#E8DED4]"}`}>
-                  {sameDayStatus.beforeCutoff ? (
-                    <Clock size={15} className="text-[#766A63] shrink-0 mt-0.5" strokeWidth={1.5} />
-                  ) : (
-                    <Truck size={15} className="text-[#DCCFC4] shrink-0 mt-0.5" strokeWidth={1.5} />
-                  )}
-                  <div>
+            {/* Método de pago — siempre visible; contraentrega solo en las ciudades habilitadas */}
+            <div className="space-y-3">
+              {cityEligible && (
+                <>
+                  {/* Aviso entrega */}
+                  <div className={`flex items-start gap-3 px-4 py-3 border ${sameDayStatus.beforeCutoff ? "bg-[#F7F2EC] border-[#DCCFC4]" : "bg-white border-[#E8DED4]"}`}>
                     {sameDayStatus.beforeCutoff ? (
-                      <>
-                        <p className="text-xs font-[600] text-[#221A33]">Entrega hoy en Montería</p>
-                        <p className="text-[11px] text-[#766A63] mt-0.5">Pedidos antes de las 4:00 PM llegan antes de las 6:00 PM.</p>
-                      </>
+                      <Clock size={15} className="text-[#766A63] shrink-0 mt-0.5" strokeWidth={1.5} />
                     ) : (
-                      <>
-                        <p className="text-xs font-[600] text-[#766A63]">Pedidos después de las 4:00 PM</p>
-                        <p className="text-[11px] text-[#766A63] mt-0.5">Tu pedido llegará mañana en Montería.</p>
-                      </>
+                      <Truck size={15} className="text-[#DCCFC4] shrink-0 mt-0.5" strokeWidth={1.5} />
                     )}
+                    <div>
+                      {sameDayStatus.beforeCutoff ? (
+                        <>
+                          <p className="text-xs font-[600] text-[#221A33]">Entrega hoy en Lorica</p>
+                          <p className="text-[11px] text-[#766A63] mt-0.5">Pedidos antes de las 4:00 PM llegan antes de las 6:00 PM.</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-xs font-[600] text-[#766A63]">Pedidos después de las 4:00 PM</p>
+                          <p className="text-[11px] text-[#766A63] mt-0.5">Tu pedido llegará mañana en Lorica.</p>
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                {/* Selector método de pago */}
+                </>
+              )}
+
                 <div className="space-y-2">
                   <p className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600]">Método de pago</p>
                   <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "wompi" ? "border-[#221A33] bg-[#F7F2EC]" : "border-[#E8DED4] bg-white hover:border-[#766A63]"}`}>
@@ -464,23 +467,28 @@ export default function CheckoutPage() {
                       <p className="text-[11px] text-[#766A63]">Pago en línea seguro via Wompi</p>
                     </div>
                   </label>
-                  <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "contraentrega" ? "border-[#221A33] bg-[#F7F2EC]" : "border-[#E8DED4] bg-white hover:border-[#766A63]"}`}>
-                    <input
-                      type="radio"
-                      name="payment_method"
-                      value="contraentrega"
-                      checked={paymentMethod === "contraentrega"}
-                      onChange={() => setPaymentMethod("contraentrega")}
-                      className="accent-[#221A33]"
-                    />
-                    <div>
-                      <p className="text-sm text-[#221A33] font-[500]">Contraentrega</p>
-                      <p className="text-[11px] text-[#766A63]">Pagas en efectivo cuando recibas tu pedido</p>
-                    </div>
-                  </label>
+                  {cityEligible ? (
+                    <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-colors ${paymentMethod === "contraentrega" ? "border-[#221A33] bg-[#F7F2EC]" : "border-[#E8DED4] bg-white hover:border-[#766A63]"}`}>
+                      <input
+                        type="radio"
+                        name="payment_method"
+                        value="contraentrega"
+                        checked={paymentMethod === "contraentrega"}
+                        onChange={() => setPaymentMethod("contraentrega")}
+                        className="accent-[#221A33]"
+                      />
+                      <div>
+                        <p className="text-sm text-[#221A33] font-[500]">Contraentrega</p>
+                        <p className="text-[11px] text-[#766A63]">Pagas en efectivo cuando recibas tu pedido</p>
+                      </div>
+                    </label>
+                  ) : (
+                    <p className="text-[11px] text-[#766A63] px-1">
+                      Pago contra entrega disponible solo en Lorica.
+                    </p>
+                  )}
                 </div>
-              </div>
-            )}
+            </div>
 
             {/* Términos — RB-CHK-08 */}
             <div className="space-y-3">

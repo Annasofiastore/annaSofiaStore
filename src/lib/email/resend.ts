@@ -17,7 +17,10 @@ export function fromAddress(storeName: string): string {
   const address = env ? (env.match(/<([^>]+)>/)?.[1] ?? env) : brand.email;
   return `${storeName.replace(/["<>]/g, "")} <${address}>`;
 }
-export const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "").split(",").filter(Boolean);
+export const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "")
+  .split(",")
+  .map((e) => e.trim())
+  .filter(Boolean);
 
 // Wrapper que loguea errores de Resend — usar en vez de Promise.allSettled silencioso
 export async function sendEmailsSafe(
