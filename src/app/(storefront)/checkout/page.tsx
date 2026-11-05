@@ -57,8 +57,10 @@ export default function CheckoutPage() {
     integritySignature: string;
   } | null>(null);
 
+  // Al confirmar un pedido se vacía el carrito: ese vaciado no debe mandar a /carrito
+  const orderPlaced = useRef(false);
   useEffect(() => {
-    if (items.length === 0) router.replace("/carrito");
+    if (items.length === 0 && !orderPlaced.current) router.replace("/carrito");
   }, [items, router]);
 
   // Precargar datos del usuario autenticado
@@ -235,6 +237,7 @@ export default function CheckoutPage() {
       if (!res.ok) { setError(data.error ?? "Error al procesar el pedido."); return; }
 
       if (data.contraentrega) {
+        orderPlaced.current = true;
         clearCart();
         router.push(`/confirmacion/${data.orderId}`);
         return;
