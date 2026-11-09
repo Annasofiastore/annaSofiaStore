@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle, ExternalLink } from "lucide-react";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 import { ShippingZoneManager } from "@/components/admin/ShippingZoneManager";
 import { HeroSlideManager } from "@/components/admin/HeroSlideManager";
 import { NosotrasImageManager } from "@/components/admin/NosotrasImageManager";
@@ -114,32 +114,6 @@ export default async function AdminConfiguracionPage() {
           <EnvRow label="Wompi Public Key" envKey="NEXT_PUBLIC_WOMPI_PUBLIC_KEY" />
           <EnvRow label="Wompi Integrity Secret" envKey="WOMPI_INTEGRITY_SECRET" secret />
           <EnvRow label="Wompi Events Secret" envKey="WOMPI_EVENTS_SECRET" secret />
-        </div>
-      </div>
-
-      {/* Links útiles */}
-      <div className="bg-white border border-gray-200 rounded overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50">
-          <p className="text-sm font-[600] text-gray-700">Paneles externos</p>
-        </div>
-        <div className="divide-y divide-gray-100">
-          {[
-            { label: "Supabase Dashboard", href: "https://app.supabase.com" },
-            { label: "Vercel Dashboard", href: "https://vercel.com" },
-            { label: "Resend Dashboard", href: "https://resend.com" },
-            { label: "Wompi Dashboard", href: "https://dashboard.wompi.co" },
-          ].map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors"
-            >
-              <span className="text-sm text-gray-700">{label}</span>
-              <ExternalLink size={14} className="text-gray-400" />
-            </a>
-          ))}
         </div>
       </div>
     </div>
