@@ -5,7 +5,6 @@ import { NosotrasImageManager } from "@/components/admin/NosotrasImageManager";
 import { StoreNameForm } from "@/components/admin/StoreNameForm";
 import { NosotrasContentForm } from "@/components/admin/NosotrasContentForm";
 import { HeroContentForm } from "@/components/admin/HeroContentForm";
-import { brand } from "@/lib/config/brand";
 import { getStoreName, STORE_NAME_MAX_LENGTH } from "@/lib/config/store-name";
 import { getNosotrasRaw, NOSOTRAS_LIMITS } from "@/lib/config/nosotras";
 import { getHeroRaw, HERO_LIMITS } from "@/lib/config/hero";
@@ -141,24 +140,6 @@ export default async function AdminConfiguracionPage() {
               <ExternalLink size={14} className="text-gray-400" />
             </a>
           ))}
-        </div>
-      </div>
-
-      {/* Decisiones pendientes */}
-      <div className="bg-amber-50 border border-amber-200 rounded p-5">
-        <div className="flex items-start gap-3">
-          <AlertTriangle size={18} className="text-amber-600 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-[600] text-amber-800 mb-2">
-              Decisiones pendientes antes del lanzamiento
-            </p>
-            <ul className="space-y-1.5 text-xs text-amber-700">
-              <li><strong>DP-03</strong> — Responsabilidades tributarias (IVA, facturación electrónica)</li>
-              <li><strong>DP-05</strong> — Verificar dominio {brand.domain} en Resend para envío de emails</li>
-              <li><strong>DP-09</strong> — Documentos legales: Términos, Privacidad, Datos (Ley 1581/2012)</li>
-              <li><strong>DP-10</strong> — Esquema de tarifa de envío en Fase 1</li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
