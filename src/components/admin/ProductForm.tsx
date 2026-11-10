@@ -63,6 +63,9 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
   const [form, setForm] = useState<ProductFormData>({ ...EMPTY, ...initial });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // El slug sigue al nombre mientras nadie lo toque a mano. Al editar un producto ya existente no se
+  // cambia solo: la URL del producto no debe moverse por corregir el nombre.
+  const [slugManual, setSlugManual] = useState(Boolean(initial?.slug));
 
   function set<K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -72,7 +75,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
     setForm((prev) => ({
       ...prev,
       name: value,
-      slug: prev.slug || slugify(value),
+      slug: slugManual ? prev.slug : slugify(value),
     }));
   }
 
@@ -158,7 +161,11 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
             <label className={labelCls}>Slug (URL)</label>
             <input
               value={form.slug}
-              onChange={(e) => set("slug", e.target.value)}
+              onChange={(e) => {
+                set("slug", e.target.value);
+                // Si lo vacían, vuelve a generarse solo a partir del nombre
+                setSlugManual(e.target.value !== "");
+              }}
               placeholder="se genera automáticamente"
               className={cn(inputCls, "font-mono text-xs")}
             />

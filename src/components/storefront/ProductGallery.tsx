@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { cn } from "@/lib/utils/cn";
 import { monogramOf } from "@/lib/utils/format";
 import { useStoreName } from "@/components/StoreNameProvider";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 
 interface Props {
   images: string[];
@@ -50,12 +51,13 @@ export function ProductGallery({ images, name }: Props) {
           className="flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {images.map((src, i) => (
-            <div key={i} className="relative shrink-0 w-full aspect-[3/4] snap-center bg-[#F5DDE5]/10">
+            <div key={i} className="relative shrink-0 w-full aspect-[3/4] snap-center overflow-hidden bg-[#F5DDE5]/10">
               <Image
-                src={src}
+                src={imageSrc(src)}
                 alt={`${name} — foto ${i + 1}`}
                 fill
                 className="object-cover"
+                style={imageStyle(src)}
                 sizes="100vw"
                 priority={i === 0}
               />
@@ -84,10 +86,11 @@ export function ProductGallery({ images, name }: Props) {
         {images.map((src, i) => (
           <div key={i} className="relative aspect-[3/4] overflow-hidden bg-[#F5DDE5]/10">
             <Image
-              src={src}
+              src={imageSrc(src)}
               alt={`${name} — foto ${i + 1}`}
               fill
               className="object-cover"
+              style={imageStyle(src)}
               sizes="55vw"
               priority={i === 0}
             />

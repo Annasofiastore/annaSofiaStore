@@ -12,6 +12,7 @@ import { ProductGallery } from "@/components/storefront/ProductGallery";
 import { VariantSelector } from "@/components/storefront/VariantSelector";
 import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { formatCOP, discountPercent } from "@/lib/utils/format";
+import { imageSrc } from "@/lib/utils/image-focus";
 import type { Product } from "@/types";
 
 interface Props {
@@ -147,7 +148,7 @@ export async function generateMetadata({ params }: Props) {
     title: product.name,
     description,
     openGraph: {
-      images: product.images[0] ? [product.images[0]] : [],
+      images: product.images[0] ? [imageSrc(product.images[0])] : [],
     },
   };
 }

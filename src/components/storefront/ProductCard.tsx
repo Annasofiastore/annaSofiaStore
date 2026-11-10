@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils/cn";
 import { formatCOP, discountPercent, monogramOf } from "@/lib/utils/format";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import type { Product } from "@/types";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 import { useStoreName } from "@/components/StoreNameProvider";
 
 interface ProductCardProps {
@@ -34,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="relative aspect-[3/4] overflow-hidden bg-[#F5DDE5]/20">
           {product.images.length > 0 && !imgError ? (
             <Image
-              src={product.images[imgIdx]}
+              src={imageSrc(product.images[imgIdx])}
               alt={product.name}
               fill
               sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
@@ -43,6 +44,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 "group-hover:scale-105",
                 isSoldOut && "opacity-60"
               )}
+              style={imageStyle(product.images[imgIdx])}
               onMouseEnter={() => product.images.length > 1 && setImgIdx(1)}
               onMouseLeave={() => setImgIdx(0)}
               onError={() => setImgError(true)}

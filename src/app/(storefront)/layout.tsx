@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/storefront/Navbar";
 import { Footer } from "@/components/storefront/Footer";
+import { FooterGate } from "@/components/storefront/FooterGate";
 import { WhatsAppButton } from "@/components/storefront/WhatsAppButton";
 
 export default function StorefrontLayout({
@@ -11,7 +12,9 @@ export default function StorefrontLayout({
     <>
       <Navbar />
       <main className="flex-1 pt-16">{children}</main>
-      <Footer />
+      <FooterGate>
+        <Footer />
+      </FooterGate>
       <WhatsAppButton />
     </>
   );

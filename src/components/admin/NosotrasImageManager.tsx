@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Upload, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload, CheckCircle, AlertCircle, Crop } from "lucide-react";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
+import { FocusPicker } from "./FocusPicker";
 
 const SETTING_KEY = "nosotras_historia_image";
 const FALLBACK = "/nosotras-historia.jpg";
@@ -13,6 +15,7 @@ export function NosotrasImageManager() {
   const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [framing, setFraming] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function load() {
@@ -69,6 +72,25 @@ export function NosotrasImageManager() {
     setUploading(false);
   }
 
+  async function saveFocus(nextUrl: string) {
+    setFraming(false);
+    setError(null);
+    setSuccess(false);
+    const res = await fetch("/api/admin/site-settings", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: SETTING_KEY, value: nextUrl }),
+    });
+    if (!res.ok) {
+      const d = await res.json();
+      setError(d.error ?? "Error al guardar el encuadre");
+      return;
+    }
+    setCurrentUrl(nextUrl);
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 3000);
+  }
+
   return (
     <div className="bg-white border border-gray-200 rounded overflow-hidden">
       <div className="px-5 py-3.5 border-b border-gray-100">
@@ -87,10 +109,11 @@ export function NosotrasImageManager() {
           ) : currentUrl ? (
             <div className="relative w-40 h-52 rounded overflow-hidden bg-[#F5DDE5]/20 border border-gray-100">
               <Image
-                src={currentUrl}
+                src={imageSrc(currentUrl)}
                 alt="Imagen actual de Nosotras"
                 fill
-                className="object-cover object-top"
+                className="object-cover"
+                style={imageStyle(currentUrl, "50% 0%")}
                 sizes="160px"
                 unoptimized={currentUrl.startsWith("/")}
               />
@@ -131,11 +154,31 @@ export function NosotrasImageManager() {
             {uploading ? "Subiendo…" : "Cambiar imagen"}
           </button>
 
+          {currentUrl && (
+            <button
+              onClick={() => setFraming(true)}
+              disabled={uploading}
+              className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 text-gray-700 text-xs rounded hover:bg-gray-50 transition-colors disabled:opacity-50"
+            >
+              <Crop size={13} strokeWidth={1.5} />
+              Encuadrar imagen
+            </button>
+          )}
+
           <p className="text-[10px] text-gray-400 max-w-[200px]">
             Formatos: JPG, PNG, WEBP, HEIC. Máximo 20 MB.
           </p>
         </div>
       </div>
+
+      {framing && currentUrl && (
+        <FocusPicker
+          src={currentUrl}
+          previews={[{ label: "Página Nosotras", aspect: "4/5" }]}
+          onSave={saveFocus}
+          onClose={() => setFraming(false)}
+        />
+      )}
     </div>
   );
 }

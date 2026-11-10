@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Edit2, Trash2 } from "lucide-react";
+import { Plus, Edit2, Trash2, Crop } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/utils/format";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
+import { FocusPicker } from "@/components/admin/FocusPicker";
 
 type Category = { id: string; name: string; slug: string; description: string | null; image_url?: string | null; sort_order: number };
 type Occasion = { id: string; name: string; slug: string; sort_order: number };
@@ -30,6 +32,7 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [framing, setFraming] = useState(false);
   const supabase = createClient();
 
   async function load() {
@@ -150,8 +153,15 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
                 <label className={LABEL}>Foto (se muestra en el inicio, formato vertical)</label>
                 <div className="flex items-center gap-3">
                   {form.image_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={form.image_url} alt="" className="w-16 h-24 object-cover border border-gray-200" />
+                    <div className="w-16 h-24 overflow-hidden border border-gray-200 shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={imageSrc(form.image_url)}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        style={imageStyle(form.image_url)}
+                      />
+                    </div>
                   )}
                   <input
                     type="file"
@@ -163,6 +173,15 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
                   {form.image_url && !uploading && (
                     <button
                       type="button"
+                      onClick={() => setFraming(true)}
+                      className="inline-flex items-center gap-1 text-xs text-[#A0526C] hover:underline"
+                    >
+                      <Crop size={12} /> Encuadrar
+                    </button>
+                  )}
+                  {form.image_url && !uploading && (
+                    <button
+                      type="button"
                       onClick={() => setForm({ ...form, image_url: "" })}
                       className="text-xs text-gray-400 hover:text-red-500"
                     >
@@ -171,6 +190,20 @@ function CrudSection<T extends { id: string; name: string; slug: string; sort_or
                   )}
                 </div>
                 {uploadError && <p className="text-xs text-red-500 mt-1">{uploadError}</p>}
+                {framing && form.image_url && (
+                  <FocusPicker
+                    src={form.image_url}
+                    previews={[
+                      { label: "Vertical (celular)", aspect: "3/4" },
+                      { label: "Horizontal (computador)", aspect: "16/7" },
+                    ]}
+                    onSave={(next) => {
+                      setForm((f) => ({ ...f, image_url: next }));
+                      setFraming(false);
+                    }}
+                    onClose={() => setFraming(false)}
+                  />
+                )}
               </div>
             )}
             <div className="w-28">

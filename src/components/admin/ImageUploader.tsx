@@ -2,8 +2,10 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Upload, X, GripVertical, AlertCircle } from "lucide-react";
+import { Upload, X, GripVertical, AlertCircle, Crop } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
+import { FocusPicker } from "./FocusPicker";
 
 interface Props {
   images: string[];
@@ -18,6 +20,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
   const [dragOver, setDragOver] = useState(false);
   const [draggingIdx, setDraggingIdx] = useState<number | null>(null);
   const [dragTargetIdx, setDragTargetIdx] = useState<number | null>(null);
+  const [focusIdx, setFocusIdx] = useState<number | null>(null);
 
   async function uploadFiles(files: FileList | File[]) {
     const arr = Array.from(files).slice(0, maxImages - images.length);
@@ -142,11 +145,12 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
               )}
             >
               <Image
-                src={url}
+                src={imageSrc(url)}
                 alt={`Imagen ${idx + 1}`}
                 fill
                 unoptimized
                 className="object-cover"
+                style={imageStyle(url)}
                 sizes="120px"
                 onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0"; }}
               />
@@ -154,6 +158,14 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
               {/* Overlay con acciones */}
               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-start justify-between p-1.5">
                 <GripVertical size={14} className="text-white cursor-grab mt-0.5" />
+                <button
+                  type="button"
+                  onClick={() => setFocusIdx(idx)}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 bg-white/90 text-[#221A33] text-[10px] px-2 py-1 hover:bg-white"
+                  aria-label="Encuadrar imagen"
+                >
+                  <Crop size={11} /> Encuadrar
+                </button>
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
@@ -177,8 +189,22 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
 
       {images.length > 0 && (
         <p className="text-[10px] text-[#766A63]">
-          Arrastra los thumbnails para reordenar. La primera imagen es la principal.
+          Arrastra los thumbnails para reordenar. La primera imagen es la principal. Pasa el cursor sobre una foto y usa “Encuadrar” para elegir qué parte se ve.
         </p>
+      )}
+
+      {focusIdx !== null && images[focusIdx] && (
+        <FocusPicker
+          src={images[focusIdx]}
+          previews={[
+            { label: "Catálogo y ficha", aspect: "3/4" },
+          ]}
+          onSave={(next) => {
+            onChange(images.map((u, i) => (i === focusIdx ? next : u)));
+            setFocusIdx(null);
+          }}
+          onClose={() => setFocusIdx(null)}
+        />
       )}
     </div>
   );

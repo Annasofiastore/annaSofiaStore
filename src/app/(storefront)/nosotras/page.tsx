@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { brand, location } from "@/lib/config/brand";
 import { getStoreName } from "@/lib/config/store-name";
 import { getNosotrasContent, getNosotrasImage, toParagraphs } from "@/lib/config/nosotras";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 
 export async function generateMetadata(): Promise<Metadata> {
   const storeName = await getStoreName();
@@ -53,10 +54,11 @@ export default async function NosotrasPage() {
           {/* Imagen historia — configurable desde el panel admin */}
           <div className="relative aspect-[4/5] overflow-hidden">
             <Image
-              src={historiaImage}
+              src={imageSrc(historiaImage)}
               alt={`${storeName} — Nuestra historia`}
               fill
-              className="object-cover object-top"
+              className="object-cover"
+              style={imageStyle(historiaImage, "50% 0%")}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
               unoptimized={historiaImage.startsWith("/")}

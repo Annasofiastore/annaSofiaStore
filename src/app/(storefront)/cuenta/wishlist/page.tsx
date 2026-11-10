@@ -7,6 +7,7 @@ import { Heart, ShoppingBag, Trash2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import { formatCOP } from "@/lib/utils/format";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 
 type ProductPreview = {
   id: string;
@@ -93,11 +94,12 @@ export default function WishlistPage() {
                 <div className="w-16 h-20 shrink-0 overflow-hidden bg-[#F7F2EC] relative">
                   {img ? (
                     <Image
-                      src={img}
+                      src={imageSrc(img)}
                       alt={p.name}
                       fill
                       sizes="64px"
                       className="object-cover"
+                      style={imageStyle(img)}
                     />
                   ) : (
                     <div className="w-full h-full bg-[#F5DDE5]/30" />

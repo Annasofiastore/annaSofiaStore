@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Trash2, ArrowRight, ShoppingBag } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { formatCOP, monogramOf } from "@/lib/utils/format";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 import { CountdownTimer } from "@/components/storefront/CountdownTimer";
 import { useStoreName } from "@/components/StoreNameProvider";
 
@@ -57,10 +58,11 @@ export default function CarritoPage() {
               <div className="relative w-20 h-28 shrink-0 bg-[#F5DDE5]/20 overflow-hidden">
                 {item.image ? (
                   <Image
-                    src={item.image}
+                    src={imageSrc(item.image)}
                     alt={item.productName}
                     fill
                     className="object-cover"
+                    style={imageStyle(item.image)}
                     sizes="80px"
                   />
                 ) : (

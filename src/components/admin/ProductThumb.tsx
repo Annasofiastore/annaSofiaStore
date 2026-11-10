@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { monogramOf } from "@/lib/utils/format";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 import { useStoreName } from "@/components/StoreNameProvider";
 
 interface Props {
@@ -36,11 +37,12 @@ export function ProductThumb({ src, alt, size = "sm" }: Props) {
   return (
     <div className={`relative ${BOX[size]} shrink-0 overflow-hidden bg-[#F5DDE5]/20`}>
       <Image
-        src={src}
+        src={imageSrc(src)}
         alt={alt}
         fill
         unoptimized
         className="object-cover"
+        style={imageStyle(src)}
         sizes={SIZES[size]}
         onError={() => setError(true)}
       />
