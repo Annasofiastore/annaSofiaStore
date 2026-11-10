@@ -156,12 +156,12 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
               />
 
               {/* Overlay con acciones */}
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-start justify-between p-1.5">
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity flex items-start justify-between p-1.5">
                 <GripVertical size={14} className="text-white cursor-grab mt-0.5" />
                 <button
                   type="button"
                   onClick={() => setFocusIdx(idx)}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 bg-white/90 text-[#221A33] text-[10px] px-2 py-1 hover:bg-white"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 bg-white/90 text-[#221A33] text-[10px] px-2.5 py-1.5 hover:bg-white"
                   aria-label="Encuadrar imagen"
                 >
                   <Crop size={11} /> Encuadrar
@@ -169,10 +169,10 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
-                  className="text-white hover:text-[#F5DDE5]"
+                  className="p-1 -m-1 text-white hover:text-[#F5DDE5]"
                   aria-label="Eliminar imagen"
                 >
-                  <X size={14} />
+                  <X size={16} />
                 </button>
               </div>
 
@@ -189,7 +189,7 @@ export function ImageUploader({ images, onChange, maxImages = 8 }: Props) {
 
       {images.length > 0 && (
         <p className="text-[10px] text-[#766A63]">
-          Arrastra los thumbnails para reordenar. La primera imagen es la principal. Pasa el cursor sobre una foto y usa “Encuadrar” para elegir qué parte se ve.
+          Arrastra los thumbnails para reordenar. La primera imagen es la principal. Usa “Encuadrar” sobre una foto (en computador, pasa el cursor) para elegir qué parte se ve.
         </p>
       )}
 
