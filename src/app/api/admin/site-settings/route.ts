@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 
@@ -39,5 +40,8 @@ export async function PATCH(req: NextRequest) {
     .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: "key" });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // La página de Nosotras se genera una vez y se guarda: sin esto la foto (o su encuadre) nuevo no se ve.
+  if (key === "nosotras_historia_image") revalidatePath("/nosotras");
   return NextResponse.json({ ok: true });
 }
