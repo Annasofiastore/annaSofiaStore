@@ -62,10 +62,32 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
   const isEdit = Boolean(initial?.id);
   const [form, setForm] = useState<ProductFormData>({ ...EMPTY, ...initial });
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // El slug sigue al nombre mientras nadie lo toque a mano. Al editar un producto ya existente no se
   // cambia solo: la URL del producto no debe moverse por corregir el nombre.
   const [slugManual, setSlugManual] = useState(Boolean(initial?.slug));
+
+  async function handleDelete() {
+    if (
+      !confirm(
+        `¿Eliminar "${form.name}"? Esta acción no se puede deshacer.\n\nSi el producto ya tiene pedidos, no se borra: se archiva para conservar el historial de ventas.`,
+      )
+    )
+      return;
+    setDeleting(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/products/${initial!.id}`, { method: "DELETE" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error ?? "No se pudo eliminar el producto.");
+      router.push("/admin/productos");
+      router.refresh();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "No se pudo eliminar el producto.");
+      setDeleting(false);
+    }
+  }
 
   function set<K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -436,6 +458,16 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
         >
           Cancelar
         </button>
+        {isEdit && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleting || saving}
+            className="text-xs text-[#A0526C] hover:underline disabled:opacity-50"
+          >
+            {deleting ? "Eliminando…" : "Eliminar producto"}
+          </button>
+        )}
         <button
           type="submit"
           disabled={saving}

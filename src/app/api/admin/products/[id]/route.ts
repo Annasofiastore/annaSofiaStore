@@ -109,7 +109,19 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const service = await createServiceClient();
-  await service.from("products").update({ status: "archived" }).eq("id", id);
 
-  return NextResponse.json({ ok: true });
+  // Se elimina de verdad. Si el producto ya tiene pedidos, la base lo impide (los pedidos conservan
+  // su historial): en ese caso se archiva, que lo oculta de la tienda sin perder las ventas.
+  const { error } = await service.from("products").delete().eq("id", id);
+  if (!error) return NextResponse.json({ ok: true, deleted: true });
+
+  if (error.code === "23503") {
+    const { error: archiveError } = await service
+      .from("products")
+      .update({ status: "archived" })
+      .eq("id", id);
+    if (archiveError) return NextResponse.json({ error: archiveError.message }, { status: 500 });
+    return NextResponse.json({ ok: true, deleted: false, archived: true });
+  }
+  return NextResponse.json({ error: error.message }, { status: 500 });
 }
