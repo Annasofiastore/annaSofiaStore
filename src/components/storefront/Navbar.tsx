@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { ShoppingBag, Heart, User, Menu, X, Search } from "lucide-react";
+import { ShoppingBag, Heart, User, Menu, X, Search, BadgePercent } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useCartStore } from "@/lib/store/cart";
 import { useStoreName } from "@/components/StoreNameProvider";
 
-const NAV_LINKS = [
+const NAV_LINKS: { href: string; label: string; hot?: boolean; icon?: typeof BadgePercent }[] = [
   { href: "/catalogo", label: "Catálogo" },
   { href: "/colecciones", label: "Colecciones" },
   { href: "/best-sellers", label: "Best Sellers", hot: true },
+  { href: "/sale", label: "Sale", hot: true, icon: BadgePercent },
   { href: "/nosotras", label: "Conócenos" },
 ];
 
@@ -262,7 +263,7 @@ export function Navbar() {
               onClick={() => setMenuOpen(false)}
               tabIndex={menuOpen ? 0 : -1}
               className={cn(
-                "text-3xl py-3 border-b border-[#E8DED4] transition-colors",
+                "flex items-center gap-3 text-3xl py-3 border-b border-[#E8DED4] transition-colors",
                 pathname === link.href
                   ? "text-[#A0526C]"
                   : link.hot
@@ -271,6 +272,15 @@ export function Navbar() {
               )}
               style={{ fontFamily: "var(--font-display)" }}
             >
+              {link.icon && (
+                <link.icon
+                  size={28}
+                  strokeWidth={2}
+                  fill="#A0526C"
+                  stroke="#F7F2EC"
+                  aria-hidden
+                />
+              )}
               {link.label}
             </Link>
           ))}

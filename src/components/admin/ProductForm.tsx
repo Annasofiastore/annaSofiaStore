@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Trash2 } from "lucide-react";
 import { ImageUploader } from "./ImageUploader";
 import { VariantManager, type VariantRow } from "./VariantManager";
 import { cn } from "@/lib/utils/cn";
@@ -450,36 +451,39 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
       )}
 
       {/* Acciones */}
-      <div className="flex items-center justify-between pt-2">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="text-xs text-[#766A63] hover:text-[#221A33] transition-colors"
-        >
-          Cancelar
-        </button>
+      <div className="flex items-center justify-between gap-4 pt-2">
         {isEdit && (
           <button
             type="button"
             onClick={handleDelete}
             disabled={deleting || saving}
-            className="text-xs text-[#A0526C] hover:underline disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-5 py-3 border border-red-300 bg-red-50 text-red-700 text-[11px] tracking-[0.18em] uppercase font-[600] hover:bg-red-600 hover:border-red-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
+            <Trash2 size={14} />
             {deleting ? "Eliminando…" : "Eliminar producto"}
           </button>
         )}
-        <button
-          type="submit"
-          disabled={saving}
-          className={cn(
-            "text-[11px] tracking-[0.18em] uppercase font-[600] px-8 py-3 transition-colors",
-            saving
-              ? "bg-[#DCCFC4] text-white cursor-not-allowed"
-              : "bg-[#221A33] text-[#F7F2EC] hover:bg-[#A0526C]"
-          )}
-        >
-          {saving ? "Guardando…" : isEdit ? "Guardar cambios" : "Crear producto"}
-        </button>
+        <div className="flex items-center gap-6 ml-auto">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="text-xs text-[#766A63] hover:text-[#221A33] transition-colors"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            disabled={saving}
+            className={cn(
+              "text-[11px] tracking-[0.18em] uppercase font-[600] px-8 py-3 transition-colors",
+              saving
+                ? "bg-[#DCCFC4] text-white cursor-not-allowed"
+                : "bg-[#221A33] text-[#F7F2EC] hover:bg-[#A0526C]"
+            )}
+          >
+            {saving ? "Guardando…" : isEdit ? "Guardar cambios" : "Crear producto"}
+          </button>
+        </div>
       </div>
     </form>
   );
