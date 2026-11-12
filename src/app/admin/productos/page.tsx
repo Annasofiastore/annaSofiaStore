@@ -60,6 +60,12 @@ export default async function AdminProductosPage({
         </h1>
         <div className="flex gap-3">
           <Link
+            href="/admin/productos/ordenar"
+            className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#E8DED4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] hover:border-[#766A63] hover:text-[#221A33] transition-colors"
+          >
+            Ordenar catálogo
+          </Link>
+          <Link
             href="/admin/productos/importar"
             className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#E8DED4] text-[#766A63] text-[11px] tracking-[0.2em] uppercase font-[500] hover:border-[#766A63] hover:text-[#221A33] transition-colors"
           >

@@ -113,7 +113,10 @@ async function getProducts(filters: SearchParams): Promise<Product[]> {
       query = query.order("base_price", { ascending: false });
       break;
     default:
-      query = query.order("created_at", { ascending: false });
+      // Orden manual del admin; a igualdad (productos nuevos sin ordenar), los más recientes primero.
+      query = query
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: false });
   }
 
   const { data } = await query.limit(48);
