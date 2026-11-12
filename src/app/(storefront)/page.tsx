@@ -116,6 +116,7 @@ async function getNewArrivals(): Promise<NewArrivalsSection> {
       .from("products")
       .select(PRODUCT_FIELDS)
       .eq("status", "active")
+      .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false })
       .limit(ARRIVALS_LIMIT);
     raw = (data ?? []) as unknown as RawProduct[];
