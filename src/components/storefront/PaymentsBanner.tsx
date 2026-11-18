@@ -1,13 +1,12 @@
 import Image from "next/image";
 import { getStoreName } from "@/lib/config/store-name";
+import { PaymentLogos } from "./PaymentLogos";
 
 /**
  * Banner de medios de pago. Cuando haya imagen, ponerla en /public y
  * asignar la ruta aquí (ej. "/pagos.png"); mientras tanto se muestra en texto.
  */
 const PAYMENTS_IMAGE: string | null = null;
-
-const METHODS = ["Pago en línea con Wompi"];
 
 export async function PaymentsBanner() {
   if (PAYMENTS_IMAGE) {
@@ -32,7 +31,7 @@ export async function PaymentsBanner() {
       {/* Fondo: nombre de la tienda en grande y muy tenue */}
       <span
         aria-hidden
-        className="pointer-events-none select-none absolute inset-0 flex items-center justify-center px-4 text-center leading-none whitespace-nowrap text-[#A0526C]/15 text-[22vw] sm:text-[14vw] lg:text-[12rem]"
+        className="pointer-events-none select-none absolute inset-0 flex items-center justify-center px-4 text-center leading-none whitespace-nowrap text-[#A0526C]/[0.08] text-[22vw] sm:text-[14vw] lg:text-[12rem]"
         style={{ fontFamily: "var(--font-script)" }}
       >
         {storeName}
@@ -41,11 +40,9 @@ export async function PaymentsBanner() {
         <span className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
           Medios de pago disponibles
         </span>
-        <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-base sm:text-lg text-[#221A33]">
-          {METHODS.map((m) => (
-            <li key={m}>{m}</li>
-          ))}
-        </ul>
+        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(34,26,51,0.10)] px-6 py-6 sm:px-12 sm:py-8">
+          <PaymentLogos size="lg" bare className="justify-center gap-x-8 gap-y-4" />
+        </div>
       </div>
     </section>
   );

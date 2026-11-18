@@ -20,7 +20,7 @@ interface Props {
   productName: string;
 }
 
-const TALLAS_DEFAULT = ["XS", "S", "M", "L", "XL", "XXL"];
+const TALLAS_DEFAULT = ["XS", "S", "M", "L", "XL", "XXL", "Talla única"];
 
 export function VariantManager({ variants, onChange, basePrice, productName }: Props) {
   const [tallas, setTallas] = useState<string[]>([]);

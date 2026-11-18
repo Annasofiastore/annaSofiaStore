@@ -110,7 +110,7 @@ export function CatalogFilters({ categories, collections, occasions, current, on
 
       {/* TALLAS */}
       <FilterGroup title="Talla">
-        {["XS", "S", "M", "L", "XL", "XXL"].map((t) => (
+        {["XS", "S", "M", "L", "XL", "XXL", "Talla única"].map((t) => (
           <FilterOption
             key={t}
             label={t}

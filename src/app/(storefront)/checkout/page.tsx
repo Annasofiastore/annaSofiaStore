@@ -11,6 +11,7 @@ import { formatCOP } from "@/lib/utils/format";
 import { MUNICIPIOS_POR_DEPARTAMENTO, DEPARTAMENTOS } from "@/lib/data/colombia-municipios";
 import type { CheckoutForm } from "@/types";
 import { useStoreName } from "@/components/StoreNameProvider";
+import { PaymentLogos } from "@/components/storefront/PaymentLogos";
 import { isContraentregaCity as isEligibleCity } from "@/lib/checkout/config";
 
 function getSameDayStatus(): { beforeCutoff: boolean } {
@@ -468,6 +469,7 @@ export default function CheckoutPage() {
                     <div>
                       <p className="text-sm text-[#221A33] font-[500]">Pago en línea</p>
                       <p className="text-[11px] text-[#766A63]">Pago en línea seguro via Wompi</p>
+                      <PaymentLogos className="mt-2" />
                     </div>
                   </label>
                   {cityEligible ? (

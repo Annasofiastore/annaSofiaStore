@@ -141,7 +141,7 @@ export async function GET() {
     ["categorias     → Nombre(s) de categoría separados por coma. Deben existir en el panel."],
     ["colecciones    → Nombre(s) de colección separados por coma. Deben existir en el panel."],
     ["ocasiones      → Nombre(s) de ocasión separados por coma. Deben existir en el panel."],
-    ["talla          → Talla de esta variante. Ej: XS, S, M, L, XL, XXL, Única. Obligatorio."],
+    ["talla          → Talla de esta variante. Ej: XS, S, M, L, XL, XXL, Talla única. Obligatorio."],
     ["color          → Color de esta variante. Ej: Blanco, Azul Marino, Coral. Obligatorio."],
     ["sku            → Código único de la variante. Si está vacío, se genera automáticamente."],
     ["stock          → Unidades disponibles. Número entero ≥ 0. Por defecto: 0."],

@@ -10,6 +10,7 @@ import { useWishlistStore } from "@/lib/store/wishlist";
 import { formatCOP } from "@/lib/utils/format";
 import type { Product, ProductVariant } from "@/types";
 import { useStoreName } from "@/components/StoreNameProvider";
+import { PaymentLogos } from "./PaymentLogos";
 
 // Orden de tallas de menor a mayor; las desconocidas (o numéricas) van al final en orden natural
 const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
@@ -346,6 +347,11 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
           <Heart size={14} strokeWidth={1.5} fill={wishlisted ? "currentColor" : "none"} />
           {wishlisted ? "En tus favoritos" : "Añadir a favoritos"}
         </button>
+      </div>
+
+      <div>
+        <p className="text-[10px] tracking-[0.2em] uppercase text-[#766A63] font-[600] mb-2">Medios de pago</p>
+        <PaymentLogos cash />
       </div>
 
       {/* FEEDBACK */}

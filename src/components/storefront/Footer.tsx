@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { brand, location } from "@/lib/config/brand";
 import { getStoreName } from "@/lib/config/store-name";
+import { PaymentLogos } from "./PaymentLogos";
 
 const SOCIAL: { label: string; href: string | null; icon: React.ReactNode }[] = [
   {
@@ -124,7 +125,12 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#352A4B] mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="border-t border-[#352A4B] mt-12 pt-6 flex flex-col items-center gap-2">
+          <p className="text-[10px] tracking-[0.2em] uppercase text-[#A39890]">Medios de pago</p>
+          <PaymentLogos cash className="justify-center" />
+        </div>
+
+        <div className="border-t border-[#352A4B] mt-6 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#A39890]">
             © {new Date().getFullYear()} {storeName}. Todos los derechos reservados.
           </p>

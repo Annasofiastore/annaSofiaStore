@@ -1,12 +1,12 @@
 import { getStoreName } from "@/lib/config/store-name";
 
 const wordsFor = (storeName: string) => [
-  "Nueva colección",
+  "Paga con tarjeta, PSE o Nequi",
   storeName,
   "Elegancia que brilla",
   "Hecho para ti",
   "Diseños exclusivos",
-  "Brilla a tu manera",
+  "Contra entrega en Lorica",
 ];
 
 /**

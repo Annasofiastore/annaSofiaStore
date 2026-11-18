@@ -51,7 +51,7 @@ export default async function AdminConfiguracionPage() {
         <div className="mb-4">
           <h2 className="text-base font-[600] text-gray-800">Banner del inicio</h2>
           <p className="text-xs text-gray-400 mt-0.5">
-            Textos y fotos del banner principal. Las fotos rotan cada 5 segundos; arrastra para reordenar.
+            Textos y fotos del banner principal. Las fotos rotan cada 3,5 segundos; arrastra para reordenar.
             Usa fotos horizontales de al menos 1920×1080 px; el texto va abajo a la izquierda.
           </p>
         </div>
