@@ -14,6 +14,7 @@ import { ProductColorProvider } from "@/components/storefront/ProductColorContex
 import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { formatCOP, discountPercent } from "@/lib/utils/format";
 import { imageSrc } from "@/lib/utils/image-focus";
+import { normalizeColorImages } from "@/lib/utils/color-images";
 import type { Product } from "@/types";
 
 interface Props {
@@ -183,7 +184,7 @@ export default async function ProductPage({ params }: Props) {
           <span className="text-[#221A33] truncate">{product.name}</span>
         </nav>
 
-        <ProductColorProvider colorImages={product.color_images ?? {}}>
+        <ProductColorProvider colorImages={normalizeColorImages(product.color_images)}>
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-8 lg:gap-16">
           {/* ── GALERÍA ── */}
           <ProductGallery images={product.images} name={product.name} />

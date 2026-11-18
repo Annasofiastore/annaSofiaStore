@@ -24,22 +24,19 @@ export function ProductGallery({ images: allImages, name }: Props) {
   const desktopRef = useRef<HTMLDivElement>(null);
   const { color, colorImages } = useProductColor();
 
-  // Al elegir un color con foto asignada, esa foto pasa al frente
-  const colorImage = color ? colorImages[color.toLowerCase()] : undefined;
-  const images = colorImage
-    ? [
-        ...allImages.filter((img) => imageSrc(img) === imageSrc(colorImage)),
-        ...allImages.filter((img) => imageSrc(img) !== imageSrc(colorImage)),
-      ]
-    : allImages;
+  // Al elegir un color que tiene sus propias fotos, la galería muestra solo esas
+  const colorPhotos = color ? colorImages[color.toLowerCase()] : undefined;
+  const hasColorPhotos = !!colorPhotos && colorPhotos.length > 0;
+  const images = hasColorPhotos ? colorPhotos : allImages;
+  const galleryKey = hasColorPhotos ? color!.toLowerCase() : "";
 
   useEffect(() => {
-    if (!colorImage) return;
+    if (!galleryKey) return;
     setActive(0);
     trackRef.current?.scrollTo({ left: 0, behavior: "smooth" });
     const el = desktopRef.current;
     if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [colorImage]);
+  }, [galleryKey]);
 
   if (images.length === 0) {
     return (

@@ -7,7 +7,6 @@ import { ImageUploader } from "./ImageUploader";
 import { VariantManager, type VariantRow } from "./VariantManager";
 import { cn } from "@/lib/utils/cn";
 import { formatCOP, slugify } from "@/lib/utils/format";
-import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 
 interface TaxonomyItem {
   id: string;
@@ -28,7 +27,7 @@ interface ProductFormData {
   is_best_seller: boolean;
   is_pre_sale: boolean;
   images: string[];
-  color_images: Record<string, string>;
+  color_images: Record<string, string[]>;
   category_ids: string[];
   collection_ids: string[];
   occasion_ids: string[];
@@ -71,13 +70,12 @@ function colorNames(variants: VariantRow[]): string[] {
   return [...seen.values()];
 }
 
-/** Deja solo las fotos de colores que siguen existiendo y que apuntan a una foto vigente del producto. */
-function cleanColorImages(map: Record<string, string>, images: string[], variants: VariantRow[]) {
+/** Deja solo las fotos de colores que siguen existiendo en las variantes. */
+function cleanColorImages(map: Record<string, string[]>, variants: VariantRow[]) {
   const colors = new Set(colorNames(variants).map((c) => c.toLowerCase()));
-  const out: Record<string, string> = {};
-  for (const [color, url] of Object.entries(map ?? {})) {
-    const current = images.find((img) => imageSrc(img) === imageSrc(url));
-    if (colors.has(color) && current) out[color] = current;
+  const out: Record<string, string[]> = {};
+  for (const [color, urls] of Object.entries(map ?? {})) {
+    if (colors.has(color) && urls.length > 0) out[color] = urls;
   }
   return out;
 }
@@ -148,7 +146,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
     if (hasBadSku) { setError("Todas las variantes deben tener SKU."); return; }
 
     // Quita fotos asignadas a colores que ya no existen o a fotos que se borraron
-    const colorImages = cleanColorImages(form.color_images, form.images, form.variants);
+    const colorImages = cleanColorImages(form.color_images, form.variants);
     const hasColorImages = Object.keys(colorImages).length > 0 || Object.keys(initial?.color_images ?? {}).length > 0;
 
     setSaving(true);
@@ -473,45 +471,29 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
         />
       </div>
 
-      {/* Foto por color */}
-      {colorNames(form.variants).length > 0 && form.images.length > 0 && (
+      {/* Fotos por color */}
+      {colorNames(form.variants).length > 0 && (
         <div className={sectionCls}>
-          <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Foto por color</h2>
+          <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Fotos por color</h2>
           <p className="text-xs text-[#766A63] -mt-2">
-            Elige qué foto se muestra cuando la clienta selecciona cada color. Es opcional.
+            Sube las fotos de cada color. Al elegir un color en la tienda, se muestran sus fotos. Si un color no tiene
+            fotos, se muestran las generales. Es opcional.
           </p>
-          <div className="space-y-5">
+          <div className="space-y-6">
             {colorNames(form.variants).map((color) => {
-              const current = form.color_images[color.toLowerCase()];
+              const key = color.toLowerCase();
               return (
                 <div key={color}>
                   <p className="text-xs font-[600] text-[#221A33] mb-2 capitalize">{color}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {form.images.map((img, i) => {
-                      const selected = !!current && imageSrc(current) === imageSrc(img);
-                      return (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => {
-                            const next = { ...form.color_images };
-                            if (selected) delete next[color.toLowerCase()];
-                            else next[color.toLowerCase()] = img;
-                            set("color_images", next);
-                          }}
-                          aria-pressed={selected}
-                          aria-label={`Foto ${i + 1} para ${color}`}
-                          className={cn(
-                            "relative w-16 aspect-[3/4] overflow-hidden border-2 transition-colors",
-                            selected ? "border-[#221A33]" : "border-transparent hover:border-[#DCCFC4]"
-                          )}
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={imageSrc(img)} alt="" className="w-full h-full object-cover" style={imageStyle(img)} />
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <ImageUploader
+                    images={form.color_images[key] ?? []}
+                    onChange={(imgs) => {
+                      const next = { ...form.color_images };
+                      if (imgs.length > 0) next[key] = imgs;
+                      else delete next[key];
+                      set("color_images", next);
+                    }}
+                  />
                 </div>
               );
             })}

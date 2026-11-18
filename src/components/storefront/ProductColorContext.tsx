@@ -6,8 +6,8 @@ interface Ctx {
   /** Color elegido en el selector (null si no hay). */
   color: string | null;
   setColor: (color: string | null) => void;
-  /** Foto de cada color, por nombre en minúsculas. */
-  colorImages: Record<string, string>;
+  /** Fotos de cada color, por nombre en minúsculas. */
+  colorImages: Record<string, string[]>;
 }
 
 const ProductColorContext = createContext<Ctx>({ color: null, setColor: () => {}, colorImages: {} });
@@ -17,7 +17,7 @@ export function ProductColorProvider({
   colorImages = {},
   children,
 }: {
-  colorImages?: Record<string, string>;
+  colorImages?: Record<string, string[]>;
   children: ReactNode;
 }) {
   const [color, setColor] = useState<string | null>(null);

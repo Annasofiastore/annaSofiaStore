@@ -142,7 +142,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       productId: product.id,
       productName: product.name,
       productSlug: product.slug,
-      image: (selectedColor && colorImages[selectedColor.toLowerCase()]) || product.images[0] || "",
+      image: (selectedColor && colorImages[selectedColor.toLowerCase()]?.[0]) || product.images[0] || "",
       sku: selectedVariant.sku,
       attributes: selectedVariant.attributes,
       quantity,

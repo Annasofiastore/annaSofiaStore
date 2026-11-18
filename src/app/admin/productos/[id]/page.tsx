@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createServiceClient } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/admin/ProductForm";
+import { normalizeColorImages } from "@/lib/utils/color-images";
 import { ArchiveProductButton } from "@/components/admin/ArchiveProductButton";
 
 type Props = { params: Promise<{ id: string }> };
@@ -48,7 +49,7 @@ export default async function EditarProductoPage({ params }: Props) {
     is_best_seller: product.is_best_seller ?? false,
     is_pre_sale: product.is_pre_sale ?? false,
     images: product.images ?? [],
-    color_images: product.color_images ?? {},
+    color_images: normalizeColorImages(product.color_images),
     category_ids: (product.product_categories ?? []).map((r: any) => r.category_id),
     collection_ids: (product.product_collections ?? []).map((r: any) => r.collection_id),
     occasion_ids: (product.product_occasions ?? []).map((r: any) => r.occasion_id),
