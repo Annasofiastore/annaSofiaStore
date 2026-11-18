@@ -11,6 +11,7 @@ import { formatCOP } from "@/lib/utils/format";
 import type { Product, ProductVariant } from "@/types";
 import { bySizeOrder } from "@/lib/utils/sizes";
 import { useStoreName } from "@/components/StoreNameProvider";
+import { colorToHex } from "@/lib/utils/colors";
 import { PaymentLogos } from "./PaymentLogos";
 import { useProductColor } from "./ProductColorContext";
 
@@ -218,7 +219,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
           <div className="flex flex-wrap gap-3">
             {colors.map((color) => {
               const hasStock = colorHasStock(color);
-              const hex = colorHex[color.toLowerCase()];
+              const hex = colorHex[color.toLowerCase()] ?? colorToHex(color);
               const selected = selectedColor === color;
               const onClick = () => hasStock && setSelectedColor(selected ? null : color);
               return hex ? (

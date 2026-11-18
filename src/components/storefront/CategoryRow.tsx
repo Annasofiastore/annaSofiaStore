@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { StaggeredGrid } from "@/components/storefront/StaggeredGrid";
 import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
+import { capitalizeFirst } from "@/lib/utils/format";
 
 export type CategoryTile = {
   id: string;
@@ -68,11 +69,11 @@ export function CategoryRow({ categories }: { categories: CategoryTile[] }) {
             <div className="absolute inset-0 bg-black/35 group-hover:bg-black/25 transition-colors" />
             <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 px-2 pb-8 sm:pb-10">
               <span
-                className={`font-[300] uppercase tracking-[0.08em] text-white text-center leading-tight ${
+                className={`font-[300] tracking-[0.04em] text-white text-center leading-tight ${
                   big ? "text-2xl sm:text-3xl lg:text-4xl" : "text-xl sm:text-2xl lg:text-[26px]"
                 }`}
               >
-                {c.name}
+                {capitalizeFirst(c.name)}
               </span>
               <span className="border border-white/70 px-5 py-1.5 text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white group-hover:bg-white group-hover:text-[#221A33] transition-colors">
                 Comprar

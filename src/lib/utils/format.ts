@@ -27,6 +27,12 @@ export function formatDateShort(iso: string): string {
 }
 
 // Slugify: texto → url-friendly
+/** "BLUSAS Y TOPS" → "Blusas y tops": todo en minúsculas y solo la primera letra en mayúscula. */
+export function capitalizeFirst(text: string): string {
+  const t = text.trim().toLowerCase();
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

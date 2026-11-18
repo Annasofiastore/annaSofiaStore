@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useCallback } from "react";
 import { cn } from "@/lib/utils/cn";
+import { capitalizeFirst } from "@/lib/utils/format";
 import type { Category, Collection, Occasion } from "@/types";
 
 interface Props {
@@ -57,7 +58,7 @@ export function CatalogFilters({ categories, collections, occasions, current, on
           {categories.map((cat) => (
             <FilterOption
               key={cat.id}
-              label={cat.name}
+              label={capitalizeFirst(cat.name)}
               active={current.categoria === cat.slug}
               onClick={() =>
                 setFilter(

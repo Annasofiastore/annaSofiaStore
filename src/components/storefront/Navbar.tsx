@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { ShoppingBag, Heart, User, Menu, X, Search, BadgePercent } from "lucide-react";
+import { ShoppingBag, Heart, User, Menu, X, Search, BadgePercent, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { capitalizeFirst } from "@/lib/utils/format";
 import { useCartStore } from "@/lib/store/cart";
 import { useStoreName } from "@/components/StoreNameProvider";
 
@@ -16,11 +17,18 @@ const NAV_LINKS: { href: string; label: string; hot?: boolean; icon?: typeof Bad
   { href: "/nosotras", label: "Conócenos" },
 ];
 
-export function Navbar() {
+export interface NavCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export function Navbar({ categories = [] }: { categories?: NavCategory[] }) {
   const storeName = useStoreName();
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [catOpen, setCatOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [heroDark, setHeroDark] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -256,34 +264,95 @@ export function Navbar() {
         </div>
 
         <nav className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-1">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              tabIndex={menuOpen ? 0 : -1}
-              className={cn(
-                "flex items-center gap-3 text-3xl py-3 border-b border-[#E8DED4] transition-colors",
-                pathname === link.href
-                  ? "text-[#A0526C]"
-                  : link.hot
-                  ? "text-[#A0526C] hover:text-[#221A33]"
-                  : "text-[#221A33] hover:text-[#A0526C]"
-              )}
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {link.icon && (
-                <link.icon
-                  size={28}
-                  strokeWidth={2}
-                  fill="#A0526C"
-                  stroke="#F7F2EC"
-                  aria-hidden
-                />
-              )}
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const linkCls = cn(
+              "flex items-center gap-3 text-3xl py-3 border-b border-[#E8DED4] transition-colors",
+              pathname === link.href
+                ? "text-[#A0526C]"
+                : link.hot
+                ? "text-[#A0526C] hover:text-[#221A33]"
+                : "text-[#221A33] hover:text-[#A0526C]"
+            );
+
+            // Catálogo: al tocarlo se despliegan las categorías
+            if (link.href === "/catalogo" && categories.length > 0) {
+              return (
+                <div key={link.href}>
+                  <button
+                    type="button"
+                    onClick={() => setCatOpen((o) => !o)}
+                    aria-expanded={catOpen}
+                    aria-controls="menu-categorias"
+                    tabIndex={menuOpen ? 0 : -1}
+                    className={cn(linkCls, "w-full text-left")}
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    <span className="flex-1">{link.label}</span>
+                    <ChevronDown
+                      size={22}
+                      strokeWidth={1.5}
+                      className={cn("transition-transform duration-300", catOpen && "rotate-180")}
+                      aria-hidden
+                    />
+                  </button>
+                  <div
+                    id="menu-categorias"
+                    className={cn(
+                      "grid transition-[grid-template-rows] duration-300 ease-out",
+                      catOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    )}
+                  >
+                    <ul className="overflow-hidden" inert={!catOpen}>
+                      <li>
+                        <Link
+                          href="/catalogo"
+                          onClick={() => setMenuOpen(false)}
+                          tabIndex={menuOpen && catOpen ? 0 : -1}
+                          className="block pl-4 py-2.5 text-lg text-[#A0526C] hover:text-[#221A33] transition-colors"
+                        >
+                          Ver todo el catálogo
+                        </Link>
+                      </li>
+                      {categories.map((c) => (
+                        <li key={c.id}>
+                          <Link
+                            href={`/catalogo?categoria=${encodeURIComponent(c.slug)}`}
+                            onClick={() => setMenuOpen(false)}
+                            tabIndex={menuOpen && catOpen ? 0 : -1}
+                            className="block pl-4 py-2.5 text-lg text-[#221A33] hover:text-[#A0526C] transition-colors"
+                          >
+                            {capitalizeFirst(c.name)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                tabIndex={menuOpen ? 0 : -1}
+                className={linkCls}
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {link.icon && (
+                  <link.icon
+                    size={28}
+                    strokeWidth={2}
+                    fill="#A0526C"
+                    stroke="#F7F2EC"
+                    aria-hidden
+                  />
+                )}
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="px-6 py-6 border-t border-[#E8DED4] flex gap-6">
