@@ -27,3 +27,21 @@ export function colorToHex(name: string): string | null {
   }
   return null;
 }
+
+type ColorVariant = { stock: number; reserved?: number | null; attributes?: { color?: string } | null };
+
+/** Colores de un producto con su disponibilidad y su tono (hex), en el orden en que aparecen. */
+export function colorAvailability(
+  variants: ColorVariant[] | undefined
+): { color: string; hex: string; available: boolean }[] {
+  const byColor = new Map<string, { color: string; available: boolean }>();
+  for (const v of variants ?? []) {
+    const color = v.attributes?.color?.trim();
+    if (!color) continue;
+    const key = color.toLowerCase();
+    const available = (v.stock ?? 0) - (v.reserved ?? 0) > 0;
+    const prev = byColor.get(key);
+    byColor.set(key, { color: prev?.color ?? color, available: (prev?.available ?? false) || available });
+  }
+  return [...byColor.values()].map((c) => ({ ...c, hex: colorToHex(c.color) ?? "#DCCFC4" }));
+}

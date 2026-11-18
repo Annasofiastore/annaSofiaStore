@@ -11,6 +11,7 @@ import type { Product } from "@/types";
 import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 import { useStoreName } from "@/components/StoreNameProvider";
 import { sizeAvailability } from "@/lib/utils/sizes";
+import { colorAvailability } from "@/lib/utils/colors";
 
 interface ProductCardProps {
   product: Product;
@@ -31,6 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const isOnSale = product.is_on_sale && product.compare_price;
   const isSoldOut = product.is_sold_out;
   const sizes = sizeAvailability(product.variants);
+  const colors = colorAvailability(product.variants);
 
   return (
     <article className="group relative">
@@ -152,7 +154,26 @@ export function ProductCard({ product }: ProductCardProps) {
           </ul>
         )}
 
-        <div className="flex items-baseline justify-center gap-2 mt-1.5">
+        {colors.length > 0 && (
+          <ul className="flex flex-wrap justify-center gap-1.5 mt-2.5" aria-label="Colores">
+            {colors.map(({ color, hex, available }) => (
+              <li
+                key={color}
+                title={available ? color : `${color} (agotado)`}
+                className={cn(
+                  "relative w-3.5 h-3.5 rounded-full border border-[#221A33]/20",
+                  !available && "opacity-40"
+                )}
+                style={{ backgroundColor: hex }}
+              >
+                <span className="sr-only">{available ? color : `${color}, agotado`}</span>
+                {!available && <span className="absolute inset-0 m-auto w-full h-px bg-[#766A63] rotate-45" />}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="flex items-baseline justify-center gap-2 mt-2">
           <span className="text-[15px] sm:text-base text-[#A0526C] font-[600]">
             {formatCOP(price)}
           </span>
