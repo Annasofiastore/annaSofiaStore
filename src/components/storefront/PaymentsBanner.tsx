@@ -40,8 +40,8 @@ export async function PaymentsBanner() {
         <span className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#A0526C] font-[500]">
           Medios de pago disponibles
         </span>
-        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(34,26,51,0.10)] px-6 py-6 sm:px-12 sm:py-8">
-          <PaymentLogos size="lg" bare className="justify-center gap-x-8 gap-y-4" />
+        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(34,26,51,0.10)] px-3 py-5 sm:px-12 sm:py-8">
+          <PaymentLogos size="lg" bare />
         </div>
       </div>
     </section>
