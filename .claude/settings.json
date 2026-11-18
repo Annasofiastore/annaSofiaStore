@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(mkdir -p prev)",
+      "Bash(qlmanage -t -s 300 -o prev visa.svg mastercard.svg amex.svg nequi.svg wompi.svg)",
+      "Bash(cat)",
+      "Bash(node --experimental-strip-types /tmp/t.mts)",
+      "Bash(rm /tmp/t.mts)"
+    ]
+  }
+}

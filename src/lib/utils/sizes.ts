@@ -3,10 +3,16 @@ const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 
 /** Posición de una talla; las combinadas ("S/M", "L-XL") se ubican según sus partes. null si no es una talla conocida. */
 function sizeRank(size: string): number | null {
+  // Admite combinadas con separador ("S/M", "L-XL") y pegadas ("SM", "ML", "LXL")
   const ranks = size
     .toUpperCase()
     .split(/[\s/\-,]+/)
     .filter(Boolean)
+    .flatMap((part) => {
+      if (SIZE_ORDER.includes(part)) return [part];
+      const pieces = part.match(/X{0,3}[SL]|M/g);
+      return pieces && pieces.join("") === part ? pieces : [part];
+    })
     .map((t) => SIZE_ORDER.indexOf(t));
   if (ranks.length === 0 || ranks.includes(-1)) return null;
   return ranks.reduce((a, b) => a + b, 0) / ranks.length;
