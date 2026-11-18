@@ -12,6 +12,7 @@ import type { Product, ProductVariant } from "@/types";
 import { bySizeOrder } from "@/lib/utils/sizes";
 import { useStoreName } from "@/components/StoreNameProvider";
 import { PaymentLogos } from "./PaymentLogos";
+import { useProductColor } from "./ProductColorContext";
 
 interface Props {
   product: Product;
@@ -23,6 +24,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
   const storeName = useStoreName();
   const router = useRouter();
   const { variants = [] } = product;
+  const { setColor, colorImages } = useProductColor();
 
   // Extraer valores únicos de talla y color
   const sizes = [
@@ -46,6 +48,10 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
   const [selectedColor, setSelectedColor] = useState<string | null>(
     colors.length === 1 ? colors[0] : null
   );
+  // La galería sigue al color elegido (también cuando el producto tiene un solo color)
+  useEffect(() => {
+    setColor(selectedColor);
+  }, [selectedColor, setColor]);
   const [quantity, setQuantity] = useState(1);
   const [adding, setAdding] = useState(false);
   const [feedback, setFeedback] = useState<"ok" | "error" | null>(null);
@@ -136,7 +142,7 @@ export function VariantSelector({ product, colorHex = {} }: Props) {
       productId: product.id,
       productName: product.name,
       productSlug: product.slug,
-      image: product.images[0] ?? "",
+      image: (selectedColor && colorImages[selectedColor.toLowerCase()]) || product.images[0] || "",
       sku: selectedVariant.sku,
       attributes: selectedVariant.attributes,
       quantity,

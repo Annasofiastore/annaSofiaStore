@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils/cn";
 import { monogramOf } from "@/lib/utils/format";
 import { useStoreName } from "@/components/StoreNameProvider";
 import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
+import { useProductColor } from "./ProductColorContext";
 
 interface Props {
   images: string[];
@@ -16,10 +17,29 @@ interface Props {
  * Escritorio: fotos grandes apiladas (la columna de información queda fija al lado).
  * Celular: carrusel deslizable con puntos.
  */
-export function ProductGallery({ images, name }: Props) {
+export function ProductGallery({ images: allImages, name }: Props) {
   const storeName = useStoreName();
   const [active, setActive] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
+  const desktopRef = useRef<HTMLDivElement>(null);
+  const { color, colorImages } = useProductColor();
+
+  // Al elegir un color con foto asignada, esa foto pasa al frente
+  const colorImage = color ? colorImages[color.toLowerCase()] : undefined;
+  const images = colorImage
+    ? [
+        ...allImages.filter((img) => imageSrc(img) === imageSrc(colorImage)),
+        ...allImages.filter((img) => imageSrc(img) !== imageSrc(colorImage)),
+      ]
+    : allImages;
+
+  useEffect(() => {
+    if (!colorImage) return;
+    setActive(0);
+    trackRef.current?.scrollTo({ left: 0, behavior: "smooth" });
+    const el = desktopRef.current;
+    if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [colorImage]);
 
   if (images.length === 0) {
     return (
@@ -82,7 +102,7 @@ export function ProductGallery({ images, name }: Props) {
       </div>
 
       {/* Escritorio: fotos apiladas */}
-      <div className="hidden lg:flex flex-col gap-3">
+      <div ref={desktopRef} className="hidden lg:flex flex-col gap-3 scroll-mt-24">
         {images.map((src, i) => (
           <div key={i} className="relative aspect-[3/4] overflow-hidden bg-[#F5DDE5]/10">
             <Image

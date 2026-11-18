@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
       is_best_seller: body.is_best_seller ?? false,
       is_pre_sale: body.is_pre_sale ?? false,
       images: body.images ?? [],
+      ...(body.color_images ? { color_images: body.color_images } : {}),
     })
     .select("id")
     .single();

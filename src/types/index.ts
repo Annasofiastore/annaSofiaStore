@@ -72,6 +72,8 @@ export interface Product {
   compare_price: number | null;
   status: ProductStatus;
   images: string[];
+  /** Foto de cada color (clave: nombre del color en minúsculas). */
+  color_images?: Record<string, string> | null;
   created_at: string;
   updated_at: string;
   // Relaciones

@@ -30,6 +30,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
       is_best_seller: body.is_best_seller ?? false,
       is_pre_sale: body.is_pre_sale ?? false,
       images: body.images ?? [],
+      ...(body.color_images !== undefined ? { color_images: body.color_images ?? {} } : {}),
     })
     .eq("id", id);
 

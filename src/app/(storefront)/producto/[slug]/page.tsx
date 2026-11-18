@@ -10,6 +10,7 @@ import { ChevronDown, ChevronRight, Truck, ShieldCheck, RotateCcw } from "lucide
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { ProductGallery } from "@/components/storefront/ProductGallery";
 import { VariantSelector } from "@/components/storefront/VariantSelector";
+import { ProductColorProvider } from "@/components/storefront/ProductColorContext";
 import { NewArrivals } from "@/components/storefront/NewArrivals";
 import { formatCOP, discountPercent } from "@/lib/utils/format";
 import { imageSrc } from "@/lib/utils/image-focus";
@@ -182,6 +183,7 @@ export default async function ProductPage({ params }: Props) {
           <span className="text-[#221A33] truncate">{product.name}</span>
         </nav>
 
+        <ProductColorProvider colorImages={product.color_images ?? {}}>
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-8 lg:gap-16">
           {/* ── GALERÍA ── */}
           <ProductGallery images={product.images} name={product.name} />
@@ -249,6 +251,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </div>
         </div>
+        </ProductColorProvider>
       </div>
 
       {/* ── TAMBIÉN TE PUEDE GUSTAR ── */}

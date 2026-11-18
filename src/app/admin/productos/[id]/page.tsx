@@ -19,7 +19,7 @@ export default async function EditarProductoPage({ params }: Props) {
     service
       .from("products")
       .select(
-        `id, name, slug, description, care_instructions, base_price, compare_price, status, is_best_seller, is_pre_sale, images,
+        `id, name, slug, description, care_instructions, base_price, compare_price, status, is_best_seller, is_pre_sale, images, color_images,
          product_categories(category_id),
          product_collections(collection_id),
          product_occasions(occasion_id),
@@ -48,6 +48,7 @@ export default async function EditarProductoPage({ params }: Props) {
     is_best_seller: product.is_best_seller ?? false,
     is_pre_sale: product.is_pre_sale ?? false,
     images: product.images ?? [],
+    color_images: product.color_images ?? {},
     category_ids: (product.product_categories ?? []).map((r: any) => r.category_id),
     collection_ids: (product.product_collections ?? []).map((r: any) => r.collection_id),
     occasion_ids: (product.product_occasions ?? []).map((r: any) => r.occasion_id),
