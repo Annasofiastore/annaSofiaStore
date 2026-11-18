@@ -10,6 +10,7 @@ import { useWishlistStore } from "@/lib/store/wishlist";
 import type { Product } from "@/types";
 import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 import { useStoreName } from "@/components/StoreNameProvider";
+import { sizeAvailability } from "@/lib/utils/sizes";
 
 interface ProductCardProps {
   product: Product;
@@ -27,6 +28,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const price = product.effective_price ?? product.base_price;
   const isOnSale = product.is_on_sale && product.compare_price;
   const isSoldOut = product.is_sold_out;
+  const sizes = sizeAvailability(product.variants);
 
   return (
     <article className="group relative">
@@ -125,6 +127,27 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
         </Link>
+
+        {sizes.length > 0 && (
+          <ul
+            className="flex flex-wrap justify-center gap-x-3 gap-y-0.5 mt-2 text-[11px] sm:text-xs tracking-wide"
+            aria-label="Tallas"
+          >
+            {sizes.map(({ size, available }) => (
+              <li
+                key={size}
+                className={cn(
+                  "font-[600]",
+                  available ? "text-[#4D3A5C]" : "text-[#B8AEA6] line-through font-[400]"
+                )}
+                title={available ? `Talla ${size} disponible` : `Talla ${size} agotada`}
+              >
+                {size}
+                <span className="sr-only">{available ? " disponible" : " agotada"}</span>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="flex items-baseline justify-center gap-2 mt-1.5">
           <span className="text-[15px] sm:text-base text-[#A0526C] font-[600]">

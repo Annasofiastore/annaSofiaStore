@@ -18,7 +18,8 @@ async function getSaleProducts(): Promise<Product[]> {
     .from("products")
     .select(`
       id, name, slug, base_price, compare_price, images,
-      is_on_sale, effective_price, is_sold_out, is_best_seller, is_pre_sale
+      is_on_sale, effective_price, is_sold_out, is_best_seller, is_pre_sale,
+      variants:product_variants(attributes, stock, reserved)
     `)
     .eq("status", "active")
     .eq("is_on_sale", true)

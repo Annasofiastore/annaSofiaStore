@@ -48,7 +48,8 @@ type NewArrivalsSection = {
 const PRODUCT_FIELDS = `
   id, name, slug, base_price, compare_price, images, status,
   is_on_sale, effective_price, is_sold_out, is_pre_sale, is_best_seller,
-  product_occasions ( occasions ( name, slug, sort_order ) )
+  product_occasions ( occasions ( name, slug, sort_order ) ),
+  variants:product_variants ( attributes, stock, reserved )
 `;
 
 const ARRIVALS_LIMIT = 12;

@@ -9,17 +9,9 @@ import { useCartStore } from "@/lib/store/cart";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import { formatCOP } from "@/lib/utils/format";
 import type { Product, ProductVariant } from "@/types";
+import { bySizeOrder } from "@/lib/utils/sizes";
 import { useStoreName } from "@/components/StoreNameProvider";
 import { PaymentLogos } from "./PaymentLogos";
-
-// Orden de tallas de menor a mayor; las desconocidas (o numéricas) van al final en orden natural
-const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
-function bySizeOrder(a: string, b: string) {
-  const ia = SIZE_ORDER.indexOf(a.toUpperCase());
-  const ib = SIZE_ORDER.indexOf(b.toUpperCase());
-  if (ia !== -1 || ib !== -1) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
-  return a.localeCompare(b, "es", { numeric: true });
-}
 
 interface Props {
   product: Product;
