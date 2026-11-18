@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   images: {
+    // El optimizador de Vercel (plan Hobby) tiene cuota y al agotarse responde 402, dejando las fotos
+    // sin cargar. Las fotos ya se suben reducidas (2000 px, WebP), así que se sirven directo desde Supabase.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
