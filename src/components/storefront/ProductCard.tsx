@@ -23,6 +23,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const wishlisted = has(product.id);
   const [imgIdx, setImgIdx] = useState(0);
   const [imgError, setImgError] = useState(false);
+  // Si el optimizador de Next falla con una foto, se reintenta cargándola directo (como en el admin)
+  const [direct, setDirect] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   const price = product.effective_price ?? product.base_price;
@@ -49,7 +51,8 @@ export function ProductCard({ product }: ProductCardProps) {
               style={imageStyle(product.images[imgIdx])}
               onMouseEnter={() => product.images.length > 1 && setImgIdx(1)}
               onMouseLeave={() => setImgIdx(0)}
-              onError={() => setImgError(true)}
+              unoptimized={direct}
+              onError={() => (direct ? setImgError(true) : setDirect(true))}
             />
           ) : (
             <div className="absolute inset-0 bg-[#DCCFC4]/30 flex items-center justify-center">

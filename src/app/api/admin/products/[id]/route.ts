@@ -103,13 +103,20 @@ export async function PUT(req: NextRequest, { params }: Params) {
   return NextResponse.json({ id, slug });
 }
 
-export async function DELETE(_req: NextRequest, { params }: Params) {
+export async function DELETE(req: NextRequest, { params }: Params) {
   const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
 
   const service = await createServiceClient();
+
+  // ?archivar=1: solo se oculta de la tienda (botón "Archivar producto"), nunca se borra.
+  if (new URL(req.url).searchParams.get("archivar")) {
+    const { error: archiveError } = await service.from("products").update({ status: "archived" }).eq("id", id);
+    if (archiveError) return NextResponse.json({ error: archiveError.message }, { status: 500 });
+    return NextResponse.json({ ok: true, deleted: false, archived: true });
+  }
 
   // Se elimina de verdad. Si el producto ya tiene pedidos, la base lo impide (los pedidos conservan
   // su historial): en ese caso se archiva, que lo oculta de la tienda sin perder las ventas.

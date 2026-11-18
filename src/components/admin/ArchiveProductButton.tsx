@@ -10,7 +10,7 @@ export function ArchiveProductButton({ id }: { id: string }) {
 
   async function archive() {
     setLoading(true);
-    await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
+    await fetch(`/api/admin/products/${id}?archivar=1`, { method: "DELETE" });
     router.push("/admin/productos");
     router.refresh();
   }
