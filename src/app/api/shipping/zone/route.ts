@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { getShippingZone } from "@/lib/checkout/shipping";
 
-// GET /api/shipping/zone?city=Cartagena
+// GET /api/shipping/zone?city=Cartagena&department=Bolívar
 // Retorna la zona y precio de envío para una ciudad dada
 export async function GET(req: NextRequest) {
   const city = req.nextUrl.searchParams.get("city")?.trim();
   if (!city) return NextResponse.json({ error: "city requerido" }, { status: 400 });
+  const department = req.nextUrl.searchParams.get("department")?.trim() || null;
 
-  const zone = await getShippingZone(createServiceClient(), city);
+  const zone = await getShippingZone(createServiceClient(), city, department);
   if (!zone) return NextResponse.json({ error: "Zona no encontrada" }, { status: 404 });
 
   return NextResponse.json({

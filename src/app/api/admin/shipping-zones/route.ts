@@ -31,7 +31,7 @@ export async function GET() {
   const db = createServiceClient();
   const { data: zones } = await db
     .from("shipping_zones")
-    .select("*, cities:shipping_zone_cities(id, city_name)")
+    .select("*, cities:shipping_zone_cities(id, city_name, department)")
     .order("sort_order");
 
   return NextResponse.json(zones ?? []);
@@ -126,13 +126,31 @@ export async function POST(req: NextRequest) {
   // Agregar ciudad a una zona existente
   const { zone_id, city_name } = body;
   if (!zone_id || !city_name?.trim()) return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
+  const department = typeof body.department === "string" && body.department.trim() ? body.department.trim() : null;
 
   const { error } = await db
     .from("shipping_zone_cities")
-    .insert({ zone_id, city_name: city_name.trim() });
+    .insert({ zone_id, city_name: city_name.trim(), department });
 
   if (error) {
     if (error.code === "23505") return NextResponse.json({ error: "Esa ciudad ya está asignada" }, { status: 409 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+  return NextResponse.json({ ok: true });
+}
+
+// PATCH — asignar (o quitar) el departamento de una ciudad ya asignada a una zona
+export async function PATCH(req: NextRequest) {
+  const user = await requireAdmin();
+  if (!isAdminUser(user)) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+
+  const { id, department } = await req.json();
+  if (!id) return NextResponse.json({ error: "Falta el ID" }, { status: 400 });
+  const value = typeof department === "string" && department.trim() ? department.trim() : null;
+
+  const { error } = await createServiceClient().from("shipping_zone_cities").update({ department: value }).eq("id", id);
+  if (error) {
+    if (error.code === "23505") return NextResponse.json({ error: "Ya existe esa ciudad en ese departamento" }, { status: 409 });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
   return NextResponse.json({ ok: true });

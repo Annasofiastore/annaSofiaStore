@@ -7,6 +7,7 @@ import { ImageUploader } from "./ImageUploader";
 import { VariantManager, type VariantRow } from "./VariantManager";
 import { cn } from "@/lib/utils/cn";
 import { formatCOP, slugify } from "@/lib/utils/format";
+import { imageSrc, imageStyle } from "@/lib/utils/image-focus";
 
 interface TaxonomyItem {
   id: string;
@@ -70,12 +71,14 @@ function colorNames(variants: VariantRow[]): string[] {
   return [...seen.values()];
 }
 
-/** Deja solo las fotos de colores que siguen existiendo en las variantes. */
-function cleanColorImages(map: Record<string, string[]>, variants: VariantRow[]) {
+/** Deja solo las fotos de colores que siguen existiendo y que siguen siendo fotos del producto. */
+function cleanColorImages(map: Record<string, string[]>, images: string[], variants: VariantRow[]) {
   const colors = new Set(colorNames(variants).map((c) => c.toLowerCase()));
   const out: Record<string, string[]> = {};
   for (const [color, urls] of Object.entries(map ?? {})) {
-    if (colors.has(color) && urls.length > 0) out[color] = urls;
+    if (!colors.has(color)) continue;
+    const kept = images.filter((img) => urls.some((u) => imageSrc(u) === imageSrc(img)));
+    if (kept.length > 0) out[color] = kept;
   }
   return out;
 }
@@ -146,7 +149,7 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
     if (hasBadSku) { setError("Todas las variantes deben tener SKU."); return; }
 
     // Quita fotos asignadas a colores que ya no existen o a fotos que se borraron
-    const colorImages = cleanColorImages(form.color_images, form.variants);
+    const colorImages = cleanColorImages(form.color_images, form.images, form.variants);
     const hasColorImages = Object.keys(colorImages).length > 0 || Object.keys(initial?.color_images ?? {}).length > 0;
 
     setSaving(true);
@@ -472,28 +475,63 @@ export function ProductForm({ initial, categories, collections, occasions }: Pro
       </div>
 
       {/* Fotos por color */}
-      {colorNames(form.variants).length > 0 && (
+      {colorNames(form.variants).length > 0 && form.images.length > 0 && (
         <div className={sectionCls}>
-          <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Fotos por color</h2>
+          <h2 className="text-sm font-[600] text-[#221A33] tracking-wide">Foto por color</h2>
           <p className="text-xs text-[#766A63] -mt-2">
-            Sube las fotos de cada color. Al elegir un color en la tienda, se muestran sus fotos. Si un color no tiene
-            fotos, se muestran las generales. Es opcional.
+            Elige qué fotos se muestran cuando la clienta selecciona cada color (puedes marcar varias). Es opcional:
+            si un color no tiene fotos marcadas, se muestran todas.
           </p>
-          <div className="space-y-6">
+          <div className="space-y-5">
             {colorNames(form.variants).map((color) => {
               const key = color.toLowerCase();
+              const chosen = form.color_images[key] ?? [];
+              const isChosen = (img: string) => chosen.some((c) => imageSrc(c) === imageSrc(img));
               return (
                 <div key={color}>
-                  <p className="text-xs font-[600] text-[#221A33] mb-2 capitalize">{color}</p>
-                  <ImageUploader
-                    images={form.color_images[key] ?? []}
-                    onChange={(imgs) => {
-                      const next = { ...form.color_images };
-                      if (imgs.length > 0) next[key] = imgs;
-                      else delete next[key];
-                      set("color_images", next);
-                    }}
-                  />
+                  <p className="text-xs font-[600] text-[#221A33] mb-2 capitalize">
+                    {color}
+                    {chosen.length > 0 && (
+                      <span className="ml-2 font-[400] normal-case text-[#766A63]">
+                        {chosen.length} {chosen.length === 1 ? "foto" : "fotos"}
+                      </span>
+                    )}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {form.images.map((img, i) => {
+                      const selected = isChosen(img);
+                      return (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => {
+                            const next = { ...form.color_images };
+                            // Se conserva el orden de las fotos del producto
+                            const picked = selected
+                              ? chosen.filter((c) => imageSrc(c) !== imageSrc(img))
+                              : form.images.filter((f) => imageSrc(f) === imageSrc(img) || isChosen(f));
+                            if (picked.length > 0) next[key] = picked;
+                            else delete next[key];
+                            set("color_images", next);
+                          }}
+                          aria-pressed={selected}
+                          aria-label={`Foto ${i + 1} para ${color}`}
+                          className={cn(
+                            "relative w-16 aspect-[3/4] overflow-hidden border-2 transition-colors",
+                            selected ? "border-[#221A33]" : "border-transparent hover:border-[#DCCFC4]"
+                          )}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={imageSrc(img)} alt="" className="w-full h-full object-cover" style={imageStyle(img)} />
+                          {selected && (
+                            <span className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-[#221A33] text-white text-[10px] leading-4 text-center">
+                              ✓
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               );
             })}

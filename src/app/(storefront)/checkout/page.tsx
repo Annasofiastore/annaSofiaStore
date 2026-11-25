@@ -113,7 +113,7 @@ export default function CheckoutPage() {
 
       if (Object.keys(updates).length > 0) {
         setForm((f) => ({ ...f, ...updates }));
-        if (updates.city) detectShippingZone(updates.city);
+        if (updates.city) detectShippingZone(updates.city, updates.department);
       }
       setPrefilled(true);
     }
@@ -122,14 +122,16 @@ export default function CheckoutPage() {
   }, [prefilled]);
 
   // Detectar zona de envío cuando cambia la ciudad
-  const detectShippingZone = useCallback(async (city: string) => {
+  const detectShippingZone = useCallback(async (city: string, department?: string) => {
     if (!city) {
       setShippingZone(null);
       useCartStore.getState().setShippingCost(0);
       return;
     }
     try {
-      const res = await fetch(`/api/shipping/zone?city=${encodeURIComponent(city)}`);
+      const res = await fetch(
+        `/api/shipping/zone?city=${encodeURIComponent(city)}${department ? `&department=${encodeURIComponent(department)}` : ""}`
+      );
       if (res.ok) {
         const zone = await res.json();
         setShippingZone(zone);
@@ -170,7 +172,7 @@ export default function CheckoutPage() {
     });
     if (field === "city" && typeof value === "string") {
       if (!isEligibleCity(String(value))) setPaymentMethod("wompi");
-      detectShippingZone(String(value));
+      detectShippingZone(String(value), form.department);
     }
     setError(null);
   }

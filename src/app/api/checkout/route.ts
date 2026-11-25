@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const { items, subtotal } = priced;
 
     // Envío según la zona de la ciudad en la base
-    const zone = await getShippingZone(supabase, form.city);
+    const zone = await getShippingZone(supabase, form.city, form.department);
     if (!zone) {
       return NextResponse.json(
         { error: "No se pudo calcular el envío. Contáctanos para completar tu pedido." },

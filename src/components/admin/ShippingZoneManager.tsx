@@ -3,8 +3,21 @@
 import { useEffect, useState } from "react";
 import { Plus, X, Pencil, Check, Trash2 } from "lucide-react";
 import { formatCOP } from "@/lib/utils/format";
+import { DEPARTAMENTOS, MUNICIPIOS_POR_DEPARTAMENTO } from "@/lib/data/colombia-municipios";
 
-type City = { id: string; city_name: string };
+type City = { id: string; city_name: string; department: string | null };
+
+const norm = (v: string) => v.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+/** Departamentos donde existe un municipio con ese nombre (si son 2 o más, el nombre es ambiguo). */
+const DEPTS_BY_MUNICIPALITY: Map<string, string[]> = (() => {
+  const map = new Map<string, string[]>();
+  for (const [dept, list] of Object.entries(MUNICIPIOS_POR_DEPARTAMENTO)) {
+    for (const m of list) map.set(norm(m), [...(map.get(norm(m)) ?? []), dept]);
+  }
+  return map;
+})();
+const candidateDepts = (cityName: string) => DEPTS_BY_MUNICIPALITY.get(norm(cityName)) ?? [];
 type Zone = {
   id: string;
   code: string;
@@ -30,6 +43,7 @@ export function ShippingZoneManager() {
   const [editDesc, setEditDesc] = useState("");
   const [saving, setSaving] = useState<string | null>(null);
   const [newCity, setNewCity] = useState<Record<string, string>>({});
+  const [newDept, setNewDept] = useState<Record<string, string>>({});
   const [addingCity, setAddingCity] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showAddZone, setShowAddZone] = useState(false);
@@ -91,15 +105,21 @@ export function ShippingZoneManager() {
   async function addCity(zoneId: string) {
     const city = newCity[zoneId]?.trim();
     if (!city) return;
+    const department = newDept[zoneId] || "";
+    if (!department && candidateDepts(city).length > 1) {
+      setError(`"${city}" existe en varios departamentos (${candidateDepts(city).join(", ")}). Elige el departamento.`);
+      return;
+    }
     setAddingCity(zoneId);
     setError(null);
     const res = await fetch("/api/admin/shipping-zones", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ zone_id: zoneId, city_name: city }),
+      body: JSON.stringify({ zone_id: zoneId, city_name: city, department: department || undefined }),
     });
     if (res.ok) {
       setNewCity((prev) => ({ ...prev, [zoneId]: "" }));
+      setNewDept((prev) => ({ ...prev, [zoneId]: "" }));
       await load();
     } else {
       const d = await res.json();
@@ -133,6 +153,21 @@ export function ShippingZoneManager() {
       setError(d.error ?? "Error al crear la zona");
     }
     setCreatingZone(false);
+  }
+
+  async function assignDepartment(cityId: string, department: string) {
+    if (!department) return;
+    setError(null);
+    const res = await fetch("/api/admin/shipping-zones", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: cityId, department }),
+    });
+    if (res.ok) await load();
+    else {
+      const d = await res.json();
+      setError(d.error ?? "No se pudo asignar el departamento");
+    }
   }
 
   async function removeCity(cityId: string) {
@@ -257,6 +292,20 @@ export function ShippingZoneManager() {
                     className="inline-flex items-center gap-1 px-2.5 py-1 bg-gray-50 border border-gray-200 text-xs text-gray-600 rounded"
                   >
                     {city.city_name}
+                    {city.department && <span className="text-gray-400">({city.department})</span>}
+                    {!city.department && candidateDepts(city.city_name).length > 1 && (
+                      <select
+                        value=""
+                        onChange={(e) => assignDepartment(city.id, e.target.value)}
+                        title="Este nombre existe en varios departamentos: elige a cuál aplica esta tarifa"
+                        className="border border-amber-300 bg-amber-50 text-amber-700 text-[11px] rounded px-1 py-0.5"
+                      >
+                        <option value="">⚠ Elegir departamento…</option>
+                        {candidateDepts(city.city_name).map((d) => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    )}
                     <button
                       onClick={() => removeCity(city.id)}
                       className="text-gray-300 hover:text-red-400 transition-colors ml-0.5"
@@ -281,6 +330,17 @@ export function ShippingZoneManager() {
                   placeholder="Agregar ciudad…"
                   className="flex-1 border border-gray-200 px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:border-[#766A63] transition-colors"
                 />
+                <select
+                  value={newDept[zone.id] ?? ""}
+                  onChange={(e) => setNewDept((prev) => ({ ...prev, [zone.id]: e.target.value }))}
+                  aria-label="Departamento"
+                  className="border border-gray-200 px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:border-[#766A63]"
+                >
+                  <option value="">Departamento…</option>
+                  {DEPARTAMENTOS.map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
                 <button
                   onClick={() => addCity(zone.id)}
                   disabled={addingCity === zone.id || !newCity[zone.id]?.trim()}
